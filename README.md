@@ -16,7 +16,7 @@ You need to input a, b and c first.
 
 ## Examples
 
-1. $\left\{\begin{aligned} &5^x+3=2^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 3)\;or\;(x,y)=(3, 7)$
+1. $$\left\{\begin{aligned} &5^x+3=2^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 3)\;or\;(x,y)=(3, 7)$$
 
 Please input a (a should be a positive integer >= 2):
 
