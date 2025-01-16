@@ -106,7 +106,7 @@ Therefore, y < 3.
 
 Further examination shows that (x, y) = (1, 1), (13, 2).
 
-4. x,y\in\mathbb{N}^*\Rightarrow 101^x+3\neq103^y
+4. $x,y\in\mathbb{N}^*\Rightarrow 101^x+3\neq103^y$
 
 Please input a (a should be a positive integer >= 2):
 
