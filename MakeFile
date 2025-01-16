@@ -1,0 +1,35 @@
+# 指定C编译器
+CC = gcc
+ 
+# 指定编译选项（可选）
+CFLAGS = -Wall -g
+ 
+# 指定源文件目录
+SRC_DIR = csource
+ 
+# 指定源文件（现在包含目录前缀）
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+ 
+# 指定生成目标文件的目录
+BUILD_DIR = build
+ 
+# 自动生成目标文件列表（.o 文件），并添加目录前缀
+OBJS = $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS))
+ 
+# 指定生成的可执行文件名称，并添加目录前缀
+EXEC = $(BUILD_DIR)/NewDiophantine.exe
+ 
+# 默认目标（当你只运行 `make` 而不带任何参数时执行的目标）
+all: $(EXEC)
+ 
+# 链接目标文件生成可执行文件
+$(EXEC): $(OBJS) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $^
+ 
+# 编译每个源文件生成目标文件，并添加目录前缀
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+ 
+# 确保构建目录存在
+$(BUILD_DIR):
+	mkdir $@
