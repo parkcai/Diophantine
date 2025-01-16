@@ -16,7 +16,7 @@ You need to input a, b and c first.
 
 ## Examples
 
-1. $$\begin{aligned} &5^x+3=2^y\\ &x,y\in\mathbb{N}^* \end{aligned}\Rightarrow(x,y)=(1, 3)\;or\;(x,y)=(3, 7)$$
+1. $5^x+3=2^y,\;x,y\in\mathbb{N}^*\Rightarrow(x,y)=(1, 3)\;or\;(x,y)=(3, 7)$
 
 Please input a (a should be a positive integer >= 2):
 
@@ -46,7 +46,7 @@ Therefore, y < 8.
 
 Further examination shows that (x, y) = (1, 3), (3, 7).
 
-2. \[\boxed{\left\{\begin{aligned} &3^x+10=13^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 1)\;or\;(x,y)=(7, 3)}\]
+2. $3^x+10=13^y,\;x,y\in\mathbb{N}^*\Rightarrow(x,y)=(1, 1)\;or\;(x,y)=(7, 3)$
 
 Please input a (a should be a positive integer >= 2):
 
@@ -76,7 +76,7 @@ Therefore, x < 8.
 
 Further examination shows that (x, y) = (1, 1), (7, 3).
 
-3. \[\boxed{\left\{\begin{aligned} &2^x+89=91^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 1)\;or\;(x,y)=(13, 2)}\]
+3. $2^x+89=91^y,\;x,y\in\mathbb{N}^*\Rightarrow(x,y)=(1, 1)\;or\;(x,y)=(13, 2)$
 
 Please input a (a should be a positive integer >= 2):
 
@@ -106,7 +106,7 @@ Therefore, y < 3.
 
 Further examination shows that (x, y) = (1, 1), (13, 2).
 
-4. \[\boxed{x,y\in\mathbb{N}^*\Rightarrow 101^x+3\neq103^y}\]
+4. x,y\in\mathbb{N}^*\Rightarrow 101^x+3\neq103^y
 
 Please input a (a should be a positive integer >= 2):
 
