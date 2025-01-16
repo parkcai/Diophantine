@@ -12,7 +12,7 @@ if __name__ == "__main__":
     # generate_print_line("[Solver V1] solution vector format is incorrect for unknown reason!")
     
     # generate_print_line("So %s = %d (mod %d), ")
-    generate_print_line("So %d ^ %s + %d = %d ^ %s is impossible.")
+    generate_print_line("Now solving diophantine equation a^x + b = c^y for its positive integer solutions (x,y).")
     
     
     

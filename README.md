@@ -18,6 +18,7 @@ You need to input a, b and c first.
 
 1. $5^x+3=2^y,\ x,y\in\mathbb{N}^*\Rightarrow(x,y)=(1, 3)\ or\ (x,y)=(3, 7)$
 
+Now solving diophantine equation a^x + b = c^y for its positive integer solutions (x,y).  
 Please input a (a should be a positive integer >= 2):  
 5  
 Please input b (b should be a positive integer):  
@@ -35,6 +36,7 @@ Further examination shows that (x, y) = (1, 3), (3, 7).
 
 2. $3^x+10=13^y,\ x,y\in\mathbb{N}^*\Rightarrow(x,y)=(1, 1)\ or\ (x,y)=(7, 3)$
 
+Now solving diophantine equation a^x + b = c^y for its positive integer solutions (x,y).  
 Please input a (a should be a positive integer >= 2):  
 3  
 Please input b (b should be a positive integer):  
@@ -52,6 +54,7 @@ Further examination shows that (x, y) = (1, 1), (7, 3).
 
 3. $2^x+89=91^y,\ x,y\in\mathbb{N}^*\Rightarrow(x,y)=(1, 1)\ or\ (x,y)=(13, 2)$
 
+Now solving diophantine equation a^x + b = c^y for its positive integer solutions (x,y).  
 Please input a (a should be a positive integer >= 2):  
 2  
 Please input b (b should be a positive integer):  
@@ -69,6 +72,7 @@ Further examination shows that (x, y) = (1, 1), (13, 2).
 
 4. $x,y\in\mathbb{N}^*\Rightarrow 101^x+3\neq103^y$
 
+Now solving diophantine equation a^x + b = c^y for its positive integer solutions (x,y).  
 Please input a (a should be a positive integer >= 2):  
 101  
 Please input b (b should be a positive integer):  

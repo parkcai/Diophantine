@@ -19,7 +19,6 @@ int max_trial_num_v1 = 25;
 int disproof_priorlist_prime[100];
 int disproof_priorlist_power[100];
 int disproof_priorlist_type[100]; // a = 1, c = 3
-int disproof_priorlist_length;
 int disproof_prime;
 int disproof_power;
 int disproof_type;
@@ -992,6 +991,9 @@ void print_solution_v1() {
 }
 
 void Solve_Diophantine1_interface() {
+    //"Now solving diophantine equation a^x + b = c^y for its positive integer solutions (x,y)."
+    int array17[89] = {78, 111, 119, 32, 115, 111, 108, 118, 105, 110, 103, 32, 100, 105, 111, 112, 104, 97, 110, 116, 105, 110, 101, 32, 101, 113, 117, 97, 116, 105, 111, 110, 32, 97, 94, 120, 32, 43, 32, 98, 32, 61, 32, 99, 94, 121, 32, 102, 111, 114, 32, 105, 116, 115, 32, 112, 111, 115, 105, 116, 105, 118, 101, 32, 105, 110, 116, 101, 103, 101, 114, 32, 115, 111, 108, 117, 116, 105, 111, 110, 115, 32, 40, 120, 44, 121, 41, 46, 10};
+    print_line(array17);
     //"Please input a (a should be a positive integer >= 2):"
     int array11[54] = {80, 108, 101, 97, 115, 101, 32, 105, 110, 112, 117, 116, 32, 97, 32, 40, 97, 32, 115, 104, 111, 117, 108, 100, 32, 98, 101, 32, 97, 32, 112, 111, 115, 105, 116, 105, 118, 101, 32, 105, 110, 116, 101, 103, 101, 114, 32, 62, 61, 32, 50, 41, 58, 10};
     print_line(array11);
