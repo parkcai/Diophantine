@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "SysY_utils.h"
 const int endl = 10;
 const int space = 32;
 const int left_parenthesis = 40;
@@ -8,10 +8,8 @@ const int comma = 44;
 const int percentage = 37;
 const int equals = 61;
 const int hat = 94;
-int assertion = 1;
 int null[1] = {0};
 int newline[1] = {10};
-
 int string_x[2] = {120, 0};
 int strlen_x = 2;
 int string_y[2] = {121, 0};
@@ -22,13 +20,9 @@ int string_u[2] = {117, 0};
 int strlen_u = 2;
 int string_v[2] = {118, 0};
 int strlen_v = 2;
+int assertion = 1;
 
-void assert(int expr, int err_info[]) {
-    assertion = expr;
-    if (!assertion) {
-        print_line(err_info);
-    }
-}
+
 
 void print_line(int line[]){
     if (!line[0]) return;
@@ -359,4 +353,11 @@ void print_line_with_ssdsdds(int line[], int arg1[], int arg2[], int arg3, int a
         }
     }
     putch(endl);
+}
+
+void assert(int expr, int err_info[]) {
+    assertion = expr;
+    if (!assertion) {
+        print_line(err_info);
+    }
 }

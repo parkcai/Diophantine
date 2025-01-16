@@ -1,3 +1,7 @@
+/*
+ * 这个头文件提供了一些使编写SysY程序更简单的工具性函数和变量
+ */
+
 #include "SysY.h"
 const int endl;
 const int space;
@@ -24,10 +28,10 @@ int strlen_v;
 
 /*
  * 此函数用于断言表达式expr为真，如若不然，则输出err_info并exit
- * 由于SysY语法实际上不支持exit，所以此函数的作用是令assertion = expr
- * 并在expr为假时输出err_info
- * 为实现exit的效果，应在所有assert(..., ...);后都加上一句（没错，就是这样，对不起......）
- * if (!assertion) return 0; 或 if (!assertion) return;
+ * 由于SysY语法实际上不支持exit，所以此函数的作用是令assertion = expr，并在expr为假时输出err_info
+ * 为实现exit的效果，应在所有assert(..., ...);后都加上一句if (!assertion) return 0; 或 if (!assertion) return;
+ * 此外，在调用所有调用了assert的函数后，理论上也都应加上一句if (!assertion) return 0; 或 if (!assertion) return;
+ * 不过，如果对于不会assert失败比较自信，或者觉得assert失败后继续运行一会儿也无所谓，那么也可以不加
  */
 void assert(int expr, int err_info[]);
 

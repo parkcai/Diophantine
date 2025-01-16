@@ -1,18 +1,33 @@
 #include "solver_v1.h"
 
+int a_v1;
+int b_v1;
+int c_v1;
 int abc_set_status_v1 = 0;
-int xy_name_set_status_v1 = 0;
+int x_name_v1[10] = {120, 0};
+int y_name_v1[10] = {121, 0};
+int xy_name_set_status_v1 = 1;
+int solution_v1[200000];
+int solution_v1_pointer;
+int solution_v1_length;
+int solver_v1_success;
 int search_threshold_v1 = 2100000000;
 // 这两个设小了可能会导致求解失败
 // 设大了可能导致那些需要多试几个方案的方程在一个方案上耗费的时间过长
 int mod_threshold_v1 = 200000;
 int max_trial_num_v1 = 25;
+int disproof_priorlist_prime[100];
+int disproof_priorlist_power[100];
+int disproof_priorlist_type[100]; // a = 1, c = 3
+int disproof_priorlist_length;
+int disproof_prime;
+int disproof_power;
+int disproof_type;
 int disproof_priorlist_length = 0;
 int solution_max_length_v1 = 200000;
 int verbose = 0;
 int disable_front_mode = 0;
 int disable_back_mode = 0;
-
 
 void set_abc_v1(int a, int b, int c) {
     //"Invalid input of set_abc_v1!"
@@ -1005,5 +1020,32 @@ void Solve_Diophantine1_interface() {
         print_line(array1);
     }
     return;
+}
+
+void Solve_Diophantine1_test_range(int a_max, int b_max, int c_max) {
+    int a = 2;
+    int first_time_protection = 1;
+    while (a <= a_max) {
+        int b = 1;
+        while (b <= b_max) {
+            int c = 2;
+            while (c <= c_max) {
+                set_abc_v1(a, b, c);
+                Solve_Diophantine1();
+                if (first_time_protection) {
+                    first_time_protection = 0;
+                }else{
+                    print_line(newline);
+                }
+                print_solution_v1();
+                if(!assertion) {
+                    getint();
+                }
+                c = c + 1;
+            }
+            b = b + 1;
+        }
+        a = a + 1;
+    }
 }
 

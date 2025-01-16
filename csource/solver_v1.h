@@ -1,132 +1,39 @@
-#include "utils.h"
+/*
+ * 第一代自动机 Solver V1        by parkcai
+ * 
+ * 【用途】
+ * 全自动地求解形如a ^ x + b = c ^ y的关于正整数x, y的不定方程
+ * 其中，a, b, c已知且满足a >= 2, b >= 1, c >= 2
+ * 
+ * 【向外提供的接口】
+ * 1. set_abc_v1(int a, int b, int c) 设置a, b, c（a, b, c应满足a >= 2, b >= 1, c >= 2）
+ * 2. Solve_Diophantine1() 根据设置的a, b, c进行求解，将求解信息保存在内部变量中
+ * 3. set_xy_name_v1(int x_name[], int y_name[], int x_name_len, int y_name_len) 设置x和y的名字
+ * 4. print_solution_v1() 根据调用时的求解信息和x, y名字在命令行输出求解过程
+ * 5. Solve_Diophantine1_interface() 一个简易的界面，从命令行读入a, b, c，进行求解，然后在命令行输出求解过程
+ * 6. Solve_Diophantine1_test_range(int a_max, int b_max, int c_max) 
+ * 遍历范围2 <= a <= a_max, 2 <= b <= b_max, 2 <= c <= c_max进行求解，然后在命令行输出求解过程
+ * 
+ * 【有效求解范围】
+ * 经过测试，第一代自动机可以正确而迅速地求解2 <= a <= 70, 2 <= b <= 30, 2 <= c <= 70
+ * 范围内的所有方程。在此范围之外，求解有可能失败，但也有很大概率成功。
+ * 譬如，方程2 ^ x + 89 = 91 ^ y是可以顺利求解的。
+ * 导致求解失败的原因：
+ * 1. int32只能表示有限范围内的整数
+ * 2. prime_list短了（见prime_list.h）
+ * 3. search_threshold/mod_threshold/max_trial_num调得太低
+ * （mod_threshold/max_trial_num调得太高是不好的，因为自动机会尝试很多种求解方案，
+ * 如果这两个参数调得太高，会在前几个失败的方案上浪费过多时间）
+ * 作者相信，在数学意义上，此程序所给出的算法可以解出所有的a ^ x + b = c ^ y
+ */
+
+#include "SysY_utils.h"
 #include "arithmetic.h"
+#include "prime_list.h"
 
-/*
- * 这里存放第一代自动机求解的方程a^x + b = c^y的a, b, c
- */
-int a_v1;
-int b_v1;
-int c_v1;
-int abc_set_status_v1;
-
-/*
- * 这里存放第一代自动机求解的方程a^x + b = c^y中x和y的名字
- */
-int x_name_v1[10];
-int y_name_v1[10];
-int xy_name_set_status_v1;
-
-/*
- * 这里存放形如a^x + b = c^y的关于x, y 的正整数不定方程的求解过程
- */
-int solution_v1[200000];
-
-/*
- * 这里存放指向上述求解过程的指针
- */
-int solution_v1_pointer;
-
-/*
- * 这个变量记录求解过程的长度
- */
-int solution_v1_length;
-
-/*
- * 用这个变量标记求解是否成功
- */
-int solver_v1_success;
-
-/*
- * 此函数设置第一代自动机求解的方程a^x + b = c^y的a, b, c
- * 合法的输入是：a, c为大于等于二的正整数，b为正整数
- * 【此函数调用了assert】
- */
 void set_abc_v1(int a, int b, int c);
-
-/*
- * 此函数设置第一代自动机求解的方程a^x + b = c^y中x和y的名字
- * 合法的输入是：x_name和y_name的前10个元素中有0（代表字符串结束）
- * 【此函数调用了assert】
- */
 void set_xy_name_v1(int x_name[], int y_name[], int x_name_len, int y_name_len);
-
-/*
- * 此函数是第一代自动机求解方程a^x + b = c^y的入口
- * 【此函数调用了assert】
- */
 void Solve_Diophantine1();
-
-/*
- * 此函数处理第一代自动机求解方程a^x + b = c^y时，考察b, c就可直接归谬的情形
- */
-void Solve_Diophantine1_I_i();
-
-/*
- * 此函数处理第一代自动机求解方程a^x + b = c^y时，考察a, c就可直接归谬的情形
- * 【此函数调用了assert】
- */
-void Solve_Diophantine1_I_ii();
-
-/*
- * 此函数处理第一代自动机求解方程a^x + b = c^y时，考察a, b就可直接归谬的情形
- */
-void Solve_Diophantine1_I_iii();
-
-/*
- * 此函数处理第一代自动机求解方程a^x + b = c^y时，a, b, c两两互素的情形
- * 【此函数调用了assert】
- */
-void Solve_Diophantine1_II();
-
-/*
- * 此函数在命令行输出求解过程
- * 【此函数调用了assert】
- */
 void print_solution_v1();
-
-/*
- * 此函数操纵指针将x写入solution_v1
- * 【此函数调用了assert】
- */
-void write_solution_v1(int x);
-
-int read_solution_v1();
-
-void resume_solution_v1(int solution_v1_pointer_backup);
-
-int search_threshold_v1;
-int mod_threshold_v1;
-
-int disproof_priorlist_prime[100];
-int disproof_priorlist_power[100];
-int disproof_priorlist_type[100]; // a = 1, c = 3
-int disproof_priorlist_length;
-int disproof_prime;
-int disproof_power;
-int disproof_type;
-
-int disable_front_mode;
-int disable_back_mode;
-
-/*
- * 【此函数调用了assert】
- */
-void insert_disproof_evidence(int prime, int _power, int type);
-
-/*
- * 【此函数调用了assert】
- */
-void get_disproof_evidence();
-
-void Solve_Diophantine1_II_disproof_A();
-
-void Solve_Diophantine1_II_disproof_C();
-
-int verbose;
-
 void Solve_Diophantine1_interface();
-
-void exhaust_solution_v1(int nsolutions_pointer);
-
-int max_trial_num_v1;
-
+void Solve_Diophantine1_test_range(int a_max, int b_max, int c_max);

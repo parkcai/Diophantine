@@ -1,4 +1,9 @@
-#include "utils.h"
+/*
+ * 这个头文件提供了一些与初等数论相关的常用函数
+ * 如最大公因数、最小公倍数、ord_M N（N关于M的阶）等
+ */
+
+#include "SysY_utils.h"
 /*
  * 此函数返回正整数n和m的最大公约数
  * 【此函数调用了assert】
@@ -57,8 +62,6 @@ int contain_undividable_prime_part(int d, int x);
  * 【此函数调用了assert】
  */
 int get_power_times_over(int M, int a);
-
-int prime_list[148933];
 
 int get_degree_wrt(int p, int N);
 
