@@ -18,8 +18,7 @@ You need to input a, b and c first.
 
 1. $5^x+3=2^y,\;x,y\in\mathbb{N}^*\Rightarrow(x,y)=(1, 3)\;or\;(x,y)=(3, 7)$
 
-Please input a (a should be a positive integer >= 2):
-
+Please input a (a should be a positive integer >= 2):  
 5
 
 Please input b (b should be a positive integer):
