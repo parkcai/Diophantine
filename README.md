@@ -16,7 +16,7 @@ You need to input a, b and c first.
 
 ## Examples
 
-1. \boxed{\left\{\begin{aligned} &5^x+3=2^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 3)\;or\;(x,y)=(3, 7)}
+1. $\boxed{\left\{\begin{aligned} &5^x+3=2^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 3)\;or\;(x,y)=(3, 7)}$
 
 Please input a (a should be a positive integer >= 2):
 5
@@ -33,7 +33,7 @@ So 2 ^ y = 17, 227, 246, 36 (mod 257), but this is impossible.
 Therefore, y < 8.
 Further examination shows that (x, y) = (1, 3), (3, 7).
 
-2. \boxed{\left\{\begin{aligned} &3^x+10=13^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 1)\;or\;(x,y)=(7, 3)}
+2. $\boxed{\left\{\begin{aligned} &3^x+10=13^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 1)\;or\;(x,y)=(7, 3)}$
 
 Please input a (a should be a positive integer >= 2):
 3
@@ -50,7 +50,7 @@ So 3 ^ x = 11606, 6476, 5871, 11001 (mod 17497), but this is impossible.
 Therefore, x < 8.
 Further examination shows that (x, y) = (1, 1), (7, 3).
 
-3. \boxed{\left\{\begin{aligned} &2^x+89=91^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 1)\;or\;(x,y)=(13, 2)}
+3. $\boxed{\left\{\begin{aligned} &2^x+89=91^y\\ &x,y\in\mathbb{N}^* \end{aligned}\right.\Rightarrow(x,y)=(1, 1)\;or\;(x,y)=(13, 2)}$
 
 For positive integers x, y satisfying 2 ^ x + 89 = 91 ^ y,
 if y >= 3, 2 ^ x = 254 (mod 343).
@@ -61,7 +61,7 @@ So 91 ^ y = 2083, 941, 1900, 1046, 1536, 1602, 2432, 437, 2059 (mod 2647), but t
 Therefore, y < 3.
 Further examination shows that (x, y) = (1, 1), (13, 2).
 
-4. \boxed{x,y\in\mathbb{N}^*\Rightarrow 101^x+3\neq103^y}
+4. $\boxed{x,y\in\mathbb{N}^*\Rightarrow 101^x+3\neq103^y}$
 
 For positive integers x, y satisfying 101 ^ x + 3 = 103 ^ y,
 if x >= 1, 103 ^ y = 3 (mod 101).
