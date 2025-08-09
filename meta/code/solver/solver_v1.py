@@ -23,6 +23,12 @@ __all__ = [
 ]
 
 
+_large_int_type = "int" if is_toy else "int64_t"
+
+
+_int_threshold = "2100000000" if is_toy else "9000000000000000000LL"
+
+
 _disproof_list_length = 100 if is_toy else 1000
 
 
@@ -38,7 +44,7 @@ int solution_v1_pointer;
 int solution_v1_length;
 int solution_max_length_v1 = 200000;
 int solver_v1_success = 0;
-int search_threshold_v1 = 2100000000;
+{_large_int_type} int_threshold_v1 = {_int_threshold};
 // 这两个设小了可能会导致求解失败
 // 设大了可能导致那些需要多试几个方案的方程在一个方案上耗费的时间过长
 int mod_threshold_v1 = 200000;
@@ -429,15 +435,15 @@ Solve_Diophantine1_I_iii_code = f"""void Solve_Diophantine1_I_iii() {{
     if (N > 1) {{
         write_solution_v1(0);
         if(!assertion) return;
-        int a = a_v1, b = b_v1, c = c_v1;
-        int a0 = a, c0 = c, x = 1, y = 1;
+        {_large_int_type} a = a_v1, b = b_v1, c = c_v1;
+        int a0 = a_v1, c0 = c_v1, x = 1, y = 1;
         while (x < N || y < N) {{
             if (a + b < c) {{
-                if (a > search_threshold_v1 / a0) {{
+                if (a > int_threshold_v1 / a0) {{
 {printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 5)}
                     return;
                 }}
-                a = a * a0;
+                a = a * a0; // safe multiplication
                 x = x + 1;
             }}else{{
                 if (a + b == c) {{
@@ -446,18 +452,18 @@ Solve_Diophantine1_I_iii_code = f"""void Solve_Diophantine1_I_iii() {{
                     write_solution_v1(y);
                     if(!assertion) return;
                     solution_v1[array_pointer] = solution_v1[array_pointer] + 1;
-                    if (c > search_threshold_v1 / c0) {{
+                    if (c > int_threshold_v1 / c0) {{
 {printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 6)}
                         return;
                     }}
-                    c = c * c0;
+                    c = c * c0; // safe multiplication
                     y = y + 1;
                 }}else{{
-                    if (c > search_threshold_v1 / c0) {{
+                    if (c > int_threshold_v1 / c0) {{
 {printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 6)}
                         return;
                     }}
-                    c = c * c0;
+                    c = c * c0; // safe multiplication
                     y = y + 1;
                 }}
             }}
@@ -483,24 +489,24 @@ int special_max_trial_num(int a, int b, int c) {{
 
 
 void Solve_Diophantine1_II() {{
-    int a = a_v1, b = b_v1, c = c_v1;
+    {_large_int_type} a = a_v1, b = b_v1, c = c_v1;
     int max_trial_num_v1_backup = max_trial_num_v1;
     if (special_max_trial_num(a, b, c)) max_trial_num_v1 = special_max_trial_num(a, b, c);
-    int a0 = a, c0 = c, x0 = 0, x = 1, y0 = 0, y = 1;
+    int a0 = a_v1, c0 = c_v1, x0 = 0, x = 1, y0 = 0, y = 1;
     while (1) {{
         if (a + b < c) {{
-            if (a > (search_threshold_v1 - b) / a0) break;
+            if (a > (int_threshold_v1 - b) / a0) break;
             a = a * a0; // safe multiplication
             x = x + 1;
         }}else{{
             if (a + b == c) {{
                 x0 = x;
                 y0 = y;
-                if (c > search_threshold_v1 / c0) break;
+                if (c > int_threshold_v1 / c0) break;
                 c = c * c0; // safe multiplication
                 y = y + 1;
             }}else{{
-                if (c > search_threshold_v1 / c0) break;
+                if (c > int_threshold_v1 / c0) break;
                 c = c * c0; // safe multiplication
                 y = y + 1;
             }}
@@ -542,11 +548,16 @@ void Solve_Diophantine1_II() {{
                     write_solution_v1(0);
                     if(!assertion) return;
                     // 归谬完成，枚举x的有限个取值
-                    int a = a_v1, c = c_v1, b = b_v1, y = 1, x = 1;
+                    {_large_int_type} a = a_v1, c = c_v1, b = b_v1, y = 1, x = 1;
                     int a0 = a, c0 = c;
                     while (x < disproof_power) {{
                         if (a + b < c) {{
-                            a = a * a0;
+                            if (a > int_threshold_v1 / a0) {{
+{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 8)}
+                                solver_v1_success = 0;
+                                return;
+                            }}
+                            a = a * a0; // safe multiplication
                             x = x + 1;
                         }}else{{
                             if (a + b == c) {{
@@ -555,10 +566,20 @@ void Solve_Diophantine1_II() {{
                                 write_solution_v1(y);
                                 if(!assertion) return;
                                 solution_v1[solution_v1_pointer_backup] = solution_v1[solution_v1_pointer_backup]+1;
-                                c = c * c0;
+                                if (c > int_threshold_v1 / c0) {{
+{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 9)}
+                                    solver_v1_success = 0;
+                                    return;
+                                }}
+                                c = c * c0; // safe multiplication
                                 y = y + 1;
                             }}else{{
-                                c = c * c0;
+                                if (c > int_threshold_v1 / c0) {{
+{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 9)}
+                                    solver_v1_success = 0;
+                                    return;
+                                }}
+                                c = c * c0; // safe multiplication
                                 y = y + 1;
                             }}
                         }}
@@ -583,11 +604,16 @@ void Solve_Diophantine1_II() {{
                     write_solution_v1(0);
                     if(!assertion) return;
                     // 归谬完成，枚举y的有限个取值
-                    int a = a_v1, c = c_v1, b = b_v1, y = 1, x = 1;
+                    {_large_int_type} a = a_v1, c = c_v1, b = b_v1, y = 1, x = 1;
                     int a0 = a, c0 = c;
                     while (y < disproof_power) {{
                         if (a + b < c) {{
-                            a = a * a0;
+                            if (a > int_threshold_v1 / a0) {{
+{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 8)}
+                                solver_v1_success = 0;
+                                return;
+                            }}
+                            a = a * a0; // safe multiplication
                             x = x + 1;
                         }}else{{
                             if (a + b == c) {{
@@ -596,10 +622,20 @@ void Solve_Diophantine1_II() {{
                                 write_solution_v1(y);
                                 if(!assertion) return;
                                 solution_v1[solution_v1_pointer_backup] = solution_v1[solution_v1_pointer_backup]+1;
-                                c = c * c0;
+                                if (c > int_threshold_v1 / c0) {{
+{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 9)}
+                                    solver_v1_success = 0;
+                                    return;
+                                }}
+                                c = c * c0; // safe multiplication
                                 y = y + 1;
                             }}else{{
-                                c = c * c0;
+                                if (c > int_threshold_v1 / c0) {{
+{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 9)}
+                                    solver_v1_success = 0;
+                                    return;
+                                }}
+                                c = c * c0; // safe multiplication
                                 y = y + 1;
                             }}
                         }}
