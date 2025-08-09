@@ -29,6 +29,7 @@ Solve_Diophantine1_generate_Lean4_code = f"""void Solve_Diophantine1_generate_Le
 
 Solve_Diophantine1_backdoor_code = f"""void Solve_Diophantine1_backdoor() {{
     max_trial_num_v1 = getint();
+    mod_threshold_v1 = getint();
 }}
 """
 
@@ -180,6 +181,10 @@ Solve_Diophantine1_research_code = f"""void Solve_Diophantine1_research() {{
                     print_line(newline);
                 }}
                 Solve_Diophantine1_generate_Lean4_code(a, b, c);
+                if (!solver_v1_success) {{
+{printf("panic: solver_v1 has failed.", [], 5)}
+                    return;
+                }}
                 c = c + 1;
             }}
             b = b + 1;

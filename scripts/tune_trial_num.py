@@ -24,7 +24,7 @@ def main():
                 
                     subprocess.run(
                         "diophantine.exe",
-                        input = f"2 {a+10} {a} {b+10} {b} {c+10} {c}".encode("utf-8"),
+                        input = f"2 {a+9} {a} {b+9} {b} {c+9} {c}".encode("utf-8"),
                         stdout = subprocess.DEVNULL,
                         stderr = subprocess.PIPE,
                         timeout = 3,

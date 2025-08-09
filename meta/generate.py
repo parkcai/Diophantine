@@ -33,7 +33,6 @@ main_code = f"""int main() {{
         }}
         return 0;
     }}
-    
 }}
 """
 
