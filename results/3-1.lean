@@ -57,9 +57,9 @@ theorem diophantine1_3_1_2 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 :
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 4 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 4 ^ y,
-if y >= 4, 3 ^ x = 15 (mod 16).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 4.
+Therefore, y < 3.
 Further examination shows that (x, y) = (1, 1).
 -/
 theorem diophantine1_3_1_4 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 4 ^ y) :
@@ -67,26 +67,26 @@ theorem diophantine1_3_1_4 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 :
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (4 ^ y % 16 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (4 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 16 = 15 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 16 = 15, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim (List.Mem (x, y) [(1, 1)]) [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 4 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -378,9 +378,9 @@ theorem diophantine1_3_1_14 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 16 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 16 ^ y,
-if y >= 4, 3 ^ x = 15 (mod 16).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 4.
+Therefore, y < 3.
 Further examination shows that 3 ^ x + 1 = 16 ^ y is impossible.
 -/
 theorem diophantine1_3_1_16 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 16 ^ y) :
@@ -388,26 +388,26 @@ theorem diophantine1_3_1_16 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (16 ^ y % 16 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (16 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 16 = 15 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 16 = 15, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 16 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -715,9 +715,9 @@ theorem diophantine1_3_1_26 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 28 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 28 ^ y,
-if y >= 4, 3 ^ x = 15 (mod 16).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 4.
+Therefore, y < 3.
 Further examination shows that (x, y) = (3, 1).
 -/
 theorem diophantine1_3_1_28 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 28 ^ y) :
@@ -725,26 +725,26 @@ theorem diophantine1_3_1_28 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (28 ^ y % 16 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (28 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 16 = 15 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 16 = 15, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim (List.Mem (x, y) [(3, 1)]) [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 28 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -854,13 +854,11 @@ theorem diophantine1_3_1_31 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 19)   3 ^ x + 1 = 32 ^ y
+(Class II, Front Mode, no magic prime)   3 ^ x + 1 = 32 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 32 ^ y,
-if x >= 3, 32 ^ y = 1 (mod 27).
-So y = 0 (mod 18), 
-Therefore, 32 ^ y = 1 (mod 19).
-So 3 ^ x = 0 (mod 19), but this is impossible.
-Therefore, x < 3.
+if y >= 3, 3 ^ x = 7 (mod 8).
+However, this is impossible.
+Therefore, y < 3.
 Further examination shows that 3 ^ x + 1 = 32 ^ y is impossible.
 -/
 theorem diophantine1_3_1_32 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 32 ^ y) :
@@ -868,41 +866,27 @@ theorem diophantine1_3_1_32 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (3 ^ x % 27 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
+  by_cases h6 : y >= 3
+  have h7 := Claim (32 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 32 ^ y % 27 = 1 := by omega
-  have h9 := Claim (y % 18 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 32 ^ y % 27 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (32 ^ y % 19) [1]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 18 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (3 ^ x % 19) [0]) [
-    {prop := List.Mem (32 ^ y % 19) [1], proof := h10},
-    {prop := 3 ^ x + 1 = 32 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 3 ^ x % 8 = 7 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (3 ^ x % 19) [0], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 2 := by omega
+    {prop := 3 ^ x % 8 = 7, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 32 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 2, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -1777,9 +1761,9 @@ theorem diophantine1_3_1_62 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 64 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 64 ^ y,
-if y >= 6, 3 ^ x = 63 (mod 64).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 6.
+Therefore, y < 3.
 Further examination shows that 3 ^ x + 1 = 64 ^ y is impossible.
 -/
 theorem diophantine1_3_1_64 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 64 ^ y) :
@@ -1787,26 +1771,26 @@ theorem diophantine1_3_1_64 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 6
-  have h7 := Claim (64 ^ y % 64 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (64 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 6, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 64 = 63 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 64 = 63, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 5 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 64 ^ y, proof := h3},
-    {prop := y <= 5, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -2222,9 +2206,9 @@ theorem diophantine1_3_1_79 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 80 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 80 ^ y,
-if y >= 4, 3 ^ x = 15 (mod 16).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 4.
+Therefore, y < 3.
 Further examination shows that 3 ^ x + 1 = 80 ^ y is impossible.
 -/
 theorem diophantine1_3_1_80 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 80 ^ y) :
@@ -2232,26 +2216,26 @@ theorem diophantine1_3_1_80 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (80 ^ y % 16 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (80 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 16 = 15 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 16 = 15, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 80 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -3094,9 +3078,9 @@ theorem diophantine1_3_1_110 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 112 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 112 ^ y,
-if y >= 4, 3 ^ x = 15 (mod 16).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 4.
+Therefore, y < 3.
 Further examination shows that 3 ^ x + 1 = 112 ^ y is impossible.
 -/
 theorem diophantine1_3_1_112 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 112 ^ y) :
@@ -3104,26 +3088,26 @@ theorem diophantine1_3_1_112 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (112 ^ y % 16 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (112 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 16 = 15 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 16 = 15, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 112 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -3342,56 +3326,39 @@ theorem diophantine1_3_1_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 109)   3 ^ x + 1 = 121 ^ y
+(Class II, Front Mode, no magic prime)   3 ^ x + 1 = 121 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 121 ^ y,
-if x >= 4, 121 ^ y = 1 (mod 81).
-So y = 0 (mod 27), 
-which implies y = 0, 27 (mod 54).
-Therefore, 121 ^ y = 1, 108 (mod 109).
-So 3 ^ x = 0, 107 (mod 109), but this is impossible.
-Therefore, x < 4.
-Further examination shows that 3 ^ x + 1 = 121 ^ y is impossible.
+if y >= 1, 3 ^ x = 10 (mod 11).
+However, this is impossible.
+Therefore, y < 1.
+So 3 ^ x + 1 = 121 ^ y is impossible.
 -/
 theorem diophantine1_3_1_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 121 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (3 ^ x % 81 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (121 ^ y % 11 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 121 ^ y % 81 = 1 := by omega
-  have h9 := Claim (y % 27 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 121 ^ y % 81 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (121 ^ y % 109) [1, 108]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 27 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (3 ^ x % 109) [0, 107]) [
-    {prop := List.Mem (121 ^ y % 109) [1, 108], proof := h10},
-    {prop := 3 ^ x + 1 = 121 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 3 ^ x % 11 = 10 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (3 ^ x % 109) [0, 107], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 3 := by omega
+    {prop := 3 ^ x % 11 = 10, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 121 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -3467,14 +3434,14 @@ theorem diophantine1_3_1_124 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 19)   3 ^ x + 1 = 125 ^ y
+(Class II, Front Mode, with magic prime 61)   3 ^ x + 1 = 125 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 125 ^ y,
-if x >= 4, 125 ^ y = 1 (mod 81).
-So y = 0 (mod 18), 
-which implies y = 0 (mod 3).
-Therefore, 125 ^ y = 1 (mod 19).
-So 3 ^ x = 0 (mod 19), but this is impossible.
-Therefore, x < 4.
+if y >= 2, 3 ^ x = 24 (mod 25).
+So x = 10 (mod 20), 
+which implies x = 0 (mod 10).
+Therefore, 3 ^ x = 1 (mod 61).
+So 125 ^ y = 2 (mod 61), but this is impossible.
+Therefore, y < 2.
 Further examination shows that 3 ^ x + 1 = 125 ^ y is impossible.
 -/
 theorem diophantine1_3_1_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 125 ^ y) :
@@ -3482,41 +3449,41 @@ theorem diophantine1_3_1_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (3 ^ x % 81 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
+  by_cases h6 : y >= 2
+  have h7 := Claim (125 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 125 ^ y % 81 = 1 := by omega
-  have h9 := Claim (y % 18 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 125 ^ y % 81 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (125 ^ y % 19) [1]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 18 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (3 ^ x % 19) [0]) [
-    {prop := List.Mem (125 ^ y % 19) [1], proof := h10},
-    {prop := 3 ^ x + 1 = 125 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 3 ^ x % 25 = 24 := by omega
+  have h9 := Claim (x % 20 = 10) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (3 ^ x % 19) [0], proof := h11},
+    {prop := 3 ^ x % 25 = 24, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (3 ^ x % 61) [1]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 20 = 10, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (125 ^ y % 61) [2]) [
+    {prop := List.Mem (3 ^ x % 61) [1], proof := h10},
+    {prop := 3 ^ x + 1 = 125 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (125 ^ y % 61) [2], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 3 := by omega
+  have h7 : y <= 1 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 125 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -3573,13 +3540,11 @@ theorem diophantine1_3_1_127 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 19)   3 ^ x + 1 = 128 ^ y
+(Class II, Front Mode, no magic prime)   3 ^ x + 1 = 128 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 128 ^ y,
-if x >= 3, 128 ^ y = 1 (mod 27).
-So y = 0 (mod 18), 
-Therefore, 128 ^ y = 1 (mod 19).
-So 3 ^ x = 0 (mod 19), but this is impossible.
-Therefore, x < 3.
+if y >= 3, 3 ^ x = 7 (mod 8).
+However, this is impossible.
+Therefore, y < 3.
 Further examination shows that 3 ^ x + 1 = 128 ^ y is impossible.
 -/
 theorem diophantine1_3_1_128 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 128 ^ y) :
@@ -3587,41 +3552,27 @@ theorem diophantine1_3_1_128 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (3 ^ x % 27 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
+  by_cases h6 : y >= 3
+  have h7 := Claim (128 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 128 ^ y % 27 = 1 := by omega
-  have h9 := Claim (y % 18 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 128 ^ y % 27 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (128 ^ y % 19) [1]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 18 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (3 ^ x % 19) [0]) [
-    {prop := List.Mem (128 ^ y % 19) [1], proof := h10},
-    {prop := 3 ^ x + 1 = 128 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 3 ^ x % 8 = 7 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (3 ^ x % 19) [0], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 2 := by omega
+    {prop := 3 ^ x % 8 = 7, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 128 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 2, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -4494,14 +4445,11 @@ theorem diophantine1_3_1_158 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Front Mode, with magic prime 61)   3 ^ x + 1 = 160 ^ y
+(Class II, Front Mode, no magic prime)   3 ^ x + 1 = 160 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 160 ^ y,
-if y >= 2, 3 ^ x = 24 (mod 25).
-So x = 10 (mod 20), 
-which implies x = 0 (mod 10).
-Therefore, 3 ^ x = 1 (mod 61).
-So 160 ^ y = 2 (mod 61), but this is impossible.
-Therefore, y < 2.
+if y >= 3, 3 ^ x = 7 (mod 8).
+However, this is impossible.
+Therefore, y < 3.
 Further examination shows that 3 ^ x + 1 = 160 ^ y is impossible.
 -/
 theorem diophantine1_3_1_160 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 160 ^ y) :
@@ -4509,40 +4457,26 @@ theorem diophantine1_3_1_160 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (160 ^ y % 25 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (160 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 25 = 24 := by omega
-  have h9 := Claim (x % 20 = 10) [
+  have h8 : 3 ^ x % 8 = 7 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 25 = 24, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (3 ^ x % 61) [1]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 20 = 10, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (160 ^ y % 61) [2]) [
-    {prop := List.Mem (3 ^ x % 61) [1], proof := h10},
-    {prop := 3 ^ x + 1 = 160 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := List.Mem (160 ^ y % 61) [2], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : y <= 1 := by omega
+  apply False.elim h9
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 160 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -4760,56 +4694,39 @@ theorem diophantine1_3_1_167 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 109)   3 ^ x + 1 = 169 ^ y
+(Class II, Front Mode, no magic prime)   3 ^ x + 1 = 169 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 169 ^ y,
-if x >= 4, 169 ^ y = 1 (mod 81).
-So y = 0 (mod 27), 
-which implies y = 0, 27 (mod 54).
-Therefore, 169 ^ y = 1, 108 (mod 109).
-So 3 ^ x = 0, 107 (mod 109), but this is impossible.
-Therefore, x < 4.
-Further examination shows that 3 ^ x + 1 = 169 ^ y is impossible.
+if y >= 1, 3 ^ x = 12 (mod 13).
+However, this is impossible.
+Therefore, y < 1.
+So 3 ^ x + 1 = 169 ^ y is impossible.
 -/
 theorem diophantine1_3_1_169 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 169 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (3 ^ x % 81 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (169 ^ y % 13 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 169 ^ y % 81 = 1 := by omega
-  have h9 := Claim (y % 27 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 169 ^ y % 81 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (169 ^ y % 109) [1, 108]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 27 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (3 ^ x % 109) [0, 107]) [
-    {prop := List.Mem (169 ^ y % 109) [1, 108], proof := h10},
-    {prop := 3 ^ x + 1 = 169 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 3 ^ x % 13 = 12 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (3 ^ x % 109) [0, 107], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 3 := by omega
+    {prop := 3 ^ x % 13 = 12, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 169 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -4992,36 +4909,36 @@ theorem diophantine1_3_1_175 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 176 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 176 ^ y,
-if y >= 1, 3 ^ x = 10 (mod 11).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 1.
-So 3 ^ x + 1 = 176 ^ y is impossible.
+Therefore, y < 3.
+Further examination shows that 3 ^ x + 1 = 176 ^ y is impossible.
 -/
 theorem diophantine1_3_1_176 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 176 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (176 ^ y % 11 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (176 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 11 = 10 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 11 = 10, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 0 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 176 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -5882,36 +5799,36 @@ theorem diophantine1_3_1_206 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 208 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 208 ^ y,
-if y >= 1, 3 ^ x = 12 (mod 13).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 1.
-So 3 ^ x + 1 = 208 ^ y is impossible.
+Therefore, y < 3.
+Further examination shows that 3 ^ x + 1 = 208 ^ y is impossible.
 -/
 theorem diophantine1_3_1_208 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 208 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (208 ^ y % 13 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (208 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 13 = 12 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 13 = 12, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 0 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 208 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -6345,9 +6262,9 @@ theorem diophantine1_3_1_223 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 224 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 224 ^ y,
-if y >= 5, 3 ^ x = 31 (mod 32).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 5.
+Therefore, y < 3.
 Further examination shows that 3 ^ x + 1 = 224 ^ y is impossible.
 -/
 theorem diophantine1_3_1_224 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 224 ^ y) :
@@ -6355,26 +6272,26 @@ theorem diophantine1_3_1_224 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 5
-  have h7 := Claim (224 ^ y % 32 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (224 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 5, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 32 = 31 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 32 = 31, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 4 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 224 ^ y, proof := h3},
-    {prop := y <= 4, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -6915,9 +6832,9 @@ theorem diophantine1_3_1_242 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   3 ^ x + 1 = 244 ^ y
 For positive integers x, y satisfying 3 ^ x + 1 = 244 ^ y,
-if y >= 4, 3 ^ x = 15 (mod 16).
+if y >= 3, 3 ^ x = 7 (mod 8).
 However, this is impossible.
-Therefore, y < 4.
+Therefore, y < 3.
 Further examination shows that (x, y) = (5, 1).
 -/
 theorem diophantine1_3_1_244 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 1 = 244 ^ y) :
@@ -6925,26 +6842,26 @@ theorem diophantine1_3_1_244 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (244 ^ y % 16 = 0) [
+  by_cases h6 : y >= 3
+  have h7 := Claim (244 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 3 ^ x % 16 = 15 := by omega
+  have h8 : 3 ^ x % 8 = 7 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 3 ^ x % 16 = 15, proof := h8},
+    {prop := 3 ^ x % 8 = 7, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim (List.Mem (x, y) [(5, 1)]) [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 1 = 244 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 2, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 

@@ -81,12 +81,12 @@ def printf(
     printf_code_uid = string_uid_generator.generate(uid_length)
     
     if generate_comment:
-        printf_code += 4 * indent * " "
+        # printf_code += 4 * indent * " "
         printf_code += f'// "{fstring}"\n'
     
     ascii_values = [ord(char) for char in fstring]
     ascii_values.append(10)
-    printf_code += 4 * indent * " "
+    if generate_comment: printf_code += 4 * indent * " "
     printf_code += f"int string_{printf_code_uid}[{len(ascii_values)}] = {{{', '.join(map(str, ascii_values))}}};\n"
     
     printf_code += 4 * indent * " "
@@ -206,13 +206,13 @@ def make_assertion(
     assertion_code: str = ""
     
     if generate_comment:
-        assertion_code += 4 * indent * " "
+        # assertion_code += 4 * indent * " "
         assertion_code += f'// "{error}"\n'
         
     assertion_code_uid = string_uid_generator.generate(uid_length)
     ascii_values = [ord(char) for char in error]
     ascii_values.append(10)
-    assertion_code += 4 * indent * " "
+    if generate_comment: assertion_code += 4 * indent * " "
     assertion_code += f"int array_{assertion_code_uid}[{len(ascii_values)}] = {{{', '.join(map(str, ascii_values))}}};\n"
         
     assertion_code += 4 * indent * " "

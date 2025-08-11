@@ -2,6 +2,7 @@ from meta.SysY.printf import *
 
 
 __all__ = [
+    "generate_Claim_Structure_code",
     "Solve_Diophantine1_generate_Lean4_code",
     "Solve_Diophantine1_backdoor_code",    # -1
     "Solve_Diophantine1_info_code",        # 0
@@ -10,6 +11,20 @@ __all__ = [
     "Solve_Diophantine1_document_code",    # 3
     
 ]
+
+
+generate_Claim_Structure_code = f"""void generate_Claim_Structure() {{
+    {printf("-- Claim Structure", [], 1)}
+    {printf("structure VerifiedFact where", [], 1)}
+    {printf("  prop : Prop", [], 1)}
+    {printf("  proof : prop", [], 1)}
+    print_line(newline);
+    {printf("axiom Claim (prop_to_claim : Prop)", [], 1)}
+    {printf("  (verified_facts : List VerifiedFact)", [], 1)}
+    {printf("  (revalidator : String)", [], 1)}
+    {printf("  : prop_to_claim", [], 1)}
+}}
+"""
 
 
 Solve_Diophantine1_generate_Lean4_code = f"""void Solve_Diophantine1_generate_Lean4_code(int a, int b, int c) {{
@@ -21,7 +36,7 @@ Solve_Diophantine1_generate_Lean4_code = f"""void Solve_Diophantine1_generate_Le
         generate_Lean4_code_v1();
         if(!assertion) return;
     }}else{{
-{printf("[Solver V1] solver failed!", [], 2)}
+        {printf("[Solver V1] solver failed!", [], 2)}
     }}
 }}
 """
@@ -35,12 +50,12 @@ Solve_Diophantine1_backdoor_code = f"""void Solve_Diophantine1_backdoor() {{
 
 
 Solve_Diophantine1_info_code = f"""void Solve_Diophantine1_info() {{
-{printf("[Diophantine Help Information]", [], 1)}
-{printf("Run the executable and", [], 1)}
-{printf("0. Enter 0 to display this help information.", [], 1)}
-{printf("1. Enter 1 to launch an interactive shell; follow the prompts to input a, b, and c for solving.", [], 1)}
-{printf("2. Enter 2 to start silent mode (for research use); input a_max a_min b_max b_min c_max c_min in order.", [], 1)}
-{printf("3. Enter 3 to view the Lean formalization file `transcendental_diophantine1.lean`; it is recommended to redirect the output to a file, as the content is very long.", [], 1)}
+    {printf("[Diophantine Help Information]", [], 1)}
+    {printf("Run the executable and", [], 1)}
+    {printf("0. Enter 0 to display this help information.", [], 1)}
+    {printf("1. Enter 1 to launch an interactive shell; follow the prompts to input a, b, and c for solving.", [], 1)}
+    {printf("2. Enter 2 to start silent mode (for research use); input a_max a_min b_max b_min c_max c_min in order.", [], 1)}
+    {printf("3. Enter 3 to view the Lean formalization file `transcendental_diophantine1.lean`; it is recommended to redirect the output to a file, as the content is very long.", [], 1)}
 }}
 """
 
@@ -48,52 +63,52 @@ Solve_Diophantine1_info_code = f"""void Solve_Diophantine1_info() {{
 Solve_Diophantine1_shell_code = f"""void Solve_Diophantine1_shell() {{
     
     set_xy_name_v1(string_x, string_y, strlen_x, strlen_y);
-{printf("Now solving diophantine equation a ^ x + b = c ^ y for its positive integer solutions (x, y).", [], 1)}
+    {printf("Now solving diophantine equation a ^ x + b = c ^ y for its positive integer solutions (x, y).", [], 1)}
     
     while (1) {{
         
         int mode, a, b, c, status;
         
         while (1) {{
-{printf("Enter 1 if you are a human, 2 if you are a Lean4 compiler:", [], 3)}
+            {printf("Enter 1 if you are a human, 2 if you are a Lean4 compiler:", [], 3)}
             mode = getint();
             if (mode == 1 || mode == 2) {{
                 break;
             }}else{{
-{printf("You are a human or a Lean4 compiler, please try again!", [], 4)}
+                {printf("You are a human or a Lean4 compiler, please try again!", [], 4)}
                 continue;
             }}
         }}
         
         while (1) {{
-{printf("Please input a (a should be a positive integer >= 2):", [], 3)}
+            {printf("Please input a (a should be a positive integer >= 2):", [], 3)}
             a = getint();
             if (a >= 2) {{
                 break;
             }}else{{
-{printf("%d isn't a positive integer >= 2, please try again!", ["a"], 4)}
+                {printf("%d isn't a positive integer >= 2, please try again!", ["a"], 4)}
                 continue;
             }}
         }}
         
         while (1) {{
-{printf("Please input b (b should be a positive integer):", [], 3)}
+            {printf("Please input b (b should be a positive integer):", [], 3)}
             b = getint();
             if (b >= 1) {{
                 break;
             }}else{{
-{printf("%d isn't a positive integer, please try again!", ["b"], 4)}
+                {printf("%d isn't a positive integer, please try again!", ["b"], 4)}
                 continue;
             }}
         }}
         
         while (1) {{
-{printf("Please input c (c should be a positive integer >= 2):", [], 3)}
+            {printf("Please input c (c should be a positive integer >= 2):", [], 3)}
             c = getint();
             if (c >= 2) {{
                 break;
             }}else{{
-{printf("%d isn't a positive integer >= 2, please try again!", ["c"], 4)}
+                {printf("%d isn't a positive integer >= 2, please try again!", ["c"], 4)}
                 continue;
             }}
         }}
@@ -112,16 +127,16 @@ Solve_Diophantine1_shell_code = f"""void Solve_Diophantine1_shell() {{
             }}
             if(!assertion) return;
         }}else{{
-{printf("[Solver V1] solver failed!", [], 3)}
+            {printf("[Solver V1] solver failed!", [], 3)}
         }}
         
         while (1) {{
-{printf("Enter 1 if you want to solve again, 2 if you want to leave:", [], 3)}
+            {printf("Enter 1 if you want to solve again, 2 if you want to leave:", [], 3)}
             status = getint();
             if (status == 1 || status == 2) {{
                 break;
             }}else{{
-{printf("You should input 1 or 2, please try again!", ["status"], 4)}
+                {printf("You should input 1 or 2, please try again!", ["status"], 4)}
                 continue;
             }}
         }}
@@ -143,26 +158,18 @@ Solve_Diophantine1_research_code = f"""void Solve_Diophantine1_research() {{
     int b_min = getint();
     int c_max = getint();
     int c_min = getint();
-{make_assertion("a_max >= a_min && a_min >= 2", "a_max >= a_min >= 2 isn't satisfied!", 1)}
-{make_assertion("b_max >= b_min && b_min >= 1", "b_max >= b_min >= 1 isn't satisfied!", 1)}
-{make_assertion("c_max >= c_min && c_min >= 2", "c_max >= c_min >= 2 isn't satisfied!", 1)}
-{printf("-- Generated by Diophantine Solver V1, developed by parkcai, Eureka Lab.", [], 1)}
-{printf("-- Consists of transcendental diophantine equations a ^ x + b = c ^ y, for positive integers x, y.", [], 1)}
-{printf("-- a, b and c range over the following intervals:", [], 1)}
-{printf("-- %d <= a <= %d", ["a_min, a_max"], 1)}
-{printf("-- %d <= b <= %d", ["b_min, b_max"], 1)}
-{printf("-- %d <= c <= %d", ["c_min, c_max"], 1)}
-{printf("-- trivial cases where a, b, c are not pairwise coprime are skipped.", [], 1)}
+    {make_assertion("a_max >= a_min && a_min >= 2", "a_max >= a_min >= 2 isn't satisfied!", 1)}
+    {make_assertion("b_max >= b_min && b_min >= 1", "b_max >= b_min >= 1 isn't satisfied!", 1)}
+    {make_assertion("c_max >= c_min && c_min >= 2", "c_max >= c_min >= 2 isn't satisfied!", 1)}
+    {printf("-- Generated by Diophantine Solver V1, developed by parkcai, Eureka Lab.", [], 1)}
+    {printf("-- Consists of transcendental diophantine equations a ^ x + b = c ^ y, for positive integers x, y.", [], 1)}
+    {printf("-- a, b and c range over the following intervals:", [], 1)}
+    {printf("-- %d <= a <= %d", ["a_min, a_max"], 1)}
+    {printf("-- %d <= b <= %d", ["b_min, b_max"], 1)}
+    {printf("-- %d <= c <= %d", ["c_min, c_max"], 1)}
+    {printf("-- trivial cases where a, b, c are not pairwise coprime are skipped.", [], 1)}
     print_line(newline); print_line(newline);
-{printf("-- Claim Structure", [], 1)}
-{printf("structure VerifiedFact where", [], 1)}
-{printf("  prop : Prop", [], 1)}
-{printf("  proof : prop", [], 1)}
-    print_line(newline);
-{printf("axiom Claim (prop_to_claim : Prop)", [], 1)}
-{printf("  (verified_facts : List VerifiedFact)", [], 1)}
-{printf("  (revalidator : String)", [], 1)}
-{printf("  : prop_to_claim", [], 1)}
+    generate_Claim_Structure();
     print_line(newline); print_line(newline);
     int a = a_min;
     int first_time_protection = 1;
@@ -182,7 +189,7 @@ Solve_Diophantine1_research_code = f"""void Solve_Diophantine1_research() {{
                 }}
                 Solve_Diophantine1_generate_Lean4_code(a, b, c);
                 if (!solver_v1_success) {{
-{printf("panic: solver_v1 has failed.", [], 5)}
+                    {printf("panic: solver_v1 has failed.", [], 5)}
                     return;
                 }}
                 c = c + 1;
@@ -192,27 +199,19 @@ Solve_Diophantine1_research_code = f"""void Solve_Diophantine1_research() {{
         a = a + 1;
     }}
     print_line(newline);
-{printf("def main : IO Unit :=", [], 1)}
-{printf('  IO.println "Native Lean4 check passed."', [], 1)}
+    {printf("def main : IO Unit :=", [], 1)}
+    {printf('  IO.println "Native Lean4 check passed."', [], 1)}
 }}
 """
 
 
 Solve_Diophantine1_document_code = f"""void Solve_Diophantine1_document() {{
-{printf("-- transcendental_diophantine1.lean", [], 1)}
-{printf("-- The 'Type-I transcendental Diophantine equation' refers to equations of the form a ^ x + b = c ^ y in positive integers x and y, where a >= 2, b >= 1, and c >= 2 are fixed integers. While it is difficult to rigorously prove a general algorithm that takes arbitrary (a, b, c) and outputs a complete proof, I propose a heuristic algorithm that is intuitive and extensively validated in finite cases, mainly relying on modular arithmetic and the apparent randomness of primes. Under this approach, such equations fall into two major classes and seven subtypes, with two representative equations provided for each subtype in this file.", [], 1)}
-{printf("-- Note that these proofs do not fully rely on traditional Lean methods; instead, Lean serves as a skeleton, while many reusable reasoning primitives are declared using `Claim` and externally verified by the CoLean system in a second-pass revalidation. This is partly due to my limited understanding of Lean and a preference for keeping the document purely ASCII. Nonetheless, I believe the CoLean framework -- using Lean as a scaffold and delegating complex inferences -- has broader relevance for domains less amenable to full formalization, such as physics or philosophy. This file also serves as an early proof-of-concept and testbed for CoLean's development.", [], 1)}
-{printf("-- Eureka Lab, Zeyu Cai, 25/08/01.", [], 1)}
+    {printf("-- transcendental_diophantine1.lean", [], 1)}
+    {printf("-- The 'Type-I transcendental Diophantine equation' refers to equations of the form a ^ x + b = c ^ y in positive integers x and y, where a >= 2, b >= 1, and c >= 2 are fixed integers. While it is difficult to rigorously prove a general algorithm that takes arbitrary (a, b, c) and outputs a complete proof, I propose a heuristic algorithm that is intuitive and extensively validated in finite cases, mainly relying on modular arithmetic and the apparent randomness of primes. Under this approach, such equations fall into two major classes and seven subtypes, with two representative equations provided for each subtype in this file.", [], 1)}
+    {printf("-- Note that these proofs do not fully rely on traditional Lean methods; instead, Lean serves as a skeleton, while many reusable reasoning primitives are declared using `Claim` and externally verified by the CoLean system in a second-pass revalidation. This is partly due to my limited understanding of Lean and a preference for keeping the document purely ASCII. Nonetheless, I believe the CoLean framework -- using Lean as a scaffold and delegating complex inferences -- has broader relevance for domains less amenable to full formalization, such as physics or philosophy. This file also serves as an early proof-of-concept and testbed for CoLean's development.", [], 1)}
+    {printf("-- Eureka Lab, Zeyu Cai, 25/08/01.", [], 1)}
     print_line(newline); print_line(newline); print_line(newline);
-{printf("-- Claim Structure", [], 1)}
-{printf("structure VerifiedFact where", [], 1)}
-{printf("  prop : Prop", [], 1)}
-{printf("  proof : prop", [], 1)}
-    print_line(newline);
-{printf("axiom Claim (prop_to_claim : Prop)", [], 1)}
-{printf("  (verified_facts : List VerifiedFact)", [], 1)}
-{printf("  (revalidator : String)", [], 1)}
-{printf("  : prop_to_claim", [], 1)}
+    generate_Claim_Structure();
     print_line(newline); print_line(newline); print_line(newline);
     Solve_Diophantine1_generate_Lean4_code(2, 6, 9);
     print_line(newline);
@@ -242,7 +241,7 @@ Solve_Diophantine1_document_code = f"""void Solve_Diophantine1_document() {{
     print_line(newline);
     Solve_Diophantine1_generate_Lean4_code(3, 10, 13);
     print_line(newline); print_line(newline); print_line(newline);
-{printf("def main : IO Unit :=", [], 1)}
-{printf('  IO.println "Native Lean4 check passed."', [], 1)}
+    {printf("def main : IO Unit :=", [], 1)}
+    {printf('  IO.println "Native Lean4 check passed."', [], 1)}
 }}
 """

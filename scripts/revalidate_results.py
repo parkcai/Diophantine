@@ -1,101 +1,21 @@
 import re
 import math
 from tqdm import tqdm
-from pathlib import Path
 from typing import Dict
 from typing import List
 from typing import Tuple
 from typing import FrozenSet
 from functools import lru_cache
+from os.path import sep as seperator
+from pywheels.file_tools import append_to_file
 from pywheels.file_tools import assert_file_exist
 from pywheels.blueprints.colean import CoLeanRechecker
 
 
-def main():
-    
-    global count_solution
-    global pow_mod_eq_zero
-    global observe_mod_cycle
-    global utilize_mod_cycle
-    global exhaust_mod_cycle
-    global compute_mod_add
-    global compute_mod_sub
-    
-    folder = f"results"
-
-    lean_file_paths = sorted([
-        str(path)
-        for path in Path(folder).glob("*.lean")
-        if path.is_file()
-    ])
-
-    if not lean_file_paths:
-        print(f"错误：{folder} 中没有找到 .lean 文件！")
-        return
-
-    rechecker = CoLeanRechecker(
-        claim_keyword = "Claim",
-        prop_field = "prop",
-    )
-    
-    if count_solution:
-    
-        pow_mod_eq_zero = lambda x, y: True # type: ignore
-        observe_mod_cycle = lambda x, y: True # type: ignore
-        utilize_mod_cycle = lambda x, y: True # type: ignore
-        exhaust_mod_cycle = lambda x, y: True # type: ignore
-        compute_mod_add = lambda x, y: True # type: ignore
-        compute_mod_sub = lambda x, y: True # type: ignore
-
-    rechecker.add_revalidators(revalidators = [
-        ("pow_mod_eq_zero", pow_mod_eq_zero),
-        ("observe_mod_cycle", observe_mod_cycle),
-        ("utilize_mod_cycle", utilize_mod_cycle),
-        ("exhaust_mod_cycle", exhaust_mod_cycle),
-        ("compute_mod_add", compute_mod_add),
-        ("compute_mod_sub", compute_mod_sub),
-        ("diophantine1_double_enumeration", diophantine1_double_enumeration),
-        ("diophantine1_front_enumeration", diophantine1_front_enumeration),
-        ("diophantine1_back_enumeration", diophantine1_back_enumeration),
-    ])
-
-    failed_files = []
-
-    for path in tqdm(lean_file_paths):
-
-        try:
-            
-            assert_file_exist(path)
-
-            valid = rechecker.revalidate(
-                lean_code = path,
-                show_progress = False,
-            )
-
-            if not valid:
-                cause = rechecker.get_invalid_cause()
-                failed_files.append((path, cause))
-
-        except Exception as error:
-            
-            print(f"失败！出错文件：{path}")
-            print(f"错误信息：{error}")
-
-    if not failed_files:
- 
-        print("所有 lean 文件均已通过复核！")
-        
-    else:
-        
-        print(f"复核未通过，{len(failed_files)}/{len(lean_file_paths)} 个文件存在问题：")
-        
-        for file_path, cause in failed_files:
-            
-            print(f"\n文件：{file_path}")
-            print(f"问题：{cause}")
-
-
-_verbose: bool = False
+a_max = 500; b_max = 500
+_verbose: bool = True
+recorder_path: str = "command_output.txt"
+max_solution_num: int = 0
 
 
 def _get_modular_multiplicative_cycle(
@@ -532,10 +452,6 @@ def compute_mod_sub(
     except Exception as error:
         if _verbose: print(error)
         return False
-    
-    
-
-count_solution: bool = True
 
 
 def diophantine1_double_enumeration(
@@ -543,7 +459,7 @@ def diophantine1_double_enumeration(
     verified_facts: List[str],
 )-> bool:
     
-    global count_solution
+    global max_solution_num
     
     try:
         
@@ -609,7 +525,9 @@ def diophantine1_double_enumeration(
                 f"by the following verified facts:\n{lined_facts}"
             )
             
-        if count_solution and len(solutions) >= 3: print(114514)
+        if len(solutions) >= 2: append_to_file(recorder_path, f"{a} ^ x + {b} = {c} ^ y has {len(solutions)} solutions.")
+            
+        if len(solutions) > max_solution_num: max_solution_num = len(solutions)
         
         return True
     
@@ -623,7 +541,7 @@ def diophantine1_front_enumeration(
     verified_facts: List[str],
 )-> bool:
     
-    global count_solution
+    global max_solution_num
     
     try:
         
@@ -688,7 +606,9 @@ def diophantine1_front_enumeration(
                 f"by the following verified facts:\n{lined_facts}"
             )
             
-        if count_solution and len(solutions) >= 3: print(all_facts)
+        if len(solutions) >= 2: append_to_file(recorder_path, f"{a} ^ x + {b} = {c} ^ y has {len(solutions)} solutions.")
+            
+        if len(solutions) > max_solution_num: max_solution_num = len(solutions)
         
         return True
     
@@ -702,7 +622,7 @@ def diophantine1_back_enumeration(
     verified_facts: List[str],
 )-> bool:
     
-    global count_solution
+    global max_solution_num
     
     try:
         
@@ -767,13 +687,88 @@ def diophantine1_back_enumeration(
                 f"by the following verified facts:\n{lined_facts}"
             )
             
-        if count_solution and len(solutions) >= 3: print(114514)
-        
+        if len(solutions) >= 2: append_to_file(recorder_path, f"{a} ^ x + {b} = {c} ^ y has {len(solutions)} solutions.")
+            
+        if len(solutions) > max_solution_num: max_solution_num = len(solutions)
+
         return True
     
     except Exception as error:
         if _verbose: print(error)
         return False
+    
+
+rechecker = CoLeanRechecker(
+    claim_keyword = "Claim",
+    prop_field = "prop",
+)
+
+rechecker.add_revalidators(revalidators = [
+    ("pow_mod_eq_zero", pow_mod_eq_zero),
+    ("observe_mod_cycle", observe_mod_cycle),
+    ("utilize_mod_cycle", utilize_mod_cycle),
+    ("exhaust_mod_cycle", exhaust_mod_cycle),
+    ("compute_mod_add", compute_mod_add),
+    ("compute_mod_sub", compute_mod_sub),
+    ("diophantine1_double_enumeration", diophantine1_double_enumeration),
+    ("diophantine1_front_enumeration", diophantine1_front_enumeration),
+    ("diophantine1_back_enumeration", diophantine1_back_enumeration),
+])
+
+
+def main():
+
+    progress_bar = tqdm(range((a_max - 1) * b_max))
+
+    for a in range(2, a_max + 1):
+        
+        for b in range(1, b_max + 1):
+            
+            if math.gcd(a, b) >= 2: progress_bar.update(1); continue
+            
+            lean_file_path = f"results{seperator}{a}-{b}.lean"
+            
+            assert_file_exist(lean_file_path)
+            
+            with open(
+                file = lean_file_path, 
+                mode = "r", 
+                encoding = "UTF-8"
+            ) as file_pointer:
+                
+                lean_code = file_pointer.read()
+            
+            valid = rechecker.revalidate(
+                lean_code = lean_code,
+                mode = "string",
+                show_progress = False,
+            )
+            
+            if not valid: 
+                
+                append_to_file(
+                    file_path = recorder_path, 
+                    content = (
+                        f"file {lean_file_path} not valid, "
+                        f"error: {rechecker.get_invalid_cause()}"
+                    )
+                )
+                
+            undesired_pattern = re.compile(r"failed|panic")
+            
+            if undesired_pattern.findall(lean_code):
+                
+                append_to_file(
+                    file_path = recorder_path, 
+                    content = (
+                        f"file {lean_file_path} not valid, "
+                        f"error: solver may have failed."
+                    )
+                )
+            
+            progress_bar.update(1)
+            
+    append_to_file(recorder_path, f"max_solution_num is {max_solution_num}.")
 
 
 if __name__ == "__main__":

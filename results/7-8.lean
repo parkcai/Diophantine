@@ -905,56 +905,56 @@ theorem diophantine1_7_8_47 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 43)   7 ^ x + 8 = 51 ^ y
+(Class II, Front Mode, with magic prime 2593)   7 ^ x + 8 = 51 ^ y
 For positive integers x, y satisfying 7 ^ x + 8 = 51 ^ y,
-if x >= 2, 51 ^ y = 8 (mod 49).
-So y = 3 (mod 21), 
-which implies y = 3, 10 (mod 14).
-Therefore, 51 ^ y = 39, 4 (mod 43).
-So 7 ^ x = 31, 39 (mod 43), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 7 ^ x + 8 = 51 ^ y is impossible.
+if y >= 1, 7 ^ x = 9 (mod 17).
+So x = 6 (mod 16), 
+which implies x = 6, 22, 38, 54, 70, 86, 102, 118, 134, 150, 166, 182, 198, 214, 230, 246, 262, 278, 294, 310, 326, 342, 358, 374, 390, 406, 422, 438, 454, 470, 486, 502, 518, 534, 550, 566, 582, 598, 614, 630, 646, 662, 678, 694, 710, 726, 742, 758, 774, 790, 806, 822, 838, 854, 870, 886, 902, 918, 934, 950, 966, 982, 998, 1014, 1030, 1046, 1062, 1078, 1094, 1110, 1126, 1142, 1158, 1174, 1190, 1206, 1222, 1238, 1254, 1270, 1286, 1302, 1318, 1334, 1350, 1366, 1382, 1398, 1414, 1430, 1446, 1462, 1478, 1494, 1510, 1526, 1542, 1558, 1574, 1590, 1606, 1622, 1638, 1654, 1670, 1686, 1702, 1718, 1734, 1750, 1766, 1782, 1798, 1814, 1830, 1846, 1862, 1878, 1894, 1910, 1926, 1942, 1958, 1974, 1990, 2006, 2022, 2038, 2054, 2070, 2086, 2102, 2118, 2134, 2150, 2166, 2182, 2198, 2214, 2230, 2246, 2262, 2278, 2294, 2310, 2326, 2342, 2358, 2374, 2390, 2406, 2422, 2438, 2454, 2470, 2486, 2502, 2518, 2534, 2550, 2566, 2582 (mod 2592).
+Therefore, 7 ^ x = 964, 963, 1465, 982, 2299, 2380, 613, 841, 477, 1695, 2207, 1890, 258, 134, 150, 2490, 2439, 2111, 815, 564, 2102, 147, 1403, 990, 876, 1058, 449, 193, 1648, 2464, 2526, 2518, 1348, 77, 241, 889, 2311, 1542, 1223, 595, 2098, 2155, 2064, 1072, 1200, 1769, 1361, 1330, 1334, 1919, 1258, 1176, 852, 141, 1822, 685, 999, 1544, 219, 1561, 2057, 1993, 412, 616, 1928, 1926, 337, 1964, 2005, 2167, 1226, 1682, 954, 797, 1821, 1187, 516, 268, 300, 2387, 2285, 1629, 1630, 1128, 1611, 294, 213, 1980, 1752, 2116, 898, 386, 703, 2335, 2459, 2443, 103, 154, 482, 1778, 2029, 491, 2446, 1190, 1603, 1717, 1535, 2144, 2400, 945, 129, 67, 75, 1245, 2516, 2352, 1704, 282, 1051, 1370, 1998, 495, 438, 529, 1521, 1393, 824, 1232, 1263, 1259, 674, 1335, 1417, 1741, 2452, 771, 1908, 1594, 1049, 2374, 1032, 536, 600, 2181, 1977, 665, 667, 2256, 629, 588, 426, 1367, 911, 1639, 1796, 772, 1406, 2077, 2325, 2293, 206, 308 (mod 2593).
+So 51 ^ y = 972, 971, 1473, 990, 2307, 2388, 621, 849, 485, 1703, 2215, 1898, 266, 142, 158, 2498, 2447, 2119, 823, 572, 2110, 155, 1411, 998, 884, 1066, 457, 201, 1656, 2472, 2534, 2526, 1356, 85, 249, 897, 2319, 1550, 1231, 603, 2106, 2163, 2072, 1080, 1208, 1777, 1369, 1338, 1342, 1927, 1266, 1184, 860, 149, 1830, 693, 1007, 1552, 227, 1569, 2065, 2001, 420, 624, 1936, 1934, 345, 1972, 2013, 2175, 1234, 1690, 962, 805, 1829, 1195, 524, 276, 308, 2395, 2293, 1637, 1638, 1136, 1619, 302, 221, 1988, 1760, 2124, 906, 394, 711, 2343, 2467, 2451, 111, 162, 490, 1786, 2037, 499, 2454, 1198, 1611, 1725, 1543, 2152, 2408, 953, 137, 75, 83, 1253, 2524, 2360, 1712, 290, 1059, 1378, 2006, 503, 446, 537, 1529, 1401, 832, 1240, 1271, 1267, 682, 1343, 1425, 1749, 2460, 779, 1916, 1602, 1057, 2382, 1040, 544, 608, 2189, 1985, 673, 675, 2264, 637, 596, 434, 1375, 919, 1647, 1804, 780, 1414, 2085, 2333, 2301, 214, 316 (mod 2593), but this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 8 = 51 ^ y is impossible.
 -/
 theorem diophantine1_7_8_51 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 8 = 51 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (7 ^ x % 49 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (51 ^ y % 17 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 51 ^ y % 49 = 8 := by omega
-  have h9 := Claim (y % 21 = 3) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 51 ^ y % 49 = 8, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (51 ^ y % 43) [39, 4]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 21 = 3, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (7 ^ x % 43) [31, 39]) [
-    {prop := List.Mem (51 ^ y % 43) [39, 4], proof := h10},
-    {prop := 7 ^ x + 8 = 51 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 7 ^ x % 17 = 9 := by omega
+  have h9 := Claim (x % 16 = 6) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (7 ^ x % 43) [31, 39], proof := h11},
+    {prop := 7 ^ x % 17 = 9, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (7 ^ x % 2593) [964, 963, 1465, 982, 2299, 2380, 613, 841, 477, 1695, 2207, 1890, 258, 134, 150, 2490, 2439, 2111, 815, 564, 2102, 147, 1403, 990, 876, 1058, 449, 193, 1648, 2464, 2526, 2518, 1348, 77, 241, 889, 2311, 1542, 1223, 595, 2098, 2155, 2064, 1072, 1200, 1769, 1361, 1330, 1334, 1919, 1258, 1176, 852, 141, 1822, 685, 999, 1544, 219, 1561, 2057, 1993, 412, 616, 1928, 1926, 337, 1964, 2005, 2167, 1226, 1682, 954, 797, 1821, 1187, 516, 268, 300, 2387, 2285, 1629, 1630, 1128, 1611, 294, 213, 1980, 1752, 2116, 898, 386, 703, 2335, 2459, 2443, 103, 154, 482, 1778, 2029, 491, 2446, 1190, 1603, 1717, 1535, 2144, 2400, 945, 129, 67, 75, 1245, 2516, 2352, 1704, 282, 1051, 1370, 1998, 495, 438, 529, 1521, 1393, 824, 1232, 1263, 1259, 674, 1335, 1417, 1741, 2452, 771, 1908, 1594, 1049, 2374, 1032, 536, 600, 2181, 1977, 665, 667, 2256, 629, 588, 426, 1367, 911, 1639, 1796, 772, 1406, 2077, 2325, 2293, 206, 308]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 16 = 6, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (51 ^ y % 2593) [972, 971, 1473, 990, 2307, 2388, 621, 849, 485, 1703, 2215, 1898, 266, 142, 158, 2498, 2447, 2119, 823, 572, 2110, 155, 1411, 998, 884, 1066, 457, 201, 1656, 2472, 2534, 2526, 1356, 85, 249, 897, 2319, 1550, 1231, 603, 2106, 2163, 2072, 1080, 1208, 1777, 1369, 1338, 1342, 1927, 1266, 1184, 860, 149, 1830, 693, 1007, 1552, 227, 1569, 2065, 2001, 420, 624, 1936, 1934, 345, 1972, 2013, 2175, 1234, 1690, 962, 805, 1829, 1195, 524, 276, 308, 2395, 2293, 1637, 1638, 1136, 1619, 302, 221, 1988, 1760, 2124, 906, 394, 711, 2343, 2467, 2451, 111, 162, 490, 1786, 2037, 499, 2454, 1198, 1611, 1725, 1543, 2152, 2408, 953, 137, 75, 83, 1253, 2524, 2360, 1712, 290, 1059, 1378, 2006, 503, 446, 537, 1529, 1401, 832, 1240, 1271, 1267, 682, 1343, 1425, 1749, 2460, 779, 1916, 1602, 1057, 2382, 1040, 544, 608, 2189, 1985, 673, 675, 2264, 637, 596, 434, 1375, 919, 1647, 1804, 780, 1414, 2085, 2333, 2301, 214, 316]) [
+    {prop := List.Mem (7 ^ x % 2593) [964, 963, 1465, 982, 2299, 2380, 613, 841, 477, 1695, 2207, 1890, 258, 134, 150, 2490, 2439, 2111, 815, 564, 2102, 147, 1403, 990, 876, 1058, 449, 193, 1648, 2464, 2526, 2518, 1348, 77, 241, 889, 2311, 1542, 1223, 595, 2098, 2155, 2064, 1072, 1200, 1769, 1361, 1330, 1334, 1919, 1258, 1176, 852, 141, 1822, 685, 999, 1544, 219, 1561, 2057, 1993, 412, 616, 1928, 1926, 337, 1964, 2005, 2167, 1226, 1682, 954, 797, 1821, 1187, 516, 268, 300, 2387, 2285, 1629, 1630, 1128, 1611, 294, 213, 1980, 1752, 2116, 898, 386, 703, 2335, 2459, 2443, 103, 154, 482, 1778, 2029, 491, 2446, 1190, 1603, 1717, 1535, 2144, 2400, 945, 129, 67, 75, 1245, 2516, 2352, 1704, 282, 1051, 1370, 1998, 495, 438, 529, 1521, 1393, 824, 1232, 1263, 1259, 674, 1335, 1417, 1741, 2452, 771, 1908, 1594, 1049, 2374, 1032, 536, 600, 2181, 1977, 665, 667, 2256, 629, 588, 426, 1367, 911, 1639, 1796, 772, 1406, 2077, 2325, 2293, 206, 308], proof := h10},
+    {prop := 7 ^ x + 8 = 51 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (51 ^ y % 2593) [972, 971, 1473, 990, 2307, 2388, 621, 849, 485, 1703, 2215, 1898, 266, 142, 158, 2498, 2447, 2119, 823, 572, 2110, 155, 1411, 998, 884, 1066, 457, 201, 1656, 2472, 2534, 2526, 1356, 85, 249, 897, 2319, 1550, 1231, 603, 2106, 2163, 2072, 1080, 1208, 1777, 1369, 1338, 1342, 1927, 1266, 1184, 860, 149, 1830, 693, 1007, 1552, 227, 1569, 2065, 2001, 420, 624, 1936, 1934, 345, 1972, 2013, 2175, 1234, 1690, 962, 805, 1829, 1195, 524, 276, 308, 2395, 2293, 1637, 1638, 1136, 1619, 302, 221, 1988, 1760, 2124, 906, 394, 711, 2343, 2467, 2451, 111, 162, 490, 1786, 2037, 499, 2454, 1198, 1611, 1725, 1543, 2152, 2408, 953, 137, 75, 83, 1253, 2524, 2360, 1712, 290, 1059, 1378, 2006, 503, 446, 537, 1529, 1401, 832, 1240, 1271, 1267, 682, 1343, 1425, 1749, 2460, 779, 1916, 1602, 1057, 2382, 1040, 544, 608, 2189, 1985, 673, 675, 2264, 637, 596, 434, 1375, 919, 1647, 1804, 780, 1414, 2085, 2333, 2301, 214, 316], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 8 = 51 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -2336,56 +2336,56 @@ theorem diophantine1_7_8_117 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 43)   7 ^ x + 8 = 121 ^ y
+(Class II, Front Mode, with magic prime 61)   7 ^ x + 8 = 121 ^ y
 For positive integers x, y satisfying 7 ^ x + 8 = 121 ^ y,
-if x >= 2, 121 ^ y = 8 (mod 49).
-So y = 12 (mod 21), 
-which implies y = 5 (mod 7).
-Therefore, 121 ^ y = 41 (mod 43).
-So 7 ^ x = 33 (mod 43), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 7 ^ x + 8 = 121 ^ y is impossible.
+if y >= 1, 7 ^ x = 3 (mod 11).
+So x = 4 (mod 10), 
+which implies x = 4, 14, 24, 34, 44, 54 (mod 60).
+Therefore, 7 ^ x = 22, 19, 58, 39, 42, 3 (mod 61).
+So 121 ^ y = 30, 27, 5, 47, 50, 11 (mod 61), but this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 8 = 121 ^ y is impossible.
 -/
 theorem diophantine1_7_8_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 8 = 121 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (7 ^ x % 49 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (121 ^ y % 11 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 121 ^ y % 49 = 8 := by omega
-  have h9 := Claim (y % 21 = 12) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 121 ^ y % 49 = 8, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (121 ^ y % 43) [41]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 21 = 12, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (7 ^ x % 43) [33]) [
-    {prop := List.Mem (121 ^ y % 43) [41], proof := h10},
-    {prop := 7 ^ x + 8 = 121 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 7 ^ x % 11 = 3 := by omega
+  have h9 := Claim (x % 10 = 4) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (7 ^ x % 43) [33], proof := h11},
+    {prop := 7 ^ x % 11 = 3, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (7 ^ x % 61) [22, 19, 58, 39, 42, 3]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 10 = 4, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (121 ^ y % 61) [30, 27, 5, 47, 50, 11]) [
+    {prop := List.Mem (7 ^ x % 61) [22, 19, 58, 39, 42, 3], proof := h10},
+    {prop := 7 ^ x + 8 = 121 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (121 ^ y % 61) [30, 27, 5, 47, 50, 11], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 8 = 121 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -2442,13 +2442,11 @@ theorem diophantine1_7_8_123 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 43)   7 ^ x + 8 = 125 ^ y
+(Class II, Front Mode, no magic prime)   7 ^ x + 8 = 125 ^ y
 For positive integers x, y satisfying 7 ^ x + 8 = 125 ^ y,
-if x >= 2, 125 ^ y = 8 (mod 49).
-So y = 12 (mod 14), 
-Therefore, 125 ^ y = 35 (mod 43).
-So 7 ^ x = 27 (mod 43), but this is impossible.
-Therefore, x < 2.
+if y >= 2, 7 ^ x = 17 (mod 25).
+However, this is impossible.
+Therefore, y < 2.
 Further examination shows that 7 ^ x + 8 = 125 ^ y is impossible.
 -/
 theorem diophantine1_7_8_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 8 = 125 ^ y) :
@@ -2456,41 +2454,27 @@ theorem diophantine1_7_8_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (7 ^ x % 49 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 2
+  have h7 := Claim (125 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 125 ^ y % 49 = 8 := by omega
-  have h9 := Claim (y % 14 = 12) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 125 ^ y % 49 = 8, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (125 ^ y % 43) [35]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 14 = 12, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (7 ^ x % 43) [27]) [
-    {prop := List.Mem (125 ^ y % 43) [35], proof := h10},
-    {prop := 7 ^ x + 8 = 125 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 7 ^ x % 25 = 17 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (7 ^ x % 43) [27], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
+    {prop := 7 ^ x % 25 = 17, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 1 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 8 = 125 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -3359,67 +3343,67 @@ theorem diophantine1_7_8_167 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Front Mode, with magic prime 313)   7 ^ x + 8 = 169 ^ y
+(Class II, Front Mode, with magic prime 61)   7 ^ x + 8 = 169 ^ y
 For positive integers x, y satisfying 7 ^ x + 8 = 169 ^ y,
-if y >= 2, 7 ^ x = 161 (mod 169).
-So x = 27 (mod 156), 
-which implies x = 27, 79 (mod 104).
-Therefore, 7 ^ x = 175, 138 (mod 313).
-So 169 ^ y = 183, 146 (mod 313), but this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 8 = 169 ^ y is impossible.
+if y >= 1, 7 ^ x = 5 (mod 13).
+So x = 3 (mod 12), 
+which implies x = 3, 15, 27, 39, 51 (mod 60).
+Therefore, 7 ^ x = 38, 11, 8, 28, 37 (mod 61).
+So 169 ^ y = 46, 19, 16, 36, 45 (mod 61), but this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 8 = 169 ^ y is impossible.
 -/
 theorem diophantine1_7_8_169 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 8 = 169 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (169 ^ y % 169 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (169 ^ y % 13 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 169 = 161 := by omega
-  have h9 := Claim (x % 156 = 27) [
+  have h8 : 7 ^ x % 13 = 5 := by omega
+  have h9 := Claim (x % 12 = 3) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 169 = 161, proof := h8},
+    {prop := 7 ^ x % 13 = 5, proof := h8},
   ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (7 ^ x % 313) [175, 138]) [
+  have h10 := Claim (List.Mem (7 ^ x % 61) [38, 11, 8, 28, 37]) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := x % 156 = 27, proof := h9},
+    {prop := x % 12 = 3, proof := h9},
   ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (169 ^ y % 313) [183, 146]) [
-    {prop := List.Mem (7 ^ x % 313) [175, 138], proof := h10},
+  have h11 := Claim (List.Mem (169 ^ y % 61) [46, 19, 16, 36, 45]) [
+    {prop := List.Mem (7 ^ x % 61) [38, 11, 8, 28, 37], proof := h10},
     {prop := 7 ^ x + 8 = 169 ^ y, proof := h3},
   ] "compute_mod_add"
   have h12 := Claim False [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := List.Mem (169 ^ y % 313) [183, 146], proof := h11},
+    {prop := List.Mem (169 ^ y % 61) [46, 19, 16, 36, 45], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 8 = 169 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
 /-
-(Class II, Front Mode, with magic prime 271)   7 ^ x + 8 = 171 ^ y
+(Class II, Back Mode, with magic prime 2311)   7 ^ x + 8 = 171 ^ y
 For positive integers x, y satisfying 7 ^ x + 8 = 171 ^ y,
-if y >= 4, 7 ^ x = 73 (mod 81).
-So x = 12 (mod 27), 
-which implies x = 12, 39, 66, 93, 120 (mod 135).
-Therefore, 7 ^ x = 141, 55, 8, 80, 258 (mod 271).
-So 171 ^ y = 149, 63, 16, 88, 266 (mod 271), but this is impossible.
-Therefore, y < 4.
+if x >= 2, 171 ^ y = 8 (mod 49).
+So y = 18 (mod 42), 
+which implies y = 18, 39, 60, 81, 102, 123, 144, 165, 186, 207, 228 (mod 231).
+Therefore, 171 ^ y = 298, 1531, 1871, 1648, 1937, 1863, 1762, 1468, 2191, 1710, 2209 (mod 2311).
+So 7 ^ x = 290, 1523, 1863, 1640, 1929, 1855, 1754, 1460, 2183, 1702, 2201 (mod 2311), but this is impossible.
+Therefore, x < 2.
 Further examination shows that 7 ^ x + 8 = 171 ^ y is impossible.
 -/
 theorem diophantine1_7_8_171 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 8 = 171 ^ y) :
@@ -3427,41 +3411,41 @@ theorem diophantine1_7_8_171 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (171 ^ y % 81 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+  by_cases h6 : x >= 2
+  have h7 := Claim (7 ^ x % 49 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 81 = 73 := by omega
-  have h9 := Claim (x % 27 = 12) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 81 = 73, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (7 ^ x % 271) [141, 55, 8, 80, 258]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 27 = 12, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (171 ^ y % 271) [149, 63, 16, 88, 266]) [
-    {prop := List.Mem (7 ^ x % 271) [141, 55, 8, 80, 258], proof := h10},
-    {prop := 7 ^ x + 8 = 171 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
+  have h8 : 171 ^ y % 49 = 8 := by omega
+  have h9 := Claim (y % 42 = 18) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := List.Mem (171 ^ y % 271) [149, 63, 16, 88, 266], proof := h11},
+    {prop := 171 ^ y % 49 = 8, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (171 ^ y % 2311) [298, 1531, 1871, 1648, 1937, 1863, 1762, 1468, 2191, 1710, 2209]) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := y % 42 = 18, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (7 ^ x % 2311) [290, 1523, 1863, 1640, 1929, 1855, 1754, 1460, 2183, 1702, 2201]) [
+    {prop := List.Mem (171 ^ y % 2311) [298, 1531, 1871, 1648, 1937, 1863, 1762, 1468, 2191, 1710, 2209], proof := h10},
+    {prop := 7 ^ x + 8 = 171 ^ y, proof := h3},
+  ] "compute_mod_sub"
+  have h12 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := List.Mem (7 ^ x % 2311) [290, 1523, 1863, 1640, 1929, 1855, 1754, 1460, 2183, 1702, 2201], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : y <= 3 := by omega
+  have h7 : x <= 1 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 8 = 171 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
-  ] "diophantine1_back_enumeration"
+    {prop := x <= 1, proof := h7},
+  ] "diophantine1_front_enumeration"
   exact h8
 
 /-
@@ -4810,55 +4794,56 @@ theorem diophantine1_7_8_237 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 197)   7 ^ x + 8 = 239 ^ y
+(Class II, Front Mode, with magic prime 30941)   7 ^ x + 8 = 239 ^ y
 For positive integers x, y satisfying 7 ^ x + 8 = 239 ^ y,
-if x >= 3, 239 ^ y = 8 (mod 343).
-So y = 20 (mod 49), 
-Therefore, 239 ^ y = 40 (mod 197).
-So 7 ^ x = 32 (mod 197), but this is impossible.
-Therefore, x < 3.
-Further examination shows that 7 ^ x + 8 = 239 ^ y is impossible.
+if y >= 1, 7 ^ x = 231 (mod 239).
+So x = 79 (mod 238), 
+which implies x = 79, 317, 555, 793, 1031, 1269, 1507, 1745, 1983, 2221, 2459, 2697, 2935 (mod 3094).
+Therefore, 7 ^ x = 1615, 21398, 16942, 6239, 30227, 23435, 1955, 16132, 4224, 5924, 10535, 8827, 7252 (mod 30941).
+So 239 ^ y = 1623, 21406, 16950, 6247, 30235, 23443, 1963, 16140, 4232, 5932, 10543, 8835, 7260 (mod 30941), but this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 8 = 239 ^ y is impossible.
 -/
 theorem diophantine1_7_8_239 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 8 = 239 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (7 ^ x % 343 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (239 ^ y % 239 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 239 ^ y % 343 = 8 := by omega
-  have h9 := Claim (y % 49 = 20) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 239 ^ y % 343 = 8, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (239 ^ y % 197) [40]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 49 = 20, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (7 ^ x % 197) [32]) [
-    {prop := List.Mem (239 ^ y % 197) [40], proof := h10},
-    {prop := 7 ^ x + 8 = 239 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 7 ^ x % 239 = 231 := by omega
+  have h9 := Claim (x % 238 = 79) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (7 ^ x % 197) [32], proof := h11},
+    {prop := 7 ^ x % 239 = 231, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (7 ^ x % 30941) [1615, 21398, 16942, 6239, 30227, 23435, 1955, 16132, 4224, 5924, 10535, 8827, 7252]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 238 = 79, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (239 ^ y % 30941) [1623, 21406, 16950, 6247, 30235, 23443, 1963, 16140, 4232, 5932, 10543, 8835, 7260]) [
+    {prop := List.Mem (7 ^ x % 30941) [1615, 21398, 16942, 6239, 30227, 23435, 1955, 16132, 4224, 5924, 10535, 8827, 7252], proof := h10},
+    {prop := 7 ^ x + 8 = 239 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (239 ^ y % 30941) [1623, 21406, 16950, 6247, 30235, 23443, 1963, 16140, 4232, 5932, 10543, 8835, 7260], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 2 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 8 = 239 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-

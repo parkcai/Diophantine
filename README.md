@@ -2,6 +2,10 @@
 
 > Solving the Diophantine Equation `a ^ x + b = c ^ y` using the SysY language
 
+```bash
+gcc -O3 diophantine.c -o diophantine -I C:/msys64/mingw64/include -L C:/msys64/mingw64/lib -lgmp
+```
+
 ## 🧩 Project Overview
 
 **Diophantine_SysY** is an experimental solver written in the **SysY** language for automatically solving Diophantine equations of the form:

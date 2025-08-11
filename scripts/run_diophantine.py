@@ -1,11 +1,12 @@
+import sys
 import math
 import subprocess
 from tqdm import tqdm
 from os.path import sep as seperator
 from pywheels.file_tools import delete_file
-from pywheels.file_tools import append_to_file
 from pywheels.file_tools import assert_file_exist
 from pywheels.file_tools import guarantee_file_exist
+from .utils import *
 
 
 def execute_diophantine(
@@ -14,36 +15,42 @@ def execute_diophantine(
     exe_path: str
 ):
     
-    with open(output_path, "w", encoding="utf-8") as out:
+    with open(
+        file = output_path, 
+        mode = "w", 
+        encoding = "UTF-8"
+    ) as out:
         
         proc = subprocess.run(
             exe_path,
-            input = input_data.encode("utf-8"),
+            input = input_data.encode("UTF-8"),
             stdout = out,
             stderr = subprocess.PIPE,
         )
 
     if proc.returncode != 0:
         
-        raise RuntimeError(f"【Diophantine 执行错误】{proc.stderr.decode('utf-8')}")
+        raise RuntimeError(f"【Diophantine 执行错误】{proc.stderr.decode('UTF-8')}")
 
 
 def main():
     
     guarantee_file_exist("results", is_directory=True)
-
-    diophantine_exec_path = [
-        "diophantine", 
-        "diophantine.exe"
-    ][1]
+    
+    diophantine_exec_path = "diophantine.exe" if sys.platform == "win32" else "diophantine"
     
     assert_file_exist(diophantine_exec_path, f"请先生成 diophantine.c 并编译至 {diophantine_exec_path}！")
-    
-    progress_bar = tqdm(range(249 * 250))
 
-    for a in range(2, 251):
+    print("请输入参数范围（直接回车使用默认值）：")
+    a_max = get_integer_input("a_max", 500)
+    b_max = get_integer_input("b_max", 500)
+    c_max = get_integer_input("c_max", 500)
+    
+    progress_bar = tqdm(range((a_max - 1) * b_max), smoothing = 0)
+
+    for a in range(2, a_max + 1):
         
-        for b in range(1, 251):
+        for b in range(1, b_max + 1):
             
             lean_file_path = f"results{seperator}{a}-{b}.lean"
             
@@ -52,14 +59,12 @@ def main():
                 delete_file(lean_file_path)
                 
             else:
-
-                if a >= 65 or (a == 64 and b >= 143):
-                    
-                    execute_diophantine(
-                        input_data = f"2 {a} {a} {b} {b} 250 2", 
-                        output_path = f"results{seperator}{a}-{b}.lean", 
-                        exe_path = diophantine_exec_path
-                    )
+                
+                execute_diophantine(
+                    input_data = f"2 {a} {a} {b} {b} {c_max} 2", 
+                    output_path = f"results{seperator}{a}-{b}.lean", 
+                    exe_path = diophantine_exec_path
+                )
                     
             progress_bar.update(1)
     

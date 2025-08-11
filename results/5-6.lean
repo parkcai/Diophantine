@@ -2069,56 +2069,39 @@ theorem diophantine1_5_6_167 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 31)   5 ^ x + 6 = 169 ^ y
+(Class II, Front Mode, no magic prime)   5 ^ x + 6 = 169 ^ y
 For positive integers x, y satisfying 5 ^ x + 6 = 169 ^ y,
-if x >= 2, 169 ^ y = 6 (mod 25).
-So y = 6 (mod 10), 
-which implies y = 1, 6, 11 (mod 15).
-Therefore, 169 ^ y = 14, 8, 9 (mod 31).
-So 5 ^ x = 8, 2, 3 (mod 31), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 6 = 169 ^ y is impossible.
+if y >= 1, 5 ^ x = 7 (mod 13).
+However, this is impossible.
+Therefore, y < 1.
+So 5 ^ x + 6 = 169 ^ y is impossible.
 -/
 theorem diophantine1_5_6_169 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 6 = 169 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (169 ^ y % 13 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 169 ^ y % 25 = 6 := by omega
-  have h9 := Claim (y % 10 = 6) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 169 ^ y % 25 = 6, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (169 ^ y % 31) [14, 8, 9]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 10 = 6, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 31) [8, 2, 3]) [
-    {prop := List.Mem (169 ^ y % 31) [14, 8, 9], proof := h10},
-    {prop := 5 ^ x + 6 = 169 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 5 ^ x % 13 = 7 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 31) [8, 2, 3], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
+    {prop := 5 ^ x % 13 = 7, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 6 = 169 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-

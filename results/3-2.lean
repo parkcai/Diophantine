@@ -2819,56 +2819,56 @@ theorem diophantine1_3_2_205 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 109)   3 ^ x + 2 = 209 ^ y
+(Class II, Front Mode, with magic prime 1117)   3 ^ x + 2 = 209 ^ y
 For positive integers x, y satisfying 3 ^ x + 2 = 209 ^ y,
-if x >= 3, 209 ^ y = 2 (mod 27).
-So y = 13 (mod 18), 
-which implies y = 13, 31, 49 (mod 54).
-Therefore, 209 ^ y = 36, 88, 94 (mod 109).
-So 3 ^ x = 34, 86, 92 (mod 109), but this is impossible.
-Therefore, x < 3.
-Further examination shows that 3 ^ x + 2 = 209 ^ y is impossible.
+if y >= 1, 3 ^ x = 17 (mod 19).
+So x = 16 (mod 18), 
+which implies x = 1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67, 70, 73, 76, 79, 82, 85, 88, 91 (mod 93).
+Therefore, 3 ^ x = 3, 81, 1070, 965, 364, 892, 627, 174, 230, 625, 120, 1006, 354, 622, 39, 1053, 506, 258, 264, 426, 332, 28, 756, 306, 443, 791, 134, 267, 507, 285, 993 (mod 1117).
+So 209 ^ y = 5, 83, 1072, 967, 366, 894, 629, 176, 232, 627, 122, 1008, 356, 624, 41, 1055, 508, 260, 266, 428, 334, 30, 758, 308, 445, 793, 136, 269, 509, 287, 995 (mod 1117), but this is impossible.
+Therefore, y < 1.
+So 3 ^ x + 2 = 209 ^ y is impossible.
 -/
 theorem diophantine1_3_2_209 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 2 = 209 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (3 ^ x % 27 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (209 ^ y % 19 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 209 ^ y % 27 = 2 := by omega
-  have h9 := Claim (y % 18 = 13) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 209 ^ y % 27 = 2, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (209 ^ y % 109) [36, 88, 94]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 18 = 13, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (3 ^ x % 109) [34, 86, 92]) [
-    {prop := List.Mem (209 ^ y % 109) [36, 88, 94], proof := h10},
-    {prop := 3 ^ x + 2 = 209 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 3 ^ x % 19 = 17 := by omega
+  have h9 := Claim (x % 18 = 16) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (3 ^ x % 109) [34, 86, 92], proof := h11},
+    {prop := 3 ^ x % 19 = 17, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (3 ^ x % 1117) [3, 81, 1070, 965, 364, 892, 627, 174, 230, 625, 120, 1006, 354, 622, 39, 1053, 506, 258, 264, 426, 332, 28, 756, 306, 443, 791, 134, 267, 507, 285, 993]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 18 = 16, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (209 ^ y % 1117) [5, 83, 1072, 967, 366, 894, 629, 176, 232, 627, 122, 1008, 356, 624, 41, 1055, 508, 260, 266, 428, 334, 30, 758, 308, 445, 793, 136, 269, 509, 287, 995]) [
+    {prop := List.Mem (3 ^ x % 1117) [3, 81, 1070, 965, 364, 892, 627, 174, 230, 625, 120, 1006, 354, 622, 39, 1053, 506, 258, 264, 426, 332, 28, 756, 306, 443, 791, 134, 267, 507, 285, 993], proof := h10},
+    {prop := 3 ^ x + 2 = 209 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (209 ^ y % 1117) [5, 83, 1072, 967, 366, 894, 629, 176, 232, 627, 122, 1008, 356, 624, 41, 1055, 508, 260, 266, 428, 334, 30, 758, 308, 445, 793, 136, 269, 509, 287, 995], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 2 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 2 = 209 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-

@@ -217,9 +217,9 @@ theorem diophantine1_7_1_6 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 :
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 8 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 8 ^ y,
-if y >= 6, 7 ^ x = 63 (mod 64).
+if y >= 4, 7 ^ x = 15 (mod 16).
 However, this is impossible.
-Therefore, y < 6.
+Therefore, y < 4.
 Further examination shows that (x, y) = (1, 1).
 -/
 theorem diophantine1_7_1_8 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 8 ^ y) :
@@ -227,62 +227,62 @@ theorem diophantine1_7_1_8 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 :
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 6
-  have h7 := Claim (8 ^ y % 64 = 0) [
+  by_cases h6 : y >= 4
+  have h7 := Claim (8 ^ y % 16 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 6, proof := h6},
+    {prop := y >= 4, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 64 = 63 := by omega
+  have h8 : 7 ^ x % 16 = 15 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 64 = 63, proof := h8},
+    {prop := 7 ^ x % 16 = 15, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 5 := by omega
+  have h7 : y <= 3 := by omega
   have h8 := Claim (List.Mem (x, y) [(1, 1)]) [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 8 ^ y, proof := h3},
-    {prop := y <= 5, proof := h7},
+    {prop := y <= 3, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 9 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 9 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 9 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 9 ^ y is impossible.
 -/
 theorem diophantine1_7_1_9 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 9 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (9 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (9 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 9 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -592,36 +592,36 @@ theorem diophantine1_7_1_17 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 18 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 18 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 18 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 18 ^ y is impossible.
 -/
 theorem diophantine1_7_1_18 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 18 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (18 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (18 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 18 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -947,36 +947,36 @@ theorem diophantine1_7_1_26 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 27 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 27 ^ y,
-if y >= 3, 7 ^ x = 26 (mod 27).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 3.
-Further examination shows that 7 ^ x + 1 = 27 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 27 ^ y is impossible.
 -/
 theorem diophantine1_7_1_27 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 27 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 3
-  have h7 := Claim (27 ^ y % 27 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (27 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 3, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 27 = 26 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 27 = 26, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 2 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 27 ^ y, proof := h3},
-    {prop := y <= 2, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -1091,9 +1091,9 @@ theorem diophantine1_7_1_31 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 32 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 32 ^ y,
-if y >= 5, 7 ^ x = 31 (mod 32).
+if y >= 4, 7 ^ x = 15 (mod 16).
 However, this is impossible.
-Therefore, y < 5.
+Therefore, y < 4.
 Further examination shows that 7 ^ x + 1 = 32 ^ y is impossible.
 -/
 theorem diophantine1_7_1_32 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 32 ^ y) :
@@ -1101,26 +1101,26 @@ theorem diophantine1_7_1_32 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 5
-  have h7 := Claim (32 ^ y % 32 = 0) [
+  by_cases h6 : y >= 4
+  have h7 := Claim (32 ^ y % 16 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 5, proof := h6},
+    {prop := y >= 4, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 32 = 31 := by omega
+  have h8 : 7 ^ x % 16 = 15 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 32 = 31, proof := h8},
+    {prop := 7 ^ x % 16 = 15, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 4 := by omega
+  have h7 : y <= 3 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 32 ^ y, proof := h3},
-    {prop := y <= 4, proof := h7},
+    {prop := y <= 3, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -1199,36 +1199,36 @@ theorem diophantine1_7_1_34 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 36 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 36 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 36 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 36 ^ y is impossible.
 -/
 theorem diophantine1_7_1_36 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 36 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (36 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (36 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 36 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -1538,36 +1538,36 @@ theorem diophantine1_7_1_44 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 45 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 45 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 45 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 45 ^ y is impossible.
 -/
 theorem diophantine1_7_1_45 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 45 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (45 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (45 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 45 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -1859,36 +1859,36 @@ theorem diophantine1_7_1_53 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 54 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 54 ^ y,
-if y >= 4, 7 ^ x = 15 (mod 16).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 4.
-Further examination shows that 7 ^ x + 1 = 54 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 54 ^ y is impossible.
 -/
 theorem diophantine1_7_1_54 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 54 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (54 ^ y % 16 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (54 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 16 = 15 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 16 = 15, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 54 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -2197,9 +2197,9 @@ theorem diophantine1_7_1_62 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 64 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 64 ^ y,
-if y >= 6, 7 ^ x = 63 (mod 64).
+if y >= 4, 7 ^ x = 15 (mod 16).
 However, this is impossible.
-Therefore, y < 6.
+Therefore, y < 4.
 Further examination shows that 7 ^ x + 1 = 64 ^ y is impossible.
 -/
 theorem diophantine1_7_1_64 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 64 ^ y) :
@@ -2207,26 +2207,26 @@ theorem diophantine1_7_1_64 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 6
-  have h7 := Claim (64 ^ y % 64 = 0) [
+  by_cases h6 : y >= 4
+  have h7 := Claim (64 ^ y % 16 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 6, proof := h6},
+    {prop := y >= 4, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 64 = 63 := by omega
+  have h8 : 7 ^ x % 16 = 15 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 64 = 63, proof := h8},
+    {prop := 7 ^ x % 16 = 15, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 5 := by omega
+  have h7 : y <= 3 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 64 ^ y, proof := h3},
-    {prop := y <= 5, proof := h7},
+    {prop := y <= 3, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -2500,36 +2500,36 @@ theorem diophantine1_7_1_71 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 72 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 72 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 72 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 72 ^ y is impossible.
 -/
 theorem diophantine1_7_1_72 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 72 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (72 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (72 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 72 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -2819,55 +2819,39 @@ theorem diophantine1_7_1_80 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 43)   7 ^ x + 1 = 81 ^ y
+(Class II, Front Mode, no magic prime)   7 ^ x + 1 = 81 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 81 ^ y,
-if x >= 2, 81 ^ y = 1 (mod 49).
-So y = 0 (mod 21), 
-Therefore, 81 ^ y = 1 (mod 43).
-So 7 ^ x = 0 (mod 43), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 7 ^ x + 1 = 81 ^ y is impossible.
+if y >= 1, 7 ^ x = 2 (mod 3).
+However, this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 81 ^ y is impossible.
 -/
 theorem diophantine1_7_1_81 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 81 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (7 ^ x % 49 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (81 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 81 ^ y % 49 = 1 := by omega
-  have h9 := Claim (y % 21 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 81 ^ y % 49 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (81 ^ y % 43) [1]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 21 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (7 ^ x % 43) [0]) [
-    {prop := List.Mem (81 ^ y % 43) [1], proof := h10},
-    {prop := 7 ^ x + 1 = 81 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 7 ^ x % 3 = 2 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (7 ^ x % 43) [0], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
+    {prop := 7 ^ x % 3 = 2, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 81 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -3192,36 +3176,36 @@ theorem diophantine1_7_1_89 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 90 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 90 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 90 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 90 ^ y is impossible.
 -/
 theorem diophantine1_7_1_90 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 90 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (90 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (90 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 90 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -3461,36 +3445,36 @@ theorem diophantine1_7_1_97 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 99 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 99 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 99 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 99 ^ y is impossible.
 -/
 theorem diophantine1_7_1_99 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 99 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (99 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (99 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 99 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -3816,36 +3800,36 @@ theorem diophantine1_7_1_107 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 108 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 108 ^ y,
-if y >= 4, 7 ^ x = 15 (mod 16).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 4.
-Further examination shows that 7 ^ x + 1 = 108 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 108 ^ y is impossible.
 -/
 theorem diophantine1_7_1_108 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 108 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (108 ^ y % 16 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (108 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 16 = 15 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 16 = 15, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 108 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -4171,36 +4155,36 @@ theorem diophantine1_7_1_116 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 117 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 117 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 117 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 117 ^ y is impossible.
 -/
 theorem diophantine1_7_1_117 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 117 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (117 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (117 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 117 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -4277,56 +4261,56 @@ theorem diophantine1_7_1_120 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 43)   7 ^ x + 1 = 121 ^ y
+(Class II, Front Mode, with magic prime 61)   7 ^ x + 1 = 121 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 121 ^ y,
-if x >= 2, 121 ^ y = 1 (mod 49).
-So y = 0 (mod 21), 
-which implies y = 0 (mod 7).
-Therefore, 121 ^ y = 1 (mod 43).
-So 7 ^ x = 0 (mod 43), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 7 ^ x + 1 = 121 ^ y is impossible.
+if y >= 1, 7 ^ x = 10 (mod 11).
+So x = 5 (mod 10), 
+which implies x = 5, 15, 25, 35, 45, 55 (mod 60).
+Therefore, 7 ^ x = 32, 11, 40, 29, 50, 21 (mod 61).
+So 121 ^ y = 33, 12, 41, 30, 51, 22 (mod 61), but this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 121 ^ y is impossible.
 -/
 theorem diophantine1_7_1_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 121 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (7 ^ x % 49 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (121 ^ y % 11 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 121 ^ y % 49 = 1 := by omega
-  have h9 := Claim (y % 21 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 121 ^ y % 49 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (121 ^ y % 43) [1]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 21 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (7 ^ x % 43) [0]) [
-    {prop := List.Mem (121 ^ y % 43) [1], proof := h10},
-    {prop := 7 ^ x + 1 = 121 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 7 ^ x % 11 = 10 := by omega
+  have h9 := Claim (x % 10 = 5) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (7 ^ x % 43) [0], proof := h11},
+    {prop := 7 ^ x % 11 = 10, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (7 ^ x % 61) [32, 11, 40, 29, 50, 21]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 10 = 5, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (121 ^ y % 61) [33, 12, 41, 30, 51, 22]) [
+    {prop := List.Mem (7 ^ x % 61) [32, 11, 40, 29, 50, 21], proof := h10},
+    {prop := 7 ^ x + 1 = 121 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (121 ^ y % 61) [33, 12, 41, 30, 51, 22], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 121 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -4545,9 +4529,9 @@ theorem diophantine1_7_1_127 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 128 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 128 ^ y,
-if y >= 7, 7 ^ x = 127 (mod 128).
+if y >= 4, 7 ^ x = 15 (mod 16).
 However, this is impossible.
-Therefore, y < 7.
+Therefore, y < 4.
 Further examination shows that 7 ^ x + 1 = 128 ^ y is impossible.
 -/
 theorem diophantine1_7_1_128 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 128 ^ y) :
@@ -4555,26 +4539,26 @@ theorem diophantine1_7_1_128 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 7
-  have h7 := Claim (128 ^ y % 128 = 0) [
+  by_cases h6 : y >= 4
+  have h7 := Claim (128 ^ y % 16 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 7, proof := h6},
+    {prop := y >= 4, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 128 = 127 := by omega
+  have h8 : 7 ^ x % 16 = 15 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 128 = 127, proof := h8},
+    {prop := 7 ^ x % 16 = 15, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 6 := by omega
+  have h7 : y <= 3 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 128 ^ y, proof := h3},
-    {prop := y <= 6, proof := h7},
+    {prop := y <= 3, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -4795,36 +4779,36 @@ theorem diophantine1_7_1_134 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 135 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 135 ^ y,
-if y >= 3, 7 ^ x = 26 (mod 27).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 3.
-Further examination shows that 7 ^ x + 1 = 135 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 135 ^ y is impossible.
 -/
 theorem diophantine1_7_1_135 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 135 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 3
-  have h7 := Claim (135 ^ y % 27 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (135 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 3, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 27 = 26 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 27 = 26, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 2 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 135 ^ y, proof := h3},
-    {prop := y <= 2, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -5134,36 +5118,36 @@ theorem diophantine1_7_1_143 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 144 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 144 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 144 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 144 ^ y is impossible.
 -/
 theorem diophantine1_7_1_144 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 144 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (144 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (144 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 144 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -5456,36 +5440,36 @@ theorem diophantine1_7_1_152 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 153 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 153 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 153 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 153 ^ y is impossible.
 -/
 theorem diophantine1_7_1_153 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 153 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (153 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (153 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 153 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -5688,9 +5672,9 @@ theorem diophantine1_7_1_159 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 160 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 160 ^ y,
-if y >= 5, 7 ^ x = 31 (mod 32).
+if y >= 4, 7 ^ x = 15 (mod 16).
 However, this is impossible.
-Therefore, y < 5.
+Therefore, y < 4.
 Further examination shows that 7 ^ x + 1 = 160 ^ y is impossible.
 -/
 theorem diophantine1_7_1_160 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 160 ^ y) :
@@ -5698,44 +5682,8 @@ theorem diophantine1_7_1_160 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 5
-  have h7 := Claim (160 ^ y % 32 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 5, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 32 = 31 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 32 = 31, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 4 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 7 ^ x + 1 = 160 ^ y, proof := h3},
-    {prop := y <= 4, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   7 ^ x + 1 = 162 ^ y
-For positive integers x, y satisfying 7 ^ x + 1 = 162 ^ y,
-if y >= 4, 7 ^ x = 15 (mod 16).
-However, this is impossible.
-Therefore, y < 4.
-Further examination shows that 7 ^ x + 1 = 162 ^ y is impossible.
--/
-theorem diophantine1_7_1_162 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 162 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
   by_cases h6 : y >= 4
-  have h7 := Claim (162 ^ y % 16 = 0) [
+  have h7 := Claim (160 ^ y % 16 = 0) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 4, proof := h6},
   ] "pow_mod_eq_zero"
@@ -5752,8 +5700,44 @@ theorem diophantine1_7_1_162 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
-    {prop := 7 ^ x + 1 = 162 ^ y, proof := h3},
+    {prop := 7 ^ x + 1 = 160 ^ y, proof := h3},
     {prop := y <= 3, proof := h7},
+  ] "diophantine1_back_enumeration"
+  exact h8
+
+/-
+(Class II, Front Mode, no magic prime)   7 ^ x + 1 = 162 ^ y
+For positive integers x, y satisfying 7 ^ x + 1 = 162 ^ y,
+if y >= 1, 7 ^ x = 2 (mod 3).
+However, this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 162 ^ y is impossible.
+-/
+theorem diophantine1_7_1_162 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 162 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (162 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 7 ^ x % 3 = 2 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 7 ^ x + 1 = 162 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -5971,55 +5955,55 @@ theorem diophantine1_7_1_167 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Front Mode, with magic prime 157)   7 ^ x + 1 = 169 ^ y
+(Class II, Front Mode, with magic prime 61)   7 ^ x + 1 = 169 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 169 ^ y,
-if y >= 2, 7 ^ x = 168 (mod 169).
-So x = 78 (mod 156), 
-which implies x = 26 (mod 52).
-Therefore, 7 ^ x = 156 (mod 157).
-So 169 ^ y = 0 (mod 157), but this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 169 ^ y is impossible.
+if y >= 1, 7 ^ x = 12 (mod 13).
+So x = 6 (mod 12), 
+which implies x = 6, 18, 30, 42, 54 (mod 60).
+Therefore, 7 ^ x = 41, 52, 60, 27, 3 (mod 61).
+So 169 ^ y = 42, 53, 0, 28, 4 (mod 61), but this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 169 ^ y is impossible.
 -/
 theorem diophantine1_7_1_169 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 169 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (169 ^ y % 169 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (169 ^ y % 13 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 169 = 168 := by omega
-  have h9 := Claim (x % 156 = 78) [
+  have h8 : 7 ^ x % 13 = 12 := by omega
+  have h9 := Claim (x % 12 = 6) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 169 = 168, proof := h8},
+    {prop := 7 ^ x % 13 = 12, proof := h8},
   ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (7 ^ x % 157) [156]) [
+  have h10 := Claim (List.Mem (7 ^ x % 61) [41, 52, 60, 27, 3]) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := x % 156 = 78, proof := h9},
+    {prop := x % 12 = 6, proof := h9},
   ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (169 ^ y % 157) [0]) [
-    {prop := List.Mem (7 ^ x % 157) [156], proof := h10},
+  have h11 := Claim (List.Mem (169 ^ y % 61) [42, 53, 0, 28, 4]) [
+    {prop := List.Mem (7 ^ x % 61) [41, 52, 60, 27, 3], proof := h10},
     {prop := 7 ^ x + 1 = 169 ^ y, proof := h3},
   ] "compute_mod_add"
   have h12 := Claim False [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := List.Mem (169 ^ y % 157) [0], proof := h11},
+    {prop := List.Mem (169 ^ y % 61) [42, 53, 0, 28, 4], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 169 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -6062,36 +6046,36 @@ theorem diophantine1_7_1_170 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 171 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 171 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 171 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 171 ^ y is impossible.
 -/
 theorem diophantine1_7_1_171 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 171 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (171 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (171 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 171 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -6401,36 +6385,36 @@ theorem diophantine1_7_1_179 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 180 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 180 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 180 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 180 ^ y is impossible.
 -/
 theorem diophantine1_7_1_180 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 180 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (180 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (180 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 180 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -7026,36 +7010,36 @@ theorem diophantine1_7_1_197 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 198 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 198 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 198 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 198 ^ y is impossible.
 -/
 theorem diophantine1_7_1_198 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 198 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (198 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (198 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 198 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -7348,36 +7332,36 @@ theorem diophantine1_7_1_206 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 207 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 207 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 207 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 207 ^ y is impossible.
 -/
 theorem diophantine1_7_1_207 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 207 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (207 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (207 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 207 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -7702,36 +7686,36 @@ theorem diophantine1_7_1_215 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 216 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 216 ^ y,
-if y >= 4, 7 ^ x = 15 (mod 16).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 4.
-Further examination shows that 7 ^ x + 1 = 216 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 216 ^ y is impossible.
 -/
 theorem diophantine1_7_1_216 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 216 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (216 ^ y % 16 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (216 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 16 = 15 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 16 = 15, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 216 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -8005,36 +7989,36 @@ theorem diophantine1_7_1_223 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 225 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 225 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 225 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 225 ^ y is impossible.
 -/
 theorem diophantine1_7_1_225 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 225 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (225 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (225 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 225 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -8327,36 +8311,36 @@ theorem diophantine1_7_1_233 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   7 ^ x + 1 = 234 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 234 ^ y,
-if y >= 2, 7 ^ x = 8 (mod 9).
+if y >= 1, 7 ^ x = 2 (mod 3).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 7 ^ x + 1 = 234 ^ y is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 234 ^ y is impossible.
 -/
 theorem diophantine1_7_1_234 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 234 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (234 ^ y % 9 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (234 ^ y % 3 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 9 = 8 := by omega
+  have h8 : 7 ^ x % 3 = 2 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 9 = 8, proof := h8},
+    {prop := 7 ^ x % 3 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 234 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -8609,91 +8593,92 @@ theorem diophantine1_7_1_241 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Front Mode, no magic prime)   7 ^ x + 1 = 242 ^ y
+(Class II, Front Mode, with magic prime 31)   7 ^ x + 1 = 242 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 242 ^ y,
-if y >= 4, 7 ^ x = 15 (mod 16).
-However, this is impossible.
-Therefore, y < 4.
-Further examination shows that 7 ^ x + 1 = 242 ^ y is impossible.
+if y >= 1, 7 ^ x = 10 (mod 11).
+So x = 5 (mod 10), 
+which implies x = 0, 5, 10 (mod 15).
+Therefore, 7 ^ x = 1, 5, 25 (mod 31).
+So 242 ^ y = 2, 6, 26 (mod 31), but this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 242 ^ y is impossible.
 -/
 theorem diophantine1_7_1_242 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 242 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 4
-  have h7 := Claim (242 ^ y % 16 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (242 ^ y % 11 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 4, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 7 ^ x % 16 = 15 := by omega
-  have h9 := Claim False [
+  have h8 : 7 ^ x % 11 = 10 := by omega
+  have h9 := Claim (x % 10 = 5) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 7 ^ x % 16 = 15, proof := h8},
+    {prop := 7 ^ x % 11 = 10, proof := h8},
   ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 3 := by omega
+  have h10 := Claim (List.Mem (7 ^ x % 31) [1, 5, 25]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 10 = 5, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (242 ^ y % 31) [2, 6, 26]) [
+    {prop := List.Mem (7 ^ x % 31) [1, 5, 25], proof := h10},
+    {prop := 7 ^ x + 1 = 242 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (242 ^ y % 31) [2, 6, 26], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 242 ^ y, proof := h3},
-    {prop := y <= 3, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 43)   7 ^ x + 1 = 243 ^ y
+(Class II, Front Mode, no magic prime)   7 ^ x + 1 = 243 ^ y
 For positive integers x, y satisfying 7 ^ x + 1 = 243 ^ y,
-if x >= 2, 243 ^ y = 1 (mod 49).
-So y = 0 (mod 42), 
-Therefore, 243 ^ y = 1 (mod 43).
-So 7 ^ x = 0 (mod 43), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 7 ^ x + 1 = 243 ^ y is impossible.
+if y >= 1, 7 ^ x = 2 (mod 3).
+However, this is impossible.
+Therefore, y < 1.
+So 7 ^ x + 1 = 243 ^ y is impossible.
 -/
 theorem diophantine1_7_1_243 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 1 = 243 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (7 ^ x % 49 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (243 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 243 ^ y % 49 = 1 := by omega
-  have h9 := Claim (y % 42 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 243 ^ y % 49 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (243 ^ y % 43) [1]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 42 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (7 ^ x % 43) [0]) [
-    {prop := List.Mem (243 ^ y % 43) [1], proof := h10},
-    {prop := 7 ^ x + 1 = 243 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 7 ^ x % 3 = 2 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (7 ^ x % 43) [0], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
+    {prop := 7 ^ x % 3 = 2, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 7 ^ x + 1 = 243 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-

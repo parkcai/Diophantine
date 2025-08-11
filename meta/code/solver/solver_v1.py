@@ -1,3 +1,4 @@
+from .big_int import *
 from ...config import *
 from ...SysY.printf import *
 
@@ -13,6 +14,8 @@ __all__ = [
     "Solve_Diophantine1_II_disproof_C_code",
     "insert_disproof_evidence_code",
     "get_disproof_evidence_code",
+    "tune_settings_code",
+    "recover_settings_code",
     "Solve_Diophantine1_I_i_code",
     "Solve_Diophantine1_I_ii_code",
     "Solve_Diophantine1_I_iii_code",
@@ -23,13 +26,13 @@ __all__ = [
 ]
 
 
-_large_int_type = "int" if is_toy else "int64_t"
-
-
-_int_threshold = "2100000000" if is_toy else "9000000000000000000LL"
-
-
 _disproof_list_length = 100 if is_toy else 1000
+
+
+_solution_max_length_v1 = 200000 if is_toy else 10000000
+
+
+_verbose_v1 = 1
 
 
 solver_v1_globals_code = f"""int a_v1;
@@ -39,16 +42,18 @@ int abc_set_status_v1 = 0;
 int x_name_v1[10] = {{120, 0}};
 int y_name_v1[10] = {{121, 0}};
 int xy_name_set_status_v1 = 1;
-int solution_v1[200000];
+int solution_v1[{_solution_max_length_v1}];
 int solution_v1_pointer;
 int solution_v1_length;
-int solution_max_length_v1 = 200000;
+int solution_max_length_v1 = {_solution_max_length_v1};
 int solver_v1_success = 0;
-{_large_int_type} int_threshold_v1 = {_int_threshold};
+int int_threshold = 2100000000;
 // 这两个设小了可能会导致求解失败
 // 设大了可能导致那些需要多试几个方案的方程在一个方案上耗费的时间过长
-int mod_threshold_v1 = 200000;
-int max_trial_num_v1 = 25;
+int mod_threshold_v1 = {21_0000_0000};
+int max_trial_num_v1 = 5;
+int max_trial_num_v1_backup;
+int mod_threshold_v1_backup;
 int disproof_priorlist_prime[{_disproof_list_length}];
 int disproof_priorlist_power[{_disproof_list_length}];
 int disproof_priorlist_type[{_disproof_list_length}]; // a = 1, c = 3
@@ -56,14 +61,14 @@ int disproof_prime;
 int disproof_power;
 int disproof_type;
 int disproof_priorlist_length = 0;
-int verbose_v1 = 0;
+int verbose_v1 = {_verbose_v1};
 int disable_front_mode = 0;
 int disable_back_mode = 0;
 """
 
 
 set_abc_v1_code = f"""void set_abc_v1(int a, int b, int c) {{
-{make_assertion("a >= 2 && c >= 2 && b >= 1", "Invalid input of set_abc_v1!", 1)}
+    {make_assertion("a >= 2 && c >= 2 && b >= 1", "Invalid input of set_abc_v1!", 1)}
     a_v1 = a;
     b_v1 = b;
     c_v1 = c;
@@ -90,14 +95,14 @@ set_xy_name_v1_code = f"""void set_xy_name_v1(int x_name[], int y_name[], int x_
         }}
         index = index + 1;
     }}
-{make_assertion("x_encounter_zero && y_encounter_zero", "Invalid input of set_xy_name_v1!", 1)}
+    {make_assertion("x_encounter_zero && y_encounter_zero", "Invalid input of set_xy_name_v1!", 1)}
     xy_name_set_status_v1 = 1;
 }}
 """
 
 
 write_solution_v1_code = f"""void write_solution_v1(int x) {{
-{make_assertion("solution_v1_pointer >= 0 && solution_v1_pointer < solution_max_length_v1", "[Solver V1] solution pointer out of legal range!", 1)}
+    {make_assertion("solution_v1_pointer >= 0 && solution_v1_pointer < solution_max_length_v1", "[Solver V1] solution pointer out of legal range!", 1)}
     solution_v1[solution_v1_pointer] = x;
     solution_v1_pointer = solution_v1_pointer + 1;
     solution_v1_length = solution_v1_length + 1;
@@ -107,7 +112,7 @@ write_solution_v1_code = f"""void write_solution_v1(int x) {{
 
 
 read_solution_v1_code = f"""int read_solution_v1() {{
-{make_assertion("solution_v1_pointer >= 0 && solution_v1_pointer < solution_max_length_v1", "[Solver V1] solution pointer out of legal range!", 1, True)}
+    {make_assertion("solution_v1_pointer >= 0 && solution_v1_pointer < solution_max_length_v1", "[Solver V1] solution pointer out of legal range!", 1, True)}
     solution_v1_pointer = solution_v1_pointer + 1;
     return solution_v1[solution_v1_pointer-1];
 }}
@@ -157,6 +162,9 @@ Solve_Diophantine1_II_disproof_A_code = f"""void Solve_Diophantine1_II_disproof_
         int trial_num = 0;
         while (P < mod_threshold_v1 && trial_num < max_trial_num_v1) {{
             if (is_prime(P) && a_v1 % P != 0 && c_v1 % P != 0) {{
+                if (verbose_v1) {{
+                    {printf("-- Trying prime %d...", ["P"], 5)}
+                }}
                 trial_num = trial_num + 1;
                 int minus_b = -b_v1;
                 while (minus_b < 0) minus_b = minus_b + P;
@@ -171,7 +179,7 @@ Solve_Diophantine1_II_disproof_A_code = f"""void Solve_Diophantine1_II_disproof_
                     write_solution_v1(m / d);
                     if(!assertion) return;
                     int i = 0;
-                    while ( i < m / d) {{
+                    while (i < m / d) {{
                         write_solution_v1((yr % d) + i * d);
                         if(!assertion) return;
                         i = i + 1;
@@ -179,7 +187,7 @@ Solve_Diophantine1_II_disproof_A_code = f"""void Solve_Diophantine1_II_disproof_
                     write_solution_v1(m / d);
                     if(!assertion) return;
                     i = 0;
-                    while ( i < m / d) {{
+                    while (i < m / d) {{
                         write_solution_v1(power(c_v1, (yr % d) + i * d, P));
                         if(!assertion) return;
                         i = i + 1;
@@ -213,7 +221,7 @@ Solve_Diophantine1_II_disproof_A_code = f"""void Solve_Diophantine1_II_disproof_
 """
 
 
-Solve_Diophantine1_II_disproof_C_code = r"""void Solve_Diophantine1_II_disproof_C() {
+Solve_Diophantine1_II_disproof_C_code = f"""void Solve_Diophantine1_II_disproof_C() {{
     solver_v1_success = 0;
     if(disable_front_mode) return;
     int M = power(disproof_prime, disproof_power, -1);
@@ -232,13 +240,13 @@ Solve_Diophantine1_II_disproof_C_code = r"""void Solve_Diophantine1_II_disproof_
     int xr = get_power_position_mod(M, a_v1, R);
     if(!assertion) return;
     // a ^ x = R (mod M) is impossible
-    if (xr == -1) {
+    if (xr == -1) {{
         write_solution_v1(xr);
         if(!assertion) return;
         solver_v1_success = 1;
 
     // a ^ x = R (mod M) => x = xr (mod k)
-    }else{
+    }}else{{
         // if (k == 1) return;
         if (k < 10) return;
         write_solution_v1(xr);
@@ -248,13 +256,16 @@ Solve_Diophantine1_II_disproof_C_code = r"""void Solve_Diophantine1_II_disproof_
         int solution_v1_pointer_backup = solution_v1_pointer;
         int n = 1, P = n * k + 1;
         int trial_num = 0;
-        while (P < mod_threshold_v1 && trial_num < max_trial_num_v1) {
-            if (is_prime(P) && a_v1 % P != 0 && c_v1 % P != 0) {
+        while (P < mod_threshold_v1 && trial_num < max_trial_num_v1) {{
+            if (is_prime(P) && a_v1 % P != 0 && c_v1 % P != 0) {{
+                if (verbose_v1) {{
+                    {printf("-- Trying prime %d...", ["P"], 5)}
+                }}
                 trial_num = trial_num + 1;
                 resume_solution_v1(solution_v1_pointer_backup);
                 int m = get_power_cycle_mod(P, a_v1);
                 int d = greatest_common_divisor(m, k);
-                if (d > 1) {
+                if (d > 1) {{
                     write_solution_v1(P);
                     if(!assertion) return;
                     write_solution_v1(m);
@@ -262,45 +273,45 @@ Solve_Diophantine1_II_disproof_C_code = r"""void Solve_Diophantine1_II_disproof_
                     write_solution_v1(m / d);
                     if(!assertion) return;
                     int i = 0;
-                    while ( i < m / d) {
+                    while (i < m / d) {{
                         write_solution_v1((xr % d) + i * d);
                         if(!assertion) return;
                         i = i + 1;
-                    }
+                    }}
                     write_solution_v1(m / d);
                     if(!assertion) return;
                     i = 0;
-                    while ( i < m / d) {
+                    while (i < m / d) {{
                         write_solution_v1(power(a_v1, (xr % d) + i * d, P));
                         if(!assertion) return;
                         i = i + 1;
-                    }
+                    }}
                     write_solution_v1(P);
                     if(!assertion) return;
                     write_solution_v1(m / d);
                     if(!assertion) return;
                     i = 0;
                     int condition = 1;
-                    while ( i < m / d) {
+                    while (i < m / d) {{
                         write_solution_v1((power(a_v1, (xr % d) + i * d, P) + b_v1) % P);
                         condition = condition && (get_power_position_mod(P, c_v1, (power(a_v1, (xr % d) + i * d, P) + b_v1) % P) == -1);
                         if(!assertion) return;
                         i = i + 1;
-                    }
+                    }}
                     write_solution_v1(P);
                     if(!assertion) return;
-                    if (condition) {
+                    if (condition) {{
                         solver_v1_success = 1;
                         return;
-                    }
-                }
-            }
+                    }}
+                }}
+            }}
             n = n + 1;
             P = n * k + 1;
-        }
+        }}
         solver_v1_success = 0;
-    }
-}
+    }}
+}}
 """
 
 
@@ -315,7 +326,7 @@ insert_disproof_evidence_code = f"""void insert_disproof_evidence(int prime, int
     while (list_index >= 1) {{
         A = power(disproof_priorlist_prime[list_index-1], disproof_priorlist_power[list_index-1], -1);
         B = power(disproof_priorlist_prime[list_index], disproof_priorlist_power[list_index], -1);
-{make_assertion("A!= B", "[Solver V1] unknown error encountered in insert_disproof_evidence!", 2)}
+        {make_assertion("A!= B", "[Solver V1] unknown error encountered in insert_disproof_evidence!", 2)}
         if (A > B) {{
             int temp;
             temp = disproof_priorlist_prime[list_index-1];
@@ -334,37 +345,12 @@ insert_disproof_evidence_code = f"""void insert_disproof_evidence(int prime, int
         }}
         list_index = list_index - 1;
     }}
-    // 在命令行输出disproof list（调试用）
-    if (!verbose_v1) return;
-    int index;
-    index = 0;
-    while (index < 20) {{
-        putint(disproof_priorlist_prime[index]);
-        putch(space);
-        index = index + 1;
-    }}
-    print_line(newline);
-    index = 0;
-    while (index < 20) {{
-        putint(disproof_priorlist_power[index]);
-        putch(space);
-        index = index + 1;
-    }}
-    print_line(newline);
-    index = 0;
-    while (index < 20) {{
-        putint(disproof_priorlist_type[index]);
-        putch(space);
-        index = index + 1;
-    }}
-    print_line(newline);
-    print_line(newline);
 }}
 """
 
 
 get_disproof_evidence_code = f"""void get_disproof_evidence() {{
-{make_assertion("disproof_priorlist_length", "[Solver V1] can't get disproof evidence: list is empty!", 1)}
+    {make_assertion("disproof_priorlist_length", "[Solver V1] can't get disproof evidence: list is empty!", 1)}
     int list_index = 0;
     while (list_index < disproof_priorlist_length) {{
         if (list_index == 0) {{
@@ -382,46 +368,21 @@ get_disproof_evidence_code = f"""void get_disproof_evidence() {{
     disproof_priorlist_prime[disproof_priorlist_length] = 0;
     disproof_priorlist_power[disproof_priorlist_length] = 0;
     disproof_priorlist_type[disproof_priorlist_length] = 0;
-    // 在命令行输出disproof list（调试用）
-    if (!verbose_v1) return;
-    int index;
-    index = 0;
-    while (index < 20) {{
-        putint(disproof_priorlist_prime[index]);
-        putch(space);
-        index = index + 1;
-    }}
-    print_line(newline);
-    index = 0;
-    while (index < 20) {{
-        putint(disproof_priorlist_power[index]);
-        putch(space);
-        index = index + 1;
-    }}
-    print_line(newline);
-    index = 0;
-    while (index < 20) {{
-        putint(disproof_priorlist_type[index]);
-        putch(space);
-        index = index + 1;
-    }}
-    print_line(newline);
-    print_line(newline);
 }}
 """
 
 
-Solve_Diophantine1_I_i_code = r"""void Solve_Diophantine1_I_i() {
+Solve_Diophantine1_I_i_code = f"""void Solve_Diophantine1_I_i() {{
     solution_v1[0] = solution_v1_length;
     solver_v1_success = 1;
-}
+}}
 """
 
 
-Solve_Diophantine1_I_ii_code = r"""void Solve_Diophantine1_I_ii() {
+Solve_Diophantine1_I_ii_code = f"""void Solve_Diophantine1_I_ii() {{
     solution_v1[0] = solution_v1_length;
     solver_v1_success = 1;
-}
+}}
 """
 
 
@@ -435,39 +396,51 @@ Solve_Diophantine1_I_iii_code = f"""void Solve_Diophantine1_I_iii() {{
     if (N > 1) {{
         write_solution_v1(0);
         if(!assertion) return;
-        {_large_int_type} a = a_v1, b = b_v1, c = c_v1;
+        {big_int_declare("A")}
+        {big_int_declare("B")}
+        {big_int_declare("C")}
+        {big_int_declare("TMP")}
+        {big_int_set_int("A", "a_v1")}
+        {big_int_set_int("B", "b_v1")}
+        {big_int_set_int("C", "c_v1")}
         int a0 = a_v1, c0 = c_v1, x = 1, y = 1;
         while (x < N || y < N) {{
-            if (a + b < c) {{
-                if (a > int_threshold_v1 / a0) {{
-{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 5)}
+            {big_int_add("TMP", "A", "B")}
+            {big_int_sub("TMP", "C", "TMP")}
+            if ({big_int_gt_int("TMP", "0")}) {{
+                if ({"A > int_threshold / a0" if is_toy else "0"}) {{
+                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 5)}
                     return;
                 }}
-                a = a * a0; // safe multiplication
+                {big_int_mul_int("A", "A", "a0")}
                 x = x + 1;
             }}else{{
-                if (a + b == c) {{
+                if ({big_int_eq_int("TMP", "0")}) {{
                     write_solution_v1(x);
                     if(!assertion) return;
                     write_solution_v1(y);
                     if(!assertion) return;
                     solution_v1[array_pointer] = solution_v1[array_pointer] + 1;
-                    if (c > int_threshold_v1 / c0) {{
-{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 6)}
+                    if ({"C > int_threshold / c0" if is_toy else "0"}) {{
+                        {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 6)}
                         return;
                     }}
-                    c = c * c0; // safe multiplication
+                    {big_int_mul_int("C", "C", "c0")}
                     y = y + 1;
                 }}else{{
-                    if (c > int_threshold_v1 / c0) {{
-{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 6)}
+                    if ({"C > int_threshold / c0" if is_toy else "0"}) {{
+                        {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 6)}
                         return;
                     }}
-                    c = c * c0; // safe multiplication
+                    {big_int_mul_int("C", "C", "c0")}
                     y = y + 1;
                 }}
             }}
         }}
+        {big_int_release("A")}
+        {big_int_release("B")}
+        {big_int_release("C")}
+        {big_int_release("TMP")}
         solution_v1[0] = solution_v1_length;
         solver_v1_success = 1;
     }}else{{
@@ -480,38 +453,64 @@ Solve_Diophantine1_I_iii_code = f"""void Solve_Diophantine1_I_iii() {{
 """
 
 
-Solve_Diophantine1_II_code = f"""
-int special_max_trial_num(int a, int b, int c) {{
-    if (a == 64 && b == 143 && c == 207) return 5;
-    if (a == 81 && b == 47 && c == 128) return 5;
-    return 0;
+tune_settings_code = f"""void tune_settings(int a, int b, int c) {{
+    max_trial_num_v1_backup = max_trial_num_v1;
+    mod_threshold_v1_backup = mod_threshold_v1;
 }}
+"""
 
 
-void Solve_Diophantine1_II() {{
-    {_large_int_type} a = a_v1, b = b_v1, c = c_v1;
-    int max_trial_num_v1_backup = max_trial_num_v1;
-    if (special_max_trial_num(a, b, c)) max_trial_num_v1 = special_max_trial_num(a, b, c);
+recover_settings_code = f"""void recover_settings() {{
+    max_trial_num_v1 = max_trial_num_v1_backup;
+    mod_threshold_v1 = mod_threshold_v1_backup;
+}}
+"""
+
+
+Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
+    if (verbose_v1) {{
+        {printf("-- Verbose mode on.", [], 2)}
+    }}
+    {big_int_declare("A")}
+    {big_int_declare("B")}
+    {big_int_declare("C")}
+    {big_int_declare("TMP")}
+    {big_int_declare("THRESHOLD")}
+    {big_int_set_int("A", "a_v1")}
+    {big_int_set_int("B", "b_v1")}
+    {big_int_set_int("C", "c_v1")}
+    {f'THRESHOLD = 1{"0"*9};' if is_toy else f'mpz_set_str(THRESHOLD, "1{"0"*100}", 10);'}
     int a0 = a_v1, c0 = c_v1, x0 = 0, x = 1, y0 = 0, y = 1;
     while (1) {{
-        if (a + b < c) {{
-            if (a > (int_threshold_v1 - b) / a0) break;
-            a = a * a0; // safe multiplication
+        {big_int_add("TMP", "A", "B")}
+        {big_int_sub("TMP", "C", "TMP")}
+        if ({big_int_gt_int("TMP", "0")}) {{
+            {big_int_sub("TMP", "THRESHOLD", "B")}
+            {big_int_div_int("TMP", "TMP", "a0")}
+            if ({big_int_gt("A", "TMP")}) break;
+            {big_int_mul_int("A", "A", "a0")}
             x = x + 1;
         }}else{{
-            if (a + b == c) {{
+            if ({big_int_eq_int("TMP", "0")}) {{
                 x0 = x;
                 y0 = y;
-                if (c > int_threshold_v1 / c0) break;
-                c = c * c0; // safe multiplication
+                {big_int_div_int("TMP", "THRESHOLD", "c0")}
+                if ({big_int_gt("C", "TMP")}) break;
+                {big_int_mul_int("C", "C", "c0")}
                 y = y + 1;
             }}else{{
-                if (c > int_threshold_v1 / c0) break;
-                c = c * c0; // safe multiplication
+                {big_int_div_int("TMP", "THRESHOLD", "c0")}
+                if ({big_int_gt("C", "TMP")}) break;
+                {big_int_mul_int("C", "C", "c0")}
                 y = y + 1;
             }}
         }}
     }}
+    {big_int_release("A")}
+    {big_int_release("B")}
+    {big_int_release("C")}
+    {big_int_release("TMP")}
+    {big_int_release("THRESHOLD")}
     // 从“反设x >= x0” / “反设y >= y0”开始归谬
     x0 = x0 + 1;
     y0 = y0 + 1;
@@ -519,11 +518,11 @@ void Solve_Diophantine1_II() {{
     // 希望对所有小于500的a, b, c顺利求解，这里开得稍大一点
     while (prime_list[prime_list_index] < 600) {{
         if (c_v1 % prime_list[prime_list_index] == 0) {{
-{make_assertion("a_v1 % prime_list[prime_list_index] != 0", "[Solver V1] unknown error encountered in situation II!", 3)}
+            {make_assertion("a_v1 % prime_list[prime_list_index] != 0", "[Solver V1] unknown error encountered in situation II!", 3)}
             insert_disproof_evidence(prime_list[prime_list_index], y0, 2);
         }}
         if (a_v1 % prime_list[prime_list_index] == 0) {{
-{make_assertion("c_v1 % prime_list[prime_list_index] != 0", "[Solver V1] unknown error encountered in situation II!", 3)}
+            {make_assertion("c_v1 % prime_list[prime_list_index] != 0", "[Solver V1] unknown error encountered in situation II!", 3)}
             insert_disproof_evidence(prime_list[prime_list_index], x0, 1);
         }}
         prime_list_index = prime_list_index + 1;
@@ -539,59 +538,82 @@ void Solve_Diophantine1_II() {{
         if(!assertion) return;
         write_solution_v1(disproof_type);
         if(!assertion) return;
+        if (verbose_v1) {{
+            if (disproof_type == 1) {{
+                {printf("-- Trying to disprove x >= %d with prime factor %d of %d ...", ["disproof_power", "disproof_prime", "a0"], 4)}
+            }}else if (disproof_type == 2) {{
+                {printf("-- Trying to disprove y >= %d with prime factor %d of %d ...", ["disproof_power", "disproof_prime", "c0"], 4)}
+            }}else{{
+                {make_assertion("0", "[Solver V1] unknown error encountered in situation II!", 3)} 
+            }}
+        }}
         if (disproof_type == 1) {{
             Solve_Diophantine1_II_disproof_A();
             if(!assertion) return;
             if (solver_v1_success) {{
+                if (verbose_v1) {{
+                    {printf("-- Succeeded.", [], 5)}
+                }}
                 if (disproof_power > 1) {{
                     solution_v1_pointer_backup = solution_v1_pointer;
                     write_solution_v1(0);
                     if(!assertion) return;
                     // 归谬完成，枚举x的有限个取值
-                    {_large_int_type} a = a_v1, c = c_v1, b = b_v1, y = 1, x = 1;
-                    int a0 = a, c0 = c;
+                    {big_int_declare("A")}
+                    {big_int_declare("B")}
+                    {big_int_declare("C")}
+                    {big_int_declare("TMP")}
+                    {big_int_set_int("A", "a_v1")}
+                    {big_int_set_int("B", "b_v1")}
+                    {big_int_set_int("C", "c_v1")}
+                    int x = 1, y = 1;
+                    int a0 = a_v1, c0 = c_v1;
                     while (x < disproof_power) {{
-                        if (a + b < c) {{
-                            if (a > int_threshold_v1 / a0) {{
-{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 8)}
+                        {big_int_add("TMP", "A", "B")}
+                        {big_int_sub("TMP", "C", "TMP")}
+                        if ({big_int_gt_int("TMP", "0")}) {{
+                            if ({"A > int_threshold / a0" if is_toy else "0"}) {{
+                                {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 8)}
                                 solver_v1_success = 0;
                                 return;
                             }}
-                            a = a * a0; // safe multiplication
+                            {big_int_mul_int("A", "A", "a0")}
                             x = x + 1;
                         }}else{{
-                            if (a + b == c) {{
+                            if ({big_int_eq_int("TMP", "0")}) {{
                                 write_solution_v1(x);
                                 if(!assertion) return;
                                 write_solution_v1(y);
                                 if(!assertion) return;
                                 solution_v1[solution_v1_pointer_backup] = solution_v1[solution_v1_pointer_backup]+1;
-                                if (c > int_threshold_v1 / c0) {{
-{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 9)}
+                                if ({"C > int_threshold / c0" if is_toy else "0"}) {{
+                                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
                                     solver_v1_success = 0;
                                     return;
                                 }}
-                                c = c * c0; // safe multiplication
+                                {big_int_mul_int("C", "C", "c0")}
                                 y = y + 1;
                             }}else{{
-                                if (c > int_threshold_v1 / c0) {{
-{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 9)}
+                                if ({"C > int_threshold / c0" if is_toy else "0"}) {{
+                                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
                                     solver_v1_success = 0;
                                     return;
                                 }}
-                                c = c * c0; // safe multiplication
+                                {big_int_mul_int("C", "C", "c0")}
                                 y = y + 1;
                             }}
                         }}
                     }}
+                    {big_int_release("A")}
+                    {big_int_release("B")}
+                    {big_int_release("C")}
+                    {big_int_release("TMP")}
                     solution_v1[0] = solution_v1_length;
-                    max_trial_num_v1 = max_trial_num_v1_backup;
                     return;
                 }}else{{
                     // -1表示不用枚举
                     write_solution_v1(-1);
                     solution_v1[0] = solution_v1_length;
-                    max_trial_num_v1 = max_trial_num_v1_backup;
                     return;
                 }}
             }}
@@ -599,60 +621,74 @@ void Solve_Diophantine1_II() {{
             Solve_Diophantine1_II_disproof_C();
             if(!assertion) return;
             if (solver_v1_success) {{
+                if (verbose_v1) {{
+                    {printf("-- Succeeded.", [], 5)}
+                }}
                 if (disproof_power > 1) {{
                     solution_v1_pointer_backup = solution_v1_pointer;
                     write_solution_v1(0);
                     if(!assertion) return;
                     // 归谬完成，枚举y的有限个取值
-                    {_large_int_type} a = a_v1, c = c_v1, b = b_v1, y = 1, x = 1;
-                    int a0 = a, c0 = c;
+                    {big_int_declare("A")}
+                    {big_int_declare("B")}
+                    {big_int_declare("C")}
+                    {big_int_declare("TMP")}
+                    {big_int_set_int("A", "a_v1")}
+                    {big_int_set_int("B", "b_v1")}
+                    {big_int_set_int("C", "c_v1")}
+                    int x = 1, y = 1;
+                    int a0 = a_v1, c0 = c_v1;
                     while (y < disproof_power) {{
-                        if (a + b < c) {{
-                            if (a > int_threshold_v1 / a0) {{
-{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 8)}
+                        {big_int_add("TMP", "A", "B")}
+                        {big_int_sub("TMP", "C", "TMP")}
+                        if ({big_int_gt_int("TMP", "0")}) {{
+                            if ({"A > int_threshold / a0" if is_toy else "0"}) {{
+                                {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 8)}
                                 solver_v1_success = 0;
                                 return;
                             }}
-                            a = a * a0; // safe multiplication
+                            {big_int_mul_int("A", "A", "a0")}
                             x = x + 1;
                         }}else{{
-                            if (a + b == c) {{
+                            if ({big_int_eq_int("TMP", "0")}) {{
                                 write_solution_v1(x);
                                 if(!assertion) return;
                                 write_solution_v1(y);
                                 if(!assertion) return;
                                 solution_v1[solution_v1_pointer_backup] = solution_v1[solution_v1_pointer_backup]+1;
-                                if (c > int_threshold_v1 / c0) {{
-{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 9)}
+                                if ({"C > int_threshold / c0" if is_toy else "0"}) {{
+                                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
                                     solver_v1_success = 0;
                                     return;
                                 }}
-                                c = c * c0; // safe multiplication
+                                {big_int_mul_int("C", "C", "c0")}
                                 y = y + 1;
                             }}else{{
-                                if (c > int_threshold_v1 / c0) {{
-{printf("[Solver V1] Runtime Warning: exceeding range of int32!", [], 9)}
+                                if ({"C > int_threshold / c0" if is_toy else "0"}) {{
+                                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
                                     solver_v1_success = 0;
                                     return;
                                 }}
-                                c = c * c0; // safe multiplication
+                                {big_int_mul_int("C", "C", "c0")}
                                 y = y + 1;
                             }}
                         }}
                     }}
+                    {big_int_release("A")}
+                    {big_int_release("B")}
+                    {big_int_release("C")}
+                    {big_int_release("TMP")}
                     solution_v1[0] = solution_v1_length;
-                    max_trial_num_v1 = max_trial_num_v1_backup;
                     return;
                 }}else{{
                     // -1表示不用枚举
                     write_solution_v1(-1);
                     solution_v1[0] = solution_v1_length;
-                    max_trial_num_v1 = max_trial_num_v1_backup;
                     return;
                 }}
             }}
-        }}else{{       
-{make_assertion("0", "[Solver V1] unknown error encountered in situation II!", 3)}
+        }}else{{ 
+            {make_assertion("0", "[Solver V1] unknown error encountered in situation II!", 3)}
         }}
         if (power(disproof_prime, disproof_power, -1) < mod_threshold_v1 / disproof_prime) {{
             insert_disproof_evidence(disproof_prime, disproof_power+1, disproof_type);
@@ -660,13 +696,12 @@ void Solve_Diophantine1_II() {{
         }}
     }}
     solver_v1_success = 0;
-    max_trial_num_v1 = max_trial_num_v1_backup;
 }}
 """
 
 
 Solve_Diophantine1_code = f"""void Solve_Diophantine1() {{
-{make_assertion("abc_set_status_v1", "[Solver V1] a, b, c not set, can't solve now!", 1)}
+    {make_assertion("abc_set_status_v1", "[Solver V1] a, b, c not set, can't solve now!", 1)}
 
     solution_v1_pointer = 1;
     solution_v1_length = 1;
@@ -735,8 +770,10 @@ Solve_Diophantine1_code = f"""void Solve_Diophantine1() {{
     // 情况II
     write_solution_v1(2);
     if(!assertion) return;
+    tune_settings(a_v1, b_v1, c_v1);
     Solve_Diophantine1_II();
     if(!assertion) return;
+    recover_settings(a_v1, b_v1, c_v1);
     return;
 }}
 """
@@ -747,11 +784,11 @@ exhaust_solution_v1_code = f"""void exhaust_solution_v1(int nsolutions_pointer) 
     int c = solution_v1[3];
     int nsolutions = solution_v1[nsolutions_pointer];
     if (nsolutions == -1) {{
-{printf("So %d ^ %s + %d = %d ^ %s is impossible.", ["a", "x_name_v1", "b", "c", "y_name_v1"], 2)}
+        {printf("So %d ^ %s + %d = %d ^ %s is impossible.", ["a", "x_name_v1", "b", "c", "y_name_v1"], 2)}
     }}else if (nsolutions == 0) {{
-{printf("Further examination shows that %d ^ %s + %d = %d ^ %s is impossible.", ["a", "x_name_v1", "b", "c", "y_name_v1"], 2)}
+        {printf("Further examination shows that %d ^ %s + %d = %d ^ %s is impossible.", ["a", "x_name_v1", "b", "c", "y_name_v1"], 2)}
     }}else{{
-{print_word("Further examination shows that ", 2)}
+        {print_word("Further examination shows that ", 2)}
         putch(left_parenthesis);
         print_word(x_name_v1);
         putch(comma);
@@ -783,35 +820,25 @@ exhaust_solution_v1_code = f"""void exhaust_solution_v1(int nsolutions_pointer) 
 
 
 print_solution_v1_code = f"""void print_solution_v1() {{
-{make_assertion("solver_v1_success && xy_name_set_status_v1", "[Solver V1] solver failed or name not set, can't print solution!", 1)}
-    if (verbose_v1) {{
-        int index = 0;
-        // while (index < solution_v1[0]) {{
-        while (index < 50) {{
-            putint(solution_v1[index]);
-            putch(space);
-            index = index + 1;
-        }}
-        print_line(newline);
-    }}
+    {make_assertion("solver_v1_success && xy_name_set_status_v1", "[Solver V1] solver failed or name not set, can't print solution!", 1)}
     int a = solution_v1[1];
     int b = solution_v1[2];
     int c = solution_v1[3];
-{printf("For positive integers %s, %s satisfying %d ^ %s + %d = %d ^ %s,", ["x_name_v1", "y_name_v1", "a", "x_name_v1", "b", "c", "y_name_v1"], 1)}
+    {printf("For positive integers %s, %s satisfying %d ^ %s + %d = %d ^ %s,", ["x_name_v1", "y_name_v1", "a", "x_name_v1", "b", "c", "y_name_v1"], 1)}
     int i;
     if (solution_v1[4] == 1) {{
         if (solution_v1[5] == 1) {{
-{printf("this is impossible, because it implies that %d ^ %s = 0 (mod %d).", ["a", "x_name_v1", "solution_v1[6]"], 3)}
+            {printf("this is impossible, because it implies that %d ^ %s = 0 (mod %d).", ["a", "x_name_v1", "solution_v1[6]"], 3)}
         }}else if (solution_v1[5] == 2) {{
-{printf("this is impossible, because it implies that %d ^ %s = 0 (mod %d).", ["c", "y_name_v1", "solution_v1[6]"], 3)}
+            {printf("this is impossible, because it implies that %d ^ %s = 0 (mod %d).", ["c", "y_name_v1", "solution_v1[6]"], 3)}
         }}else if (solution_v1[5] == 3) {{
-{printf("if %s >= %d and %s >= %d,", ["x_name_v1", "solution_v1[7]", "y_name_v1", "solution_v1[7]"], 3)}
-{printf("%d = 0 (mod %d), which is impossible.", ["b", "power(solution_v1[6], solution_v1[7], -1)"], 3)}
-{printf("Therefore, %s < %d or %s < %d.", ["x_name_v1", "solution_v1[7]", "y_name_v1", "solution_v1[7]"], 3)}
+            {printf("if %s >= %d and %s >= %d,", ["x_name_v1", "solution_v1[7]", "y_name_v1", "solution_v1[7]"], 3)}
+            {printf("%d = 0 (mod %d), which is impossible.", ["b", "power(solution_v1[6], solution_v1[7], -1)"], 3)}
+            {printf("Therefore, %s < %d or %s < %d.", ["x_name_v1", "solution_v1[7]", "y_name_v1", "solution_v1[7]"], 3)}
             int nsolutions_pointer = 8;
             exhaust_solution_v1(nsolutions_pointer);
         }}else {{
-{make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 3)}
+            {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 3)}
         }}
     }}else if (solution_v1[4] == 2) {{
         // disproof prime, power and type
@@ -824,11 +851,11 @@ print_solution_v1_code = f"""void print_solution_v1() {{
             read_solution_v1();
             int R = read_solution_v1();
             int M = read_solution_v1();
-{printf("if %s >= %d, %d ^ %s = %d (mod %d).", ["x_name_v1", "dp_power", "c", "y_name_v1", "R", "M"], 3)}
+            {printf("if %s >= %d, %d ^ %s = %d (mod %d).", ["x_name_v1", "dp_power", "c", "y_name_v1", "R", "M"], 3)}
             int yr = read_solution_v1();
             if (yr == -1) {{
-{printf("However, this is impossible.", [], 4)}
-{printf("Therefore, %s < %d.", ["x_name_v1", "dp_power"], 4)}
+                {printf("However, this is impossible.", [], 4)}
+                {printf("Therefore, %s < %d.", ["x_name_v1", "dp_power"], 4)}
                 exhaust_solution_v1(solution_v1_pointer);
             }}else{{
                 int k = read_solution_v1();
@@ -837,8 +864,8 @@ print_solution_v1_code = f"""void print_solution_v1() {{
                 int npossibilities = read_solution_v1();
                 // k m 不等，x = xr (mod k) 推出多个关于m的可能余数
                 if (k != m) {{
-{printf("So %s = %d (mod %d), ", ["y_name_v1", "yr", "k"], 5)}
-{print_word("which implies ", 5)}
+                    {printf("So %s = %d (mod %d), ", ["y_name_v1", "yr", "k"], 5)}
+                    {print_word("which implies ", 5)}
                     print_word(y_name_v1);
                     putch(space);
                     putch(equals);
@@ -852,14 +879,14 @@ print_solution_v1_code = f"""void print_solution_v1() {{
                         putint(read_solution_v1());
                         i = i + 1;
                     }}
-{printf(" (mod %d).", ["m"], 5)}
+                    {printf(" (mod %d).", ["m"], 5)}
                 // k m 相等，npossibilities = 1
                 }}else {{
-{printf("So %s = %d (mod %d), ", ["y_name_v1", "yr", "k"], 5)}
+                    {printf("So %s = %d (mod %d), ", ["y_name_v1", "yr", "k"], 5)}
                     read_solution_v1();
                 }}
                 read_solution_v1();
-{print_word("Therefore, ", 4)}
+                {print_word("Therefore, ", 4)}
                 putint(c);
                 putch(space);
                 putch(hat);
@@ -877,10 +904,10 @@ print_solution_v1_code = f"""void print_solution_v1() {{
                     putint(read_solution_v1());
                     i = i + 1;
                 }}
-{printf(" (mod %d).", ["P"], 4)}
+                {printf(" (mod %d).", ["P"], 4)}
                 read_solution_v1();
                 read_solution_v1();
-{print_word("So ", 4)}
+                {print_word("So ", 4)}
                 putint(a);
                 putch(space);
                 putch(hat);
@@ -898,8 +925,8 @@ print_solution_v1_code = f"""void print_solution_v1() {{
                     putint(read_solution_v1());
                     i = i + 1;
                 }}
-{printf(" (mod %d), but this is impossible.", ["P"], 4)}
-{printf("Therefore, %s < %d.", ["x_name_v1", "dp_power"], 4)}
+                {printf(" (mod %d), but this is impossible.", ["P"], 4)}
+                {printf("Therefore, %s < %d.", ["x_name_v1", "dp_power"], 4)}
                 read_solution_v1();
                 exhaust_solution_v1(solution_v1_pointer);
             }}
@@ -908,11 +935,11 @@ print_solution_v1_code = f"""void print_solution_v1() {{
             read_solution_v1();
             int R = read_solution_v1();
             int M = read_solution_v1();
-{printf("if %s >= %d, %d ^ %s = %d (mod %d).", ["y_name_v1", "dp_power", "a", "x_name_v1", "R", "M"], 3)}
+            {printf("if %s >= %d, %d ^ %s = %d (mod %d).", ["y_name_v1", "dp_power", "a", "x_name_v1", "R", "M"], 3)}
             int xr = read_solution_v1();
             if (xr == -1) {{
-{printf("However, this is impossible.", [], 4)}
-{printf("Therefore, %s < %d.", ["y_name_v1", "dp_power"], 4)}
+                {printf("However, this is impossible.", [], 4)}
+                {printf("Therefore, %s < %d.", ["y_name_v1", "dp_power"], 4)}
                 exhaust_solution_v1(solution_v1_pointer);
             }}else{{
                 int k = read_solution_v1();
@@ -921,8 +948,8 @@ print_solution_v1_code = f"""void print_solution_v1() {{
                 int npossibilities = read_solution_v1();
                 // k m 不等，x = xr (mod k) 推出多个关于m的可能余数
                 if (k != m) {{
-{printf("So %s = %d (mod %d), ", ["x_name_v1", "xr", "k"], 5)}
-{print_word("which implies ", 5)}
+                    {printf("So %s = %d (mod %d), ", ["x_name_v1", "xr", "k"], 5)}
+                    {print_word("which implies ", 5)}
                     print_word(x_name_v1);
                     putch(space);
                     putch(equals);
@@ -936,14 +963,14 @@ print_solution_v1_code = f"""void print_solution_v1() {{
                         putint(read_solution_v1());
                         i = i + 1;
                     }}
-{printf(" (mod %d).", ["m"], 5)}
+                    {printf(" (mod %d).", ["m"], 5)}
                 // k m 相等，npossibilities = 1
                 }}else {{
-{printf("So %s = %d (mod %d).", ["x_name_v1", "xr", "k"], 5)}
+                    {printf("So %s = %d (mod %d).", ["x_name_v1", "xr", "k"], 5)}
                     read_solution_v1();
                 }}
                 read_solution_v1();
-{print_word("Therefore, ", 4)}
+                {print_word("Therefore, ", 4)}
                 putint(a);
                 putch(space);
                 putch(hat);
@@ -961,10 +988,10 @@ print_solution_v1_code = f"""void print_solution_v1() {{
                     putint(read_solution_v1());
                     i = i + 1;
                 }}
-{printf(" (mod %d).", ["P"], 4)}
+                {printf(" (mod %d).", ["P"], 4)}
                 read_solution_v1();
                 read_solution_v1();
-{print_word("So ", 4)}
+                {print_word("So ", 4)}
                 putint(c);
                 putch(space);
                 putch(hat);
@@ -982,16 +1009,16 @@ print_solution_v1_code = f"""void print_solution_v1() {{
                     putint(read_solution_v1());
                     i = i + 1;
                 }}
-{printf(" (mod %d), but this is impossible.", ["P"], 4)}
-{printf("Therefore, %s < %d.", ["y_name_v1", "dp_power"], 4)}
+                {printf(" (mod %d), but this is impossible.", ["P"], 4)}
+                {printf("Therefore, %s < %d.", ["y_name_v1", "dp_power"], 4)}
                 read_solution_v1();
                 exhaust_solution_v1(solution_v1_pointer);
             }}
         }}else{{
-{make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 3)}
+        {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 3)}
         }}
     }}else{{
-{make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 2)}
+        {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 2)}
     }}
 }}
 """

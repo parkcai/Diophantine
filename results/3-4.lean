@@ -1775,56 +1775,39 @@ theorem diophantine1_3_4_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 109)   3 ^ x + 4 = 121 ^ y
+(Class II, Front Mode, no magic prime)   3 ^ x + 4 = 121 ^ y
 For positive integers x, y satisfying 3 ^ x + 4 = 121 ^ y,
-if x >= 4, 121 ^ y = 4 (mod 81).
-So y = 25 (mod 27), 
-which implies y = 25, 52 (mod 54).
-Therefore, 121 ^ y = 28, 81 (mod 109).
-So 3 ^ x = 24, 77 (mod 109), but this is impossible.
-Therefore, x < 4.
-Further examination shows that 3 ^ x + 4 = 121 ^ y is impossible.
+if y >= 1, 3 ^ x = 7 (mod 11).
+However, this is impossible.
+Therefore, y < 1.
+So 3 ^ x + 4 = 121 ^ y is impossible.
 -/
 theorem diophantine1_3_4_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 4 = 121 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (3 ^ x % 81 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (121 ^ y % 11 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 121 ^ y % 81 = 4 := by omega
-  have h9 := Claim (y % 27 = 25) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 121 ^ y % 81 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (121 ^ y % 109) [28, 81]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 27 = 25, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (3 ^ x % 109) [24, 77]) [
-    {prop := List.Mem (121 ^ y % 109) [28, 81], proof := h10},
-    {prop := 3 ^ x + 4 = 121 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 3 ^ x % 11 = 7 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (3 ^ x % 109) [24, 77], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 3 := by omega
+    {prop := 3 ^ x % 11 = 7, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 4 = 121 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-

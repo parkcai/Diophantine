@@ -5,7 +5,7 @@ def main():
     
     A = a; x = 1; C = c; y = 1
     
-    search_threshold = 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    search_threshold = int(f"1{'0'*100}")
     
     while A < search_threshold or C < search_threshold:
         

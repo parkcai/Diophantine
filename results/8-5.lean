@@ -701,39 +701,39 @@ theorem diophantine1_8_5_47 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   exact h8
 
 /-
-(Class II, Back Mode, no magic prime)   8 ^ x + 5 = 49 ^ y
+(Class II, Front Mode, no magic prime)   8 ^ x + 5 = 49 ^ y
 For positive integers x, y satisfying 8 ^ x + 5 = 49 ^ y,
-if x >= 3, 49 ^ y = 5 (mod 8).
+if y >= 1, 8 ^ x = 2 (mod 7).
 However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 8 ^ x + 5 = 49 ^ y is impossible.
+Therefore, y < 1.
+So 8 ^ x + 5 = 49 ^ y is impossible.
 -/
 theorem diophantine1_8_5_49 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 5 = 49 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (8 ^ x % 8 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 49 ^ y % 8 = 5 := by omega
-  have h9 := Claim False [
+  by_cases h6 : y >= 1
+  have h7 := Claim (49 ^ y % 7 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 49 ^ y % 8 = 5, proof := h8},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 8 ^ x % 7 = 2 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 8 ^ x % 7 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : x <= 2 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 8 ^ x + 5 = 49 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -2154,39 +2154,39 @@ theorem diophantine1_8_5_143 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, no magic prime)   8 ^ x + 5 = 147 ^ y
+(Class II, Front Mode, no magic prime)   8 ^ x + 5 = 147 ^ y
 For positive integers x, y satisfying 8 ^ x + 5 = 147 ^ y,
-if x >= 3, 147 ^ y = 5 (mod 8).
+if y >= 1, 8 ^ x = 2 (mod 7).
 However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 8 ^ x + 5 = 147 ^ y is impossible.
+Therefore, y < 1.
+So 8 ^ x + 5 = 147 ^ y is impossible.
 -/
 theorem diophantine1_8_5_147 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 5 = 147 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (8 ^ x % 8 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 147 ^ y % 8 = 5 := by omega
-  have h9 := Claim False [
+  by_cases h6 : y >= 1
+  have h7 := Claim (147 ^ y % 7 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 147 ^ y % 8 = 5, proof := h8},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 8 ^ x % 7 = 2 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 8 ^ x % 7 = 2, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : x <= 2 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 8 ^ x + 5 = 147 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-

@@ -340,36 +340,36 @@ theorem diophantine1_6_1_23 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Front Mode, no magic prime)   6 ^ x + 1 = 25 ^ y
 For positive integers x, y satisfying 6 ^ x + 1 = 25 ^ y,
-if y >= 2, 6 ^ x = 24 (mod 25).
+if y >= 1, 6 ^ x = 4 (mod 5).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 6 ^ x + 1 = 25 ^ y is impossible.
+Therefore, y < 1.
+So 6 ^ x + 1 = 25 ^ y is impossible.
 -/
 theorem diophantine1_6_1_25 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 1 = 25 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (25 ^ y % 25 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (25 ^ y % 5 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 6 ^ x % 25 = 24 := by omega
+  have h8 : 6 ^ x % 5 = 4 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 6 ^ x % 25 = 24, proof := h8},
+    {prop := 6 ^ x % 5 = 4, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 1 = 25 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 
@@ -1870,108 +1870,92 @@ theorem diophantine1_6_1_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 163)   6 ^ x + 1 = 121 ^ y
+(Class II, Front Mode, with magic prime 61)   6 ^ x + 1 = 121 ^ y
 For positive integers x, y satisfying 6 ^ x + 1 = 121 ^ y,
-if x >= 4, 121 ^ y = 1 (mod 81).
-So y = 0 (mod 27), 
-which implies y = 0, 27, 54 (mod 81).
-Therefore, 121 ^ y = 1, 58, 104 (mod 163).
-So 6 ^ x = 0, 57, 103 (mod 163), but this is impossible.
-Therefore, x < 4.
-Further examination shows that 6 ^ x + 1 = 121 ^ y is impossible.
+if y >= 1, 6 ^ x = 10 (mod 11).
+So x = 5 (mod 10), 
+which implies x = 5, 15, 25, 35, 45, 55 (mod 60).
+Therefore, 6 ^ x = 29, 50, 21, 32, 11, 40 (mod 61).
+So 121 ^ y = 30, 51, 22, 33, 12, 41 (mod 61), but this is impossible.
+Therefore, y < 1.
+So 6 ^ x + 1 = 121 ^ y is impossible.
 -/
 theorem diophantine1_6_1_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 1 = 121 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (6 ^ x % 81 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (121 ^ y % 11 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 121 ^ y % 81 = 1 := by omega
-  have h9 := Claim (y % 27 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 121 ^ y % 81 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (121 ^ y % 163) [1, 58, 104]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 27 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (6 ^ x % 163) [0, 57, 103]) [
-    {prop := List.Mem (121 ^ y % 163) [1, 58, 104], proof := h10},
-    {prop := 6 ^ x + 1 = 121 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 6 ^ x % 11 = 10 := by omega
+  have h9 := Claim (x % 10 = 5) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (6 ^ x % 163) [0, 57, 103], proof := h11},
+    {prop := 6 ^ x % 11 = 10, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (6 ^ x % 61) [29, 50, 21, 32, 11, 40]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 10 = 5, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (121 ^ y % 61) [30, 51, 22, 33, 12, 41]) [
+    {prop := List.Mem (6 ^ x % 61) [29, 50, 21, 32, 11, 40], proof := h10},
+    {prop := 6 ^ x + 1 = 121 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (121 ^ y % 61) [30, 51, 22, 33, 12, 41], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 3 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 1 = 121 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 17)   6 ^ x + 1 = 125 ^ y
+(Class II, Front Mode, no magic prime)   6 ^ x + 1 = 125 ^ y
 For positive integers x, y satisfying 6 ^ x + 1 = 125 ^ y,
-if x >= 6, 125 ^ y = 1 (mod 64).
-So y = 0 (mod 16), 
-Therefore, 125 ^ y = 1 (mod 17).
-So 6 ^ x = 0 (mod 17), but this is impossible.
-Therefore, x < 6.
-Further examination shows that 6 ^ x + 1 = 125 ^ y is impossible.
+if y >= 1, 6 ^ x = 4 (mod 5).
+However, this is impossible.
+Therefore, y < 1.
+So 6 ^ x + 1 = 125 ^ y is impossible.
 -/
 theorem diophantine1_6_1_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 1 = 125 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 6
-  have h7 := Claim (6 ^ x % 64 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 6, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (125 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 125 ^ y % 64 = 1 := by omega
-  have h9 := Claim (y % 16 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 125 ^ y % 64 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (125 ^ y % 17) [1]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 16 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (6 ^ x % 17) [0]) [
-    {prop := List.Mem (125 ^ y % 17) [1], proof := h10},
-    {prop := 6 ^ x + 1 = 125 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 6 ^ x % 5 = 4 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (6 ^ x % 17) [0], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 5 := by omega
+    {prop := 6 ^ x % 5 = 4, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 1 = 125 ^ y, proof := h3},
-    {prop := x <= 5, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -2646,55 +2630,56 @@ theorem diophantine1_6_1_167 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 163)   6 ^ x + 1 = 169 ^ y
+(Class II, Front Mode, with magic prime 37)   6 ^ x + 1 = 169 ^ y
 For positive integers x, y satisfying 6 ^ x + 1 = 169 ^ y,
-if x >= 4, 169 ^ y = 1 (mod 81).
-So y = 0 (mod 27), 
-Therefore, 169 ^ y = 1 (mod 163).
-So 6 ^ x = 0 (mod 163), but this is impossible.
-Therefore, x < 4.
-Further examination shows that 6 ^ x + 1 = 169 ^ y is impossible.
+if y >= 1, 6 ^ x = 12 (mod 13).
+So x = 6 (mod 12), 
+which implies x = 2 (mod 4).
+Therefore, 6 ^ x = 36 (mod 37).
+So 169 ^ y = 0 (mod 37), but this is impossible.
+Therefore, y < 1.
+So 6 ^ x + 1 = 169 ^ y is impossible.
 -/
 theorem diophantine1_6_1_169 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 1 = 169 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (6 ^ x % 81 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (169 ^ y % 13 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 169 ^ y % 81 = 1 := by omega
-  have h9 := Claim (y % 27 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 169 ^ y % 81 = 1, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (169 ^ y % 163) [1]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 27 = 0, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (6 ^ x % 163) [0]) [
-    {prop := List.Mem (169 ^ y % 163) [1], proof := h10},
-    {prop := 6 ^ x + 1 = 169 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 6 ^ x % 13 = 12 := by omega
+  have h9 := Claim (x % 12 = 6) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (6 ^ x % 163) [0], proof := h11},
+    {prop := 6 ^ x % 13 = 12, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (6 ^ x % 37) [36]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 12 = 6, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (169 ^ y % 37) [0]) [
+    {prop := List.Mem (6 ^ x % 37) [36], proof := h10},
+    {prop := 6 ^ x + 1 = 169 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (169 ^ y % 37) [0], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 3 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 1 = 169 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -2752,36 +2737,36 @@ theorem diophantine1_6_1_173 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
 /-
 (Class II, Front Mode, no magic prime)   6 ^ x + 1 = 175 ^ y
 For positive integers x, y satisfying 6 ^ x + 1 = 175 ^ y,
-if y >= 2, 6 ^ x = 24 (mod 25).
+if y >= 1, 6 ^ x = 4 (mod 5).
 However, this is impossible.
-Therefore, y < 2.
-Further examination shows that 6 ^ x + 1 = 175 ^ y is impossible.
+Therefore, y < 1.
+So 6 ^ x + 1 = 175 ^ y is impossible.
 -/
 theorem diophantine1_6_1_175 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 1 = 175 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (175 ^ y % 25 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (175 ^ y % 5 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 6 ^ x % 25 = 24 := by omega
+  have h8 : 6 ^ x % 5 = 4 := by omega
   have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 6 ^ x % 25 = 24, proof := h8},
+    {prop := 6 ^ x % 5 = 4, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : y <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 1 = 175 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 

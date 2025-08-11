@@ -216,56 +216,56 @@ theorem diophantine1_5_2_13 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 101)   5 ^ x + 2 = 17 ^ y
+(Class II, Front Mode, with magic prime 1409)   5 ^ x + 2 = 17 ^ y
 For positive integers x, y satisfying 5 ^ x + 2 = 17 ^ y,
-if x >= 2, 17 ^ y = 2 (mod 25).
-So y = 17 (mod 20), 
-which implies y = 7 (mod 10).
-Therefore, 17 ^ y = 14 (mod 101).
-So 5 ^ x = 12 (mod 101), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 2 = 17 ^ y is impossible.
+if y >= 1, 5 ^ x = 15 (mod 17).
+So x = 14 (mod 16), 
+which implies x = 14, 30, 46, 62, 78, 94, 110, 126, 142, 158, 174, 190, 206, 222, 238, 254, 270, 286, 302, 318, 334, 350, 366, 382, 398, 414, 430, 446, 462, 478, 494, 510, 526, 542, 558, 574, 590, 606, 622, 638, 654, 670, 686, 702 (mod 704).
+Therefore, 5 ^ x = 971, 1273, 1296, 248, 952, 791, 1082, 381, 99, 880, 151, 716, 885, 352, 624, 850, 354, 1268, 1095, 340, 987, 789, 438, 136, 113, 1161, 457, 618, 327, 1028, 1310, 529, 1258, 693, 524, 1057, 785, 559, 1055, 141, 314, 1069, 422, 620 (mod 1409).
+So 17 ^ y = 973, 1275, 1298, 250, 954, 793, 1084, 383, 101, 882, 153, 718, 887, 354, 626, 852, 356, 1270, 1097, 342, 989, 791, 440, 138, 115, 1163, 459, 620, 329, 1030, 1312, 531, 1260, 695, 526, 1059, 787, 561, 1057, 143, 316, 1071, 424, 622 (mod 1409), but this is impossible.
+Therefore, y < 1.
+So 5 ^ x + 2 = 17 ^ y is impossible.
 -/
 theorem diophantine1_5_2_17 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 2 = 17 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (17 ^ y % 17 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 17 ^ y % 25 = 2 := by omega
-  have h9 := Claim (y % 20 = 17) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 17 ^ y % 25 = 2, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (17 ^ y % 101) [14]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 17, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 101) [12]) [
-    {prop := List.Mem (17 ^ y % 101) [14], proof := h10},
-    {prop := 5 ^ x + 2 = 17 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 5 ^ x % 17 = 15 := by omega
+  have h9 := Claim (x % 16 = 14) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 101) [12], proof := h11},
+    {prop := 5 ^ x % 17 = 15, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (5 ^ x % 1409) [971, 1273, 1296, 248, 952, 791, 1082, 381, 99, 880, 151, 716, 885, 352, 624, 850, 354, 1268, 1095, 340, 987, 789, 438, 136, 113, 1161, 457, 618, 327, 1028, 1310, 529, 1258, 693, 524, 1057, 785, 559, 1055, 141, 314, 1069, 422, 620]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 16 = 14, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (17 ^ y % 1409) [973, 1275, 1298, 250, 954, 793, 1084, 383, 101, 882, 153, 718, 887, 354, 626, 852, 356, 1270, 1097, 342, 989, 791, 440, 138, 115, 1163, 459, 620, 329, 1030, 1312, 531, 1260, 695, 526, 1059, 787, 561, 1057, 143, 316, 1071, 424, 622]) [
+    {prop := List.Mem (5 ^ x % 1409) [971, 1273, 1296, 248, 952, 791, 1082, 381, 99, 880, 151, 716, 885, 352, 624, 850, 354, 1268, 1095, 340, 987, 789, 438, 136, 113, 1161, 457, 618, 327, 1028, 1310, 529, 1258, 693, 524, 1057, 785, 559, 1055, 141, 314, 1069, 422, 620], proof := h10},
+    {prop := 5 ^ x + 2 = 17 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (17 ^ y % 1409) [973, 1275, 1298, 250, 954, 793, 1084, 383, 101, 882, 153, 718, 887, 354, 626, 852, 356, 1270, 1097, 342, 989, 791, 440, 138, 115, 1163, 459, 620, 329, 1030, 1312, 531, 1260, 695, 526, 1059, 787, 561, 1057, 143, 316, 1071, 424, 622], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 2 = 17 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -393,14 +393,14 @@ theorem diophantine1_5_2_23 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 401)   5 ^ x + 2 = 27 ^ y
+(Class II, Front Mode, with magic prime 109)   5 ^ x + 2 = 27 ^ y
 For positive integers x, y satisfying 5 ^ x + 2 = 27 ^ y,
-if x >= 3, 27 ^ y = 2 (mod 125).
-So y = 81 (mod 100), 
-which implies y = 81, 181, 281, 381 (mod 400).
-Therefore, 27 ^ y = 165, 309, 236, 92 (mod 401).
-So 5 ^ x = 163, 307, 234, 90 (mod 401), but this is impossible.
-Therefore, x < 3.
+if y >= 4, 5 ^ x = 79 (mod 81).
+So x = 20 (mod 54), 
+which implies x = 20 (mod 27).
+Therefore, 5 ^ x = 35 (mod 109).
+So 27 ^ y = 37 (mod 109), but this is impossible.
+Therefore, y < 4.
 Further examination shows that (x, y) = (2, 1).
 -/
 theorem diophantine1_5_2_27 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 2 = 27 ^ y) :
@@ -408,41 +408,41 @@ theorem diophantine1_5_2_27 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (5 ^ x % 125 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
+  by_cases h6 : y >= 4
+  have h7 := Claim (27 ^ y % 81 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 27 ^ y % 125 = 2 := by omega
-  have h9 := Claim (y % 100 = 81) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 27 ^ y % 125 = 2, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (27 ^ y % 401) [165, 309, 236, 92]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 100 = 81, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 401) [163, 307, 234, 90]) [
-    {prop := List.Mem (27 ^ y % 401) [165, 309, 236, 92], proof := h10},
-    {prop := 5 ^ x + 2 = 27 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 5 ^ x % 81 = 79 := by omega
+  have h9 := Claim (x % 54 = 20) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 401) [163, 307, 234, 90], proof := h11},
+    {prop := 5 ^ x % 81 = 79, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (5 ^ x % 109) [35]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 54 = 20, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (27 ^ y % 109) [37]) [
+    {prop := List.Mem (5 ^ x % 109) [35], proof := h10},
+    {prop := 5 ^ x + 2 = 27 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (27 ^ y % 109) [37], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 2 := by omega
+  have h7 : y <= 3 := by omega
   have h8 := Claim (List.Mem (x, y) [(2, 1)]) [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 2 = 27 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 3, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-

@@ -198,9 +198,9 @@ theorem diophantine1_8_9_13 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
 /-
 (Class II, Back Mode, no magic prime)   8 ^ x + 9 = 17 ^ y
 For positive integers x, y satisfying 8 ^ x + 9 = 17 ^ y,
-if x >= 6, 17 ^ y = 9 (mod 64).
+if x >= 4, 17 ^ y = 9 (mod 16).
 However, this is impossible.
-Therefore, x < 6.
+Therefore, x < 4.
 Further examination shows that (x, y) = (1, 1).
 -/
 theorem diophantine1_8_9_17 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 9 = 17 ^ y) :
@@ -208,26 +208,26 @@ theorem diophantine1_8_9_17 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 6
-  have h7 := Claim (8 ^ x % 64 = 0) [
+  by_cases h6 : x >= 4
+  have h7 := Claim (8 ^ x % 16 = 0) [
     {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 6, proof := h6},
+    {prop := x >= 4, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 17 ^ y % 64 = 9 := by omega
+  have h8 : 17 ^ y % 16 = 9 := by omega
   have h9 := Claim False [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := 17 ^ y % 64 = 9, proof := h8},
+    {prop := 17 ^ y % 16 = 9, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : x <= 5 := by omega
+  have h7 : x <= 3 := by omega
   have h8 := Claim (List.Mem (x, y) [(1, 1)]) [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 8 ^ x + 9 = 17 ^ y, proof := h3},
-    {prop := x <= 5, proof := h7},
+    {prop := x <= 3, proof := h7},
   ] "diophantine1_front_enumeration"
   exact h8
 
@@ -641,39 +641,39 @@ theorem diophantine1_8_9_47 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   exact h8
 
 /-
-(Class II, Back Mode, no magic prime)   8 ^ x + 9 = 49 ^ y
+(Class II, Front Mode, no magic prime)   8 ^ x + 9 = 49 ^ y
 For positive integers x, y satisfying 8 ^ x + 9 = 49 ^ y,
-if x >= 4, 49 ^ y = 9 (mod 16).
+if y >= 1, 8 ^ x = 5 (mod 7).
 However, this is impossible.
-Therefore, x < 4.
-Further examination shows that 8 ^ x + 9 = 49 ^ y is impossible.
+Therefore, y < 1.
+So 8 ^ x + 9 = 49 ^ y is impossible.
 -/
 theorem diophantine1_8_9_49 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 9 = 49 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (8 ^ x % 16 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 49 ^ y % 16 = 9 := by omega
-  have h9 := Claim False [
+  by_cases h6 : y >= 1
+  have h7 := Claim (49 ^ y % 7 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 49 ^ y % 16 = 9, proof := h8},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 8 ^ x % 7 = 5 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 8 ^ x % 7 = 5, proof := h8},
   ] "observe_mod_cycle"
   apply False.elim h9
-  have h7 : x <= 3 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 8 ^ x + 9 = 49 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -1012,13 +1012,13 @@ theorem diophantine1_8_9_71 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 257)   8 ^ x + 9 = 73 ^ y
+(Class II, Back Mode, with magic prime 17)   8 ^ x + 9 = 73 ^ y
 For positive integers x, y satisfying 8 ^ x + 9 = 73 ^ y,
-if x >= 9, 73 ^ y = 9 (mod 512).
-So y = 25 (mod 64), 
-Therefore, 73 ^ y = 46 (mod 257).
-So 8 ^ x = 37 (mod 257), but this is impossible.
-Therefore, x < 9.
+if x >= 7, 73 ^ y = 9 (mod 128).
+So y = 9 (mod 16), 
+Therefore, 73 ^ y = 12 (mod 17).
+So 8 ^ x = 3 (mod 17), but this is impossible.
+Therefore, x < 7.
 Further examination shows that (x, y) = (2, 1).
 -/
 theorem diophantine1_8_9_73 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 9 = 73 ^ y) :
@@ -1026,40 +1026,40 @@ theorem diophantine1_8_9_73 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 9
-  have h7 := Claim (8 ^ x % 512 = 0) [
+  by_cases h6 : x >= 7
+  have h7 := Claim (8 ^ x % 128 = 0) [
     {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 9, proof := h6},
+    {prop := x >= 7, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 73 ^ y % 512 = 9 := by omega
-  have h9 := Claim (y % 64 = 25) [
+  have h8 : 73 ^ y % 128 = 9 := by omega
+  have h9 := Claim (y % 16 = 9) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := 73 ^ y % 512 = 9, proof := h8},
+    {prop := 73 ^ y % 128 = 9, proof := h8},
   ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (73 ^ y % 257) [46]) [
+  have h10 := Claim (List.Mem (73 ^ y % 17) [12]) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := y % 64 = 25, proof := h9},
+    {prop := y % 16 = 9, proof := h9},
   ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (8 ^ x % 257) [37]) [
-    {prop := List.Mem (73 ^ y % 257) [46], proof := h10},
+  have h11 := Claim (List.Mem (8 ^ x % 17) [3]) [
+    {prop := List.Mem (73 ^ y % 17) [12], proof := h10},
     {prop := 8 ^ x + 9 = 73 ^ y, proof := h3},
   ] "compute_mod_sub"
   have h12 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (8 ^ x % 257) [37], proof := h11},
+    {prop := List.Mem (8 ^ x % 17) [3], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 8 := by omega
+  have h7 : x <= 6 := by omega
   have h8 := Claim (List.Mem (x, y) [(2, 1)]) [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 8 ^ x + 9 = 73 ^ y, proof := h3},
-    {prop := x <= 8, proof := h7},
+    {prop := x <= 6, proof := h7},
   ] "diophantine1_front_enumeration"
   exact h8
 
@@ -1686,45 +1686,97 @@ theorem diophantine1_8_9_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Front Mode, with magic prime 661)   8 ^ x + 9 = 121 ^ y
+(Class II, Front Mode, with magic prime 31)   8 ^ x + 9 = 121 ^ y
 For positive integers x, y satisfying 8 ^ x + 9 = 121 ^ y,
-if y >= 2, 8 ^ x = 112 (mod 121).
-So x = 77 (mod 110), 
-which implies x = 77, 187 (mod 220).
-Therefore, 8 ^ x = 71, 590 (mod 661).
-So 121 ^ y = 80, 599 (mod 661), but this is impossible.
-Therefore, y < 2.
-Further examination shows that 8 ^ x + 9 = 121 ^ y is impossible.
+if y >= 1, 8 ^ x = 2 (mod 11).
+So x = 7 (mod 10), 
+which implies x = 2 (mod 5).
+Therefore, 8 ^ x = 2 (mod 31).
+So 121 ^ y = 11 (mod 31), but this is impossible.
+Therefore, y < 1.
+So 8 ^ x + 9 = 121 ^ y is impossible.
 -/
 theorem diophantine1_8_9_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 9 = 121 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (121 ^ y % 121 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (121 ^ y % 11 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 8 ^ x % 121 = 112 := by omega
-  have h9 := Claim (x % 110 = 77) [
+  have h8 : 8 ^ x % 11 = 2 := by omega
+  have h9 := Claim (x % 10 = 7) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 8 ^ x % 121 = 112, proof := h8},
+    {prop := 8 ^ x % 11 = 2, proof := h8},
   ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (8 ^ x % 661) [71, 590]) [
+  have h10 := Claim (List.Mem (8 ^ x % 31) [2]) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := x % 110 = 77, proof := h9},
+    {prop := x % 10 = 7, proof := h9},
   ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (121 ^ y % 661) [80, 599]) [
-    {prop := List.Mem (8 ^ x % 661) [71, 590], proof := h10},
+  have h11 := Claim (List.Mem (121 ^ y % 31) [11]) [
+    {prop := List.Mem (8 ^ x % 31) [2], proof := h10},
     {prop := 8 ^ x + 9 = 121 ^ y, proof := h3},
   ] "compute_mod_add"
   have h12 := Claim False [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := List.Mem (121 ^ y % 661) [80, 599], proof := h11},
+    {prop := List.Mem (121 ^ y % 31) [11], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 8 ^ x + 9 = 121 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
+  exact h8
+
+/-
+(Class II, Front Mode, with magic prime 61)   8 ^ x + 9 = 125 ^ y
+For positive integers x, y satisfying 8 ^ x + 9 = 125 ^ y,
+if y >= 2, 8 ^ x = 16 (mod 25).
+So x = 8 (mod 20).
+Therefore, 8 ^ x = 20 (mod 61).
+So 125 ^ y = 29 (mod 61), but this is impossible.
+Therefore, y < 2.
+Further examination shows that 8 ^ x + 9 = 125 ^ y is impossible.
+-/
+theorem diophantine1_8_9_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 9 = 125 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (125 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 8 ^ x % 25 = 16 := by omega
+  have h9 := Claim (x % 20 = 8) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 8 ^ x % 25 = 16, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (8 ^ x % 61) [20]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 20 = 8, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (125 ^ y % 61) [29]) [
+    {prop := List.Mem (8 ^ x % 61) [20], proof := h10},
+    {prop := 8 ^ x + 9 = 125 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (125 ^ y % 61) [29], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
   have h7 : y <= 1 := by omega
@@ -1733,61 +1785,9 @@ theorem diophantine1_8_9_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
-    {prop := 8 ^ x + 9 = 121 ^ y, proof := h3},
+    {prop := 8 ^ x + 9 = 125 ^ y, proof := h3},
     {prop := y <= 1, proof := h7},
   ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 17)   8 ^ x + 9 = 125 ^ y
-For positive integers x, y satisfying 8 ^ x + 9 = 125 ^ y,
-if x >= 6, 125 ^ y = 9 (mod 64).
-So y = 2 (mod 16), 
-Therefore, 125 ^ y = 2 (mod 17).
-So 8 ^ x = 10 (mod 17), but this is impossible.
-Therefore, x < 6.
-Further examination shows that 8 ^ x + 9 = 125 ^ y is impossible.
--/
-theorem diophantine1_8_9_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 9 = 125 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 6
-  have h7 := Claim (8 ^ x % 64 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 6, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 125 ^ y % 64 = 9 := by omega
-  have h9 := Claim (y % 16 = 2) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 125 ^ y % 64 = 9, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (125 ^ y % 17) [2]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 16 = 2, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (8 ^ x % 17) [10]) [
-    {prop := List.Mem (125 ^ y % 17) [2], proof := h10},
-    {prop := 8 ^ x + 9 = 125 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (8 ^ x % 17) [10], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 5 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 8 ^ x + 9 = 125 ^ y, proof := h3},
-    {prop := x <= 5, proof := h7},
-  ] "diophantine1_front_enumeration"
   exact h8
 
 /-
@@ -2428,56 +2428,39 @@ theorem diophantine1_8_9_167 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 17)   8 ^ x + 9 = 169 ^ y
+(Class II, Front Mode, no magic prime)   8 ^ x + 9 = 169 ^ y
 For positive integers x, y satisfying 8 ^ x + 9 = 169 ^ y,
-if x >= 7, 169 ^ y = 9 (mod 128).
-So y = 13 (mod 16), 
-which implies y = 1 (mod 2).
-Therefore, 169 ^ y = 16 (mod 17).
-So 8 ^ x = 7 (mod 17), but this is impossible.
-Therefore, x < 7.
-Further examination shows that 8 ^ x + 9 = 169 ^ y is impossible.
+if y >= 1, 8 ^ x = 4 (mod 13).
+However, this is impossible.
+Therefore, y < 1.
+So 8 ^ x + 9 = 169 ^ y is impossible.
 -/
 theorem diophantine1_8_9_169 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 9 = 169 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 7
-  have h7 := Claim (8 ^ x % 128 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 7, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (169 ^ y % 13 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 169 ^ y % 128 = 9 := by omega
-  have h9 := Claim (y % 16 = 13) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 169 ^ y % 128 = 9, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (169 ^ y % 17) [16]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 16 = 13, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (8 ^ x % 17) [7]) [
-    {prop := List.Mem (169 ^ y % 17) [16], proof := h10},
-    {prop := 8 ^ x + 9 = 169 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 8 ^ x % 13 = 4 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (8 ^ x % 17) [7], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 6 := by omega
+    {prop := 8 ^ x % 13 = 4, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 8 ^ x + 9 = 169 ^ y, proof := h3},
-    {prop := x <= 6, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-
@@ -3559,54 +3542,38 @@ theorem diophantine1_8_9_241 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
   exact h8
 
 /-
-(Class II, Front Mode, with magic prime 41)   8 ^ x + 9 = 245 ^ y
+(Class II, Front Mode, no magic prime)   8 ^ x + 9 = 245 ^ y
 For positive integers x, y satisfying 8 ^ x + 9 = 245 ^ y,
-if y >= 2, 8 ^ x = 16 (mod 25).
-So x = 8 (mod 20).
-Therefore, 8 ^ x = 16 (mod 41).
-So 245 ^ y = 25 (mod 41), but this is impossible.
-Therefore, y < 2.
-Further examination shows that 8 ^ x + 9 = 245 ^ y is impossible.
+if y >= 1, 8 ^ x = 5 (mod 7).
+However, this is impossible.
+Therefore, y < 1.
+So 8 ^ x + 9 = 245 ^ y is impossible.
 -/
 theorem diophantine1_8_9_245 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 8 ^ x + 9 = 245 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 2
-  have h7 := Claim (245 ^ y % 25 = 0) [
+  by_cases h6 : y >= 1
+  have h7 := Claim (245 ^ y % 7 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 2, proof := h6},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 8 ^ x % 25 = 16 := by omega
-  have h9 := Claim (x % 20 = 8) [
+  have h8 : 8 ^ x % 7 = 5 := by omega
+  have h9 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := 8 ^ x % 25 = 16, proof := h8},
+    {prop := 8 ^ x % 7 = 5, proof := h8},
   ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (8 ^ x % 41) [16]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 20 = 8, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (245 ^ y % 41) [25]) [
-    {prop := List.Mem (8 ^ x % 41) [16], proof := h10},
-    {prop := 8 ^ x + 9 = 245 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := List.Mem (245 ^ y % 41) [25], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : y <= 1 := by omega
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 8 ^ x + 9 = 245 ^ y, proof := h3},
-    {prop := y <= 1, proof := h7},
+    {prop := y <= 0, proof := h7},
   ] "diophantine1_back_enumeration"
   exact h8
 

@@ -662,14 +662,13 @@ theorem diophantine1_3_5_31 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 271)   3 ^ x + 5 = 32 ^ y
+(Class II, Front Mode, with magic prime 17)   3 ^ x + 5 = 32 ^ y
 For positive integers x, y satisfying 3 ^ x + 5 = 32 ^ y,
-if x >= 4, 32 ^ y = 5 (mod 81).
-So y = 37 (mod 54), 
-which implies y = 10 (mod 27).
-Therefore, 32 ^ y = 83 (mod 271).
-So 3 ^ x = 78 (mod 271), but this is impossible.
-Therefore, x < 4.
+if y >= 6, 3 ^ x = 59 (mod 64).
+So x = 11 (mod 16).
+Therefore, 3 ^ x = 7 (mod 17).
+So 32 ^ y = 12 (mod 17), but this is impossible.
+Therefore, y < 6.
 Further examination shows that (x, y) = (3, 1).
 -/
 theorem diophantine1_3_5_32 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 3 ^ x + 5 = 32 ^ y) :
@@ -677,41 +676,41 @@ theorem diophantine1_3_5_32 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (3 ^ x % 81 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
+  by_cases h6 : y >= 6
+  have h7 := Claim (32 ^ y % 64 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 6, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 32 ^ y % 81 = 5 := by omega
-  have h9 := Claim (y % 54 = 37) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 32 ^ y % 81 = 5, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (32 ^ y % 271) [83]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 54 = 37, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (3 ^ x % 271) [78]) [
-    {prop := List.Mem (32 ^ y % 271) [83], proof := h10},
-    {prop := 3 ^ x + 5 = 32 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 3 ^ x % 64 = 59 := by omega
+  have h9 := Claim (x % 16 = 11) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (3 ^ x % 271) [78], proof := h11},
+    {prop := 3 ^ x % 64 = 59, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (3 ^ x % 17) [7]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 16 = 11, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (32 ^ y % 17) [12]) [
+    {prop := List.Mem (3 ^ x % 17) [7], proof := h10},
+    {prop := 3 ^ x + 5 = 32 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (32 ^ y % 17) [12], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 3 := by omega
+  have h7 : y <= 5 := by omega
   have h8 := Claim (List.Mem (x, y) [(3, 1)]) [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 3 ^ x + 5 = 32 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 5, proof := h7},
+  ] "diophantine1_back_enumeration"
   exact h8
 
 /-

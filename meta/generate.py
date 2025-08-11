@@ -44,7 +44,7 @@ def main():
     if not is_toy:
         
         SysY_header_code = f"""
-{include_stdio_code}
+{include_code}
 
 // {section_comment_decorator} SysY basic section {section_comment_decorator}
 
@@ -114,6 +114,10 @@ def main():
 
 {get_disproof_evidence_code}
 
+{tune_settings_code}
+
+{recover_settings_code}
+
 {Solve_Diophantine1_I_i_code}
 
 {Solve_Diophantine1_I_ii_code}
@@ -134,6 +138,8 @@ def main():
 
 {generate_Lean4_code_v1_code}
 // {section_comment_decorator} api section {section_comment_decorator}
+
+{generate_Claim_Structure_code}
 
 {Solve_Diophantine1_generate_Lean4_code}
 
