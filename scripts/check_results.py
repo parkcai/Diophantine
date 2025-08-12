@@ -1,38 +1,64 @@
+import math
 from tqdm import tqdm
-from os import listdir
-from os.path import join
-from os.path import isfile
+from os.path import sep as seperator
+from pywheels.file_tools import append_to_file
 from pywheels.file_tools import assert_file_exist
 from pywheels.task_runner import execute_command
+from .utils import *
 
 
 def main():
     
-    folder = f"results"
+    a_max, a_min, b_max, b_min, c_max, c_min, a_start, b_start, exclude_trivial = \
+        get_diophantine_parameters()
 
-    lean_file_paths = sorted([
-        join(folder, f)
-        for f in listdir(folder)
-        if f.endswith(".lean") and isfile(join(folder, f))
-    ])
+    progress_bar = tqdm(range((a_max - a_min + 1) * (b_max - b_min + 1)))
 
-    for lean_file_path in tqdm(lean_file_paths):
-
-        try:
+    for a in range(a_min, a_max + 1):
+        for b in range(b_min, b_max + 1):
             
-            assert_file_exist(lean_file_path)
-
-            result = execute_command(f"lean --run {lean_file_path}")
-
-            assert result["stdout"] == "Native Lean4 check passed.\n"
-
-        except Exception as error:
+            if not(a >= (a_start + 1) or (a == a_start and b >= b_start)):
+                progress_bar.update(1); continue
             
-            print(f"失败！出错文件：{lean_file_path}")
+            if exclude_trivial and math.gcd(a, b) >= 2: 
+                progress_bar.update(1); continue
             
-            print(f"错误信息：{error}")
+            lean_file_path = f"results{seperator}{a}-{b}.lean"
             
-            return
+            try:
+                assert_file_exist(lean_file_path)
+                
+            except Exception as _:
+                
+                append_to_file(
+                    file_path = recorder_path, 
+                    content = (
+                        f"file {lean_file_path} not valid, "
+                        f"error: {lean_file_path} doesn't exist!"
+                    )
+                )
+                
+                progress_bar.update(1); continue
+                
+            try:
+
+                result = execute_command(f"lean --run {lean_file_path}")
+
+                assert result["stdout"] == "Native Lean4 check passed.\n"
+
+            except Exception as _:
+                
+                append_to_file(
+                    file_path = recorder_path, 
+                    content = (
+                        f"file {lean_file_path} not valid, "
+                        f"error: failed native Lean4 check!"
+                    )
+                )
+                
+                progress_bar.update(1); continue
+                
+            progress_bar.update(1)
 
 
 if __name__ == "__main__":
