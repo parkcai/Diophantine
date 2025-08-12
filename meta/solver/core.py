@@ -1,6 +1,6 @@
-from .big_int import *
-from ...config import *
-from ...SysY.printf import *
+from ..big_int import *
+from ..config import *
+from ..SysY.printf import *
 
 
 __all__ = [
@@ -64,6 +64,7 @@ int disproof_priorlist_length = 0;
 int verbose_v1 = {_verbose_v1};
 int disable_front_mode = 0;
 int disable_back_mode = 0;
+int hijack_settings = 0;
 """
 
 
@@ -453,14 +454,45 @@ Solve_Diophantine1_I_iii_code = f"""void Solve_Diophantine1_I_iii() {{
 """
 
 
+# (a, b, c, tuned_max_trial_num)
+_special_trial_num_list = [
+    (31, 2, 47, 25), (47, 49, 59, 25), (47, 81, 73, 25),
+    (47, 81, 83, 25), (47, 91, 31, 25), (47, 96, 59, 25),
+    (47, 97, 59, 25), (59, 31, 47, 25), (59, 73, 47, 25),
+    (59, 87, 47, 25), (59, 99, 47, 25), (59, 42, 67, 25), 
+    (59, 42, 83, 25), (59, 42, 89, 25), (59, 85, 83, 10), 
+    (83, 7, 59, 25), (83, 11, 59, 25), (83, 18, 19, 25), 
+    (83, 21, 59, 25), (83, 29, 59, 25), (83, 30, 59, 10), 
+    (83, 33, 47, 25), (83, 33, 89, 25), (83, 40, 59, 10), 
+    (83, 51, 59, 25), (83, 61, 59, 25), (83, 78, 59, 25), 
+    (83, 84, 59, 25), (83, 84, 89, 25), (83, 85, 47, 50), 
+    (83, 93, 89, 25), (83, 94, 59, 10), (83, 95, 59, 10),
+]
+
+
+_enter = "\n"
+
+
 tune_settings_code = f"""void tune_settings(int a, int b, int c) {{
+    if (hijack_settings) return;
     max_trial_num_v1_backup = max_trial_num_v1;
     mod_threshold_v1_backup = mod_threshold_v1;
+    // 点状设置（优先生效）
+{f"{_enter}".join([
+    f"    if (a == {a} && b == {b} && c == {c}) {{ max_trial_num_v1 = {d}; mod_threshold_v1 = 1000000000; return; }}" 
+    for a, b, c, d in _special_trial_num_list
+])}
+    // 面状设置
+    if (a <= 100 && b <= 100 && c <= 100) {{
+        max_trial_num_v1 = 5; mod_threshold_v1 = 1000000000;
+        return;
+    }}
 }}
 """
 
 
 recover_settings_code = f"""void recover_settings() {{
+    if (hijack_settings) return;
     max_trial_num_v1 = max_trial_num_v1_backup;
     mod_threshold_v1 = mod_threshold_v1_backup;
 }}

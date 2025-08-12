@@ -5,6 +5,9 @@ diophantine
 command_output.txt
 transcendental_diophantine1.lean
 diophantine.c
+tmp.lean
+fix.py
+quick.py
 results/*.lean
 !results/2-1.lean
 !results/2-2.lean

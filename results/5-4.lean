@@ -3,8 +3,8 @@
 -- a, b and c range over the following intervals:
 -- 5 <= a <= 5
 -- 4 <= b <= 4
--- 2 <= c <= 250
--- trivial cases where a, b, c are not pairwise coprime are skipped.
+-- 2 <= c <= 100
+-- trivial cases where a, b, c are not pairwise coprime are not skipped.
 
 
 -- Claim Structure
@@ -18,6 +18,33 @@ axiom Claim (prop_to_claim : Prop)
   : prop_to_claim
 
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 2 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 2 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_2 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 2 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (2 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 61)   5 ^ x + 4 = 3 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 3 ^ y,
@@ -68,9 +95,92 @@ theorem diophantine1_5_4_3 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 :
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 3 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 4 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 4 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_4 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 4 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 5 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 5 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 5 ^ y is impossible.
+-/
+theorem diophantine1_5_4_5 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 5 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (5 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 5 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 6 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 6 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_6 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 6 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (6 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 1 with prime factor 7 of 7 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 7 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 7 ^ y,
@@ -104,9 +214,36 @@ theorem diophantine1_5_4_7 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 :
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 7 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 8 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 8 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_8 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 8 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (8 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 2 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 11...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 11)   5 ^ x + 4 = 9 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 9 ^ y,
@@ -157,9 +294,34 @@ theorem diophantine1_5_4_9 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 :
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 9 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 10 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 10 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_10 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 10 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 11 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 11 ^ y,
@@ -193,9 +355,35 @@ theorem diophantine1_5_4_11 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 11 ^ y, proof := h3},
     {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 12 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 12 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_12 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 12 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (12 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 1 with prime factor 13 of 13 ...
+-- Succeeded.
 /-
 (Class II, Front Mode, no magic prime)   5 ^ x + 4 = 13 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 13 ^ y,
@@ -229,62 +417,179 @@ theorem diophantine1_5_4_13 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 13 ^ y, proof := h3},
     {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
 /-
-(Class II, Front Mode, with magic prime 2593)   5 ^ x + 4 = 17 ^ y
+(Class I, Type i)   5 ^ x + 4 = 14 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 14 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_14 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 14 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (14 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 15 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 15 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 15 ^ y is impossible.
+-/
+theorem diophantine1_5_4_15 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 15 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (15 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 15 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 16 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 16 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_16 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 16 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (16 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 1 with prime factor 17 of 17 ...
+-- Trying prime 97...
+-- Trying prime 113...
+-- Trying prime 193...
+-- Trying prime 241...
+-- Trying prime 257...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Trying prime 101...
+-- Succeeded.
+/-
+(Class II, Back Mode, with magic prime 101)   5 ^ x + 4 = 17 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 17 ^ y,
-if y >= 1, 5 ^ x = 13 (mod 17).
-So x = 4 (mod 16), 
-which implies x = 4, 20 (mod 32).
-Therefore, 5 ^ x = 625, 1968 (mod 2593).
-So 17 ^ y = 629, 1972 (mod 2593), but this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 17 ^ y is impossible.
+if x >= 2, 17 ^ y = 4 (mod 25).
+So y = 14 (mod 20), 
+which implies y = 4 (mod 10).
+Therefore, 17 ^ y = 95 (mod 101).
+So 5 ^ x = 91 (mod 101), but this is impossible.
+Therefore, x < 2.
+Further examination shows that 5 ^ x + 4 = 17 ^ y is impossible.
 -/
 theorem diophantine1_5_4_17 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 17 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (17 ^ y % 17 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
+  by_cases h6 : x >= 2
+  have h7 := Claim (5 ^ x % 25 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 17 = 13 := by omega
-  have h9 := Claim (x % 16 = 4) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 17 = 13, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (5 ^ x % 2593) [625, 1968]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 16 = 4, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (17 ^ y % 2593) [629, 1972]) [
-    {prop := List.Mem (5 ^ x % 2593) [625, 1968], proof := h10},
-    {prop := 5 ^ x + 4 = 17 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
+  have h8 : 17 ^ y % 25 = 4 := by omega
+  have h9 := Claim (y % 20 = 14) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := List.Mem (17 ^ y % 2593) [629, 1972], proof := h11},
+    {prop := 17 ^ y % 25 = 4, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (17 ^ y % 101) [95]) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := y % 20 = 14, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (5 ^ x % 101) [91]) [
+    {prop := List.Mem (17 ^ y % 101) [95], proof := h10},
+    {prop := 5 ^ x + 4 = 17 ^ y, proof := h3},
+  ] "compute_mod_sub"
+  have h12 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := List.Mem (5 ^ x % 101) [91], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : y <= 0 := by omega
+  have h7 : x <= 1 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 17 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+    {prop := x <= 1, proof := h7},
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 18 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 18 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_18 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 18 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (18 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 1 with prime factor 19 of 19 ...
+-- Succeeded.
 /-
 (Class II, Front Mode, no magic prime)   5 ^ x + 4 = 19 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 19 ^ y,
@@ -318,9 +623,35 @@ theorem diophantine1_5_4_19 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 19 ^ y, proof := h3},
     {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 20 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 20 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_20 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 20 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (20 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 21 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 21 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 21 ^ y,
@@ -354,9 +685,43 @@ theorem diophantine1_5_4_21 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 21 ^ y, proof := h3},
     {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 22 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 22 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_22 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 22 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (22 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 1 with prime factor 23 of 23 ...
+-- Trying prime 67...
+-- Trying prime 89...
+-- Trying prime 199...
+-- Trying prime 331...
+-- Trying prime 353...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 61)   5 ^ x + 4 = 23 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 23 ^ y,
@@ -406,9 +771,95 @@ theorem diophantine1_5_4_23 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 23 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 24 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 24 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_24 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 24 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (24 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 25 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 25 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 25 ^ y is impossible.
+-/
+theorem diophantine1_5_4_25 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 25 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (25 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 25 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 26 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 26 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_26 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 26 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (26 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 27 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 2 with prime factor 3 of 27 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 61)   5 ^ x + 4 = 27 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 27 ^ y,
@@ -459,9 +910,36 @@ theorem diophantine1_5_4_27 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 27 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 28 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 28 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_28 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 28 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (28 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 3 with prime factor 5 of 5 ...
+-- Trying prime 101...
+-- Trying prime 151...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 151)   5 ^ x + 4 = 29 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 29 ^ y,
@@ -512,9 +990,34 @@ theorem diophantine1_5_4_29 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 29 ^ y, proof := h3},
     {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 30 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 30 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_30 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 30 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (30 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 31 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 31 ^ y,
@@ -548,9 +1051,37 @@ theorem diophantine1_5_4_31 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 31 ^ y, proof := h3},
     {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 32 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 32 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_32 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 32 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (32 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 33 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 2 with prime factor 3 of 33 ...
+-- Trying to disprove y >= 1 with prime factor 11 of 33 ...
+-- Succeeded.
 /-
 (Class II, Front Mode, no magic prime)   5 ^ x + 4 = 33 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 33 ^ y,
@@ -584,9 +1115,92 @@ theorem diophantine1_5_4_33 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 33 ^ y, proof := h3},
     {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 34 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 34 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_34 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 34 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (34 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 35 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 35 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 35 ^ y is impossible.
+-/
+theorem diophantine1_5_4_35 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 35 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (35 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 35 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 36 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 36 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_36 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 36 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (36 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 41)   5 ^ x + 4 = 37 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 37 ^ y,
@@ -637,9 +1251,37 @@ theorem diophantine1_5_4_37 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 37 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 38 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 38 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_38 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 38 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (38 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 39 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 2 with prime factor 3 of 39 ...
+-- Trying to disprove y >= 1 with prime factor 13 of 39 ...
+-- Succeeded.
 /-
 (Class II, Front Mode, no magic prime)   5 ^ x + 4 = 39 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 39 ^ y,
@@ -673,9 +1315,34 @@ theorem diophantine1_5_4_39 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 39 ^ y, proof := h3},
     {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 40 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 40 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_40 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 40 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (40 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 41 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 41 ^ y,
@@ -709,9 +1376,35 @@ theorem diophantine1_5_4_41 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 41 ^ y, proof := h3},
     {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 42 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 42 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_42 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 42 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (42 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 43 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 43 ^ y,
@@ -745,9 +1438,96 @@ theorem diophantine1_5_4_43 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 43 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 44 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 44 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_44 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 44 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (44 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 45 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 45 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 45 ^ y is impossible.
+-/
+theorem diophantine1_5_4_45 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 45 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (45 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 45 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 46 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 46 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_46 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 46 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (46 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Trying prime 101...
+-- Trying prime 181...
+-- Trying prime 241...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 241)   5 ^ x + 4 = 47 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 47 ^ y,
@@ -798,9 +1578,36 @@ theorem diophantine1_5_4_47 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 47 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 48 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 48 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_48 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 48 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (48 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 1 with prime factor 7 of 49 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 49 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 49 ^ y,
@@ -834,9 +1641,35 @@ theorem diophantine1_5_4_49 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 49 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 50 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 50 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_50 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 50 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (50 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 51 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 51 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 51 ^ y,
@@ -870,9 +1703,37 @@ theorem diophantine1_5_4_51 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 51 ^ y, proof := h3},
     {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 52 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 52 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_52 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 52 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (52 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 61)   5 ^ x + 4 = 53 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 53 ^ y,
@@ -922,9 +1783,93 @@ theorem diophantine1_5_4_53 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 53 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 54 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 54 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_54 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 54 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (54 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 55 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 55 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 55 ^ y is impossible.
+-/
+theorem diophantine1_5_4_55 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 55 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (55 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 55 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 56 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 56 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_56 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 56 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (56 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 57 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 2 with prime factor 3 of 57 ...
+-- Trying to disprove y >= 1 with prime factor 19 of 57 ...
+-- Succeeded.
 /-
 (Class II, Front Mode, no magic prime)   5 ^ x + 4 = 57 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 57 ^ y,
@@ -958,9 +1903,37 @@ theorem diophantine1_5_4_57 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 57 ^ y, proof := h3},
     {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 58 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 58 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_58 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 58 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (58 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 11...
+-- Trying prime 31...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 31)   5 ^ x + 4 = 59 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 59 ^ y,
@@ -1011,9 +1984,34 @@ theorem diophantine1_5_4_59 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 59 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 60 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 60 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_60 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 60 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (60 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 61 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 61 ^ y,
@@ -1047,18 +2045,54 @@ theorem diophantine1_5_4_61 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 61 ^ y, proof := h3},
     {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 401)   5 ^ x + 4 = 63 ^ y
+(Class I, Type i)   5 ^ x + 4 = 62 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 62 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_62 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 62 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (62 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 63 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 1 with prime factor 7 of 63 ...
+-- Trying to disprove y >= 2 with prime factor 3 of 63 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Trying prime 101...
+-- Trying prime 181...
+-- Trying prime 241...
+-- Trying to disprove y >= 3 with prime factor 3 of 63 ...
+-- Trying prime 19...
+-- Succeeded.
+/-
+(Class II, Front Mode, with magic prime 19)   5 ^ x + 4 = 63 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 63 ^ y,
-if x >= 2, 63 ^ y = 4 (mod 25).
-So y = 18 (mod 20), 
-which implies y = 3, 8, 13, 18, 23 (mod 25).
-Therefore, 63 ^ y = 224, 315, 255, 321, 88 (mod 401).
-So 5 ^ x = 220, 311, 251, 317, 84 (mod 401), but this is impossible.
-Therefore, x < 2.
+if y >= 3, 5 ^ x = 23 (mod 27).
+So x = 13 (mod 18), 
+which implies x = 4 (mod 9).
+Therefore, 5 ^ x = 17 (mod 19).
+So 63 ^ y = 2 (mod 19), but this is impossible.
+Therefore, y < 3.
 Further examination shows that 5 ^ x + 4 = 63 ^ y is impossible.
 -/
 theorem diophantine1_5_4_63 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 63 ^ y) :
@@ -1066,83 +2100,242 @@ theorem diophantine1_5_4_63 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 3
+  have h7 := Claim (63 ^ y % 27 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 63 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 18) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 63 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (63 ^ y % 401) [224, 315, 255, 321, 88]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 18, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 401) [220, 311, 251, 317, 84]) [
-    {prop := List.Mem (63 ^ y % 401) [224, 315, 255, 321, 88], proof := h10},
-    {prop := 5 ^ x + 4 = 63 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 5 ^ x % 27 = 23 := by omega
+  have h9 := Claim (x % 18 = 13) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 401) [220, 311, 251, 317, 84], proof := h11},
+    {prop := 5 ^ x % 27 = 23, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (5 ^ x % 19) [17]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 18 = 13, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (63 ^ y % 19) [2]) [
+    {prop := List.Mem (5 ^ x % 19) [17], proof := h10},
+    {prop := 5 ^ x + 4 = 63 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (63 ^ y % 19) [2], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 1 := by omega
+  have h7 : y <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 63 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 2, proof := h7},
+  ] "diophantine1_enumeration"
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 521)   5 ^ x + 4 = 67 ^ y
+(Class I, Type i)   5 ^ x + 4 = 64 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 64 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_64 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 64 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (64 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 65 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 65 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 65 ^ y is impossible.
+-/
+theorem diophantine1_5_4_65 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 65 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (65 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 65 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 66 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 66 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_66 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 66 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (66 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Trying prime 101...
+-- Trying prime 181...
+-- Trying prime 241...
+-- Trying to disprove y >= 1 with prime factor 67 of 67 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   5 ^ x + 4 = 67 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 67 ^ y,
-if x >= 2, 67 ^ y = 4 (mod 25).
-So y = 14 (mod 20), 
-which implies y = 14, 34, 54, 74, 94, 114, 134, 154, 174, 194, 214, 234, 254, 274, 294, 314, 334, 354, 374, 394, 414, 434, 454, 474, 494, 514 (mod 520).
-Therefore, 67 ^ y = 338, 248, 481, 393, 424, 419, 403, 456, 313, 168, 225, 199, 220, 183, 273, 40, 128, 97, 102, 118, 65, 208, 353, 296, 322, 301 (mod 521).
-So 5 ^ x = 334, 244, 477, 389, 420, 415, 399, 452, 309, 164, 221, 195, 216, 179, 269, 36, 124, 93, 98, 114, 61, 204, 349, 292, 318, 297 (mod 521), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 67 ^ y is impossible.
+if y >= 1, 5 ^ x = 63 (mod 67).
+However, this is impossible.
+Therefore, y < 1.
+So 5 ^ x + 4 = 67 ^ y is impossible.
 -/
 theorem diophantine1_5_4_67 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 67 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (67 ^ y % 67 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 5 ^ x % 67 = 63 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 67 = 63, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 67 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 68 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 68 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_68 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 68 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (68 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 69 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 2 with prime factor 3 of 69 ...
+-- Trying to disprove y >= 1 with prime factor 23 of 69 ...
+-- Trying prime 67...
+-- Trying prime 89...
+-- Trying prime 199...
+-- Trying prime 331...
+-- Trying prime 353...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 11...
+-- Succeeded.
+/-
+(Class II, Back Mode, with magic prime 11)   5 ^ x + 4 = 69 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 69 ^ y,
+if x >= 2, 69 ^ y = 4 (mod 25).
+So y = 9 (mod 10), 
+which implies y = 4 (mod 5).
+Therefore, 69 ^ y = 4 (mod 11).
+So 5 ^ x = 0 (mod 11), but this is impossible.
+Therefore, x < 2.
+Further examination shows that 5 ^ x + 4 = 69 ^ y is impossible.
+-/
+theorem diophantine1_5_4_69 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 69 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
   by_cases h6 : x >= 2
   have h7 := Claim (5 ^ x % 25 = 0) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 2, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 67 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 14) [
+  have h8 : 69 ^ y % 25 = 4 := by omega
+  have h9 := Claim (y % 10 = 9) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := 67 ^ y % 25 = 4, proof := h8},
+    {prop := 69 ^ y % 25 = 4, proof := h8},
   ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (67 ^ y % 521) [338, 248, 481, 393, 424, 419, 403, 456, 313, 168, 225, 199, 220, 183, 273, 40, 128, 97, 102, 118, 65, 208, 353, 296, 322, 301]) [
+  have h10 := Claim (List.Mem (69 ^ y % 11) [4]) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 14, proof := h9},
+    {prop := y % 10 = 9, proof := h9},
   ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 521) [334, 244, 477, 389, 420, 415, 399, 452, 309, 164, 221, 195, 216, 179, 269, 36, 124, 93, 98, 114, 61, 204, 349, 292, 318, 297]) [
-    {prop := List.Mem (67 ^ y % 521) [338, 248, 481, 393, 424, 419, 403, 456, 313, 168, 225, 199, 220, 183, 273, 40, 128, 97, 102, 118, 65, 208, 353, 296, 322, 301], proof := h10},
-    {prop := 5 ^ x + 4 = 67 ^ y, proof := h3},
+  have h11 := Claim (List.Mem (5 ^ x % 11) [0]) [
+    {prop := List.Mem (69 ^ y % 11) [4], proof := h10},
+    {prop := 5 ^ x + 4 = 69 ^ y, proof := h3},
   ] "compute_mod_sub"
   have h12 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 521) [334, 244, 477, 389, 420, 415, 399, 452, 309, 164, 221, 195, 216, 179, 269, 36, 124, 93, 98, 114, 61, 204, 349, 292, 318, 297], proof := h11},
+    {prop := List.Mem (5 ^ x % 11) [0], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
   have h7 : x <= 1 := by omega
@@ -1151,64 +2344,36 @@ theorem diophantine1_5_4_67 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 67 ^ y, proof := h3},
+    {prop := 5 ^ x + 4 = 69 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
 /-
-(Class II, Front Mode, with magic prime 419)   5 ^ x + 4 = 69 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 69 ^ y,
-if y >= 1, 5 ^ x = 19 (mod 23).
-So x = 15 (mod 22), 
-which implies x = 4, 15, 26, 37, 48, 59, 70, 81, 92, 103, 114, 125, 136, 147, 158, 169, 180, 191, 202 (mod 209).
-Therefore, 5 ^ x = 206, 140, 266, 254, 315, 389, 362, 185, 142, 186, 102, 110, 209, 20, 38, 156, 45, 295, 351 (mod 419).
-So 69 ^ y = 210, 144, 270, 258, 319, 393, 366, 189, 146, 190, 106, 114, 213, 24, 42, 160, 49, 299, 355 (mod 419), but this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 69 ^ y is impossible.
+(Class I, Type i)   5 ^ x + 4 = 70 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 70 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
 -/
-theorem diophantine1_5_4_69 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 69 ^ y) :
+theorem diophantine1_5_4_70 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 70 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (69 ^ y % 23 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 23 = 19 := by omega
-  have h9 := Claim (x % 22 = 15) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 23 = 19, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (5 ^ x % 419) [206, 140, 266, 254, 315, 389, 362, 185, 142, 186, 102, 110, 209, 20, 38, 156, 45, 295, 351]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 22 = 15, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (69 ^ y % 419) [210, 144, 270, 258, 319, 393, 366, 189, 146, 190, 106, 114, 213, 24, 42, 160, 49, 299, 355]) [
-    {prop := List.Mem (5 ^ x % 419) [206, 140, 266, 254, 315, 389, 362, 185, 142, 186, 102, 110, 209, 20, 38, 156, 45, 295, 351], proof := h10},
-    {prop := 5 ^ x + 4 = 69 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
+  have h6 := Claim (70 ^ y % 2 = 0) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := List.Mem (69 ^ y % 419) [210, 144, 270, 258, 319, 393, 366, 189, 146, 190, 106, 114, 213, 24, 42, 160, 49, 299, 355], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : y <= 0 := by omega
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
   have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 69 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
   exact h8
 
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 71 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 71 ^ y,
@@ -1242,9 +2407,37 @@ theorem diophantine1_5_4_71 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 71 ^ y, proof := h3},
     {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 72 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 72 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_72 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 72 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (72 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 61)   5 ^ x + 4 = 73 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 73 ^ y,
@@ -1295,9 +2488,92 @@ theorem diophantine1_5_4_73 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 73 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 74 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 74 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_74 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 74 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (74 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 75 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 75 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 75 ^ y is impossible.
+-/
+theorem diophantine1_5_4_75 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 75 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (75 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 75 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 76 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 76 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_76 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 76 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (76 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 1 with prime factor 7 of 77 ...
+-- Trying to disprove y >= 1 with prime factor 11 of 77 ...
+-- Succeeded.
 /-
 (Class II, Front Mode, no magic prime)   5 ^ x + 4 = 77 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 77 ^ y,
@@ -1331,9 +2607,37 @@ theorem diophantine1_5_4_77 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 77 ^ y, proof := h3},
     {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 78 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 78 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_78 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 78 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (78 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 11...
+-- Trying prime 31...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 31)   5 ^ x + 4 = 79 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 79 ^ y,
@@ -1384,9 +2688,35 @@ theorem diophantine1_5_4_79 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 79 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 80 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 80 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_80 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 80 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (80 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 81 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 81 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 81 ^ y,
@@ -1420,9 +2750,40 @@ theorem diophantine1_5_4_81 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 81 ^ y, proof := h3},
     {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 82 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 82 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_82 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 82 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (82 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Trying prime 101...
+-- Trying prime 181...
+-- Trying prime 241...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 241)   5 ^ x + 4 = 83 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 83 ^ y,
@@ -1473,9 +2834,94 @@ theorem diophantine1_5_4_83 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 83 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 84 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 84 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_84 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 84 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (84 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 85 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 85 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 85 ^ y is impossible.
+-/
+theorem diophantine1_5_4_85 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 85 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (85 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 85 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 86 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 86 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_86 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 86 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (86 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 87 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 2 with prime factor 3 of 87 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 41)   5 ^ x + 4 = 87 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 87 ^ y,
@@ -1525,9 +2971,37 @@ theorem diophantine1_5_4_87 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 87 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 88 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 88 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_88 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 88 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (88 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 11...
+-- Trying prime 31...
+-- Succeeded.
 /-
 (Class II, Back Mode, with magic prime 31)   5 ^ x + 4 = 89 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 89 ^ y,
@@ -1577,9 +3051,34 @@ theorem diophantine1_5_4_89 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 89 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 90 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 90 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_90 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 90 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (90 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 91 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 91 ^ y,
@@ -1613,9 +3112,37 @@ theorem diophantine1_5_4_91 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 91 ^ y, proof := h3},
     {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 92 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 92 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_92 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 92 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (92 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 93 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 2 with prime factor 3 of 93 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   5 ^ x + 4 = 93 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 93 ^ y,
@@ -1649,62 +3176,179 @@ theorem diophantine1_5_4_93 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 93 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
 /-
-(Class II, Back Mode, with magic prime 601)   5 ^ x + 4 = 97 ^ y
+(Class I, Type i)   5 ^ x + 4 = 94 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 94 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_94 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 94 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (94 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 4 = 95 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 95 ^ y,
+if x >= 1 and y >= 1,
+4 = 0 (mod 5), which is impossible.
+Therefore, x < 1 or y < 1.
+So 5 ^ x + 4 = 95 ^ y is impossible.
+-/
+theorem diophantine1_5_4_95 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 95 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (95 ^ y % 5 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 4 = 95 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   5 ^ x + 4 = 96 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 96 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
+-/
+theorem diophantine1_5_4_96 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 96 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (96 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove x >= 2 with prime factor 5 of 5 ...
+-- Trying prime 41...
+-- Trying prime 61...
+-- Trying prime 101...
+-- Trying prime 181...
+-- Trying prime 241...
+-- Trying to disprove y >= 1 with prime factor 97 of 97 ...
+-- Trying prime 193...
+-- Succeeded.
+/-
+(Class II, Front Mode, with magic prime 193)   5 ^ x + 4 = 97 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 97 ^ y,
-if x >= 2, 97 ^ y = 4 (mod 25).
-So y = 6 (mod 20), 
-which implies y = 6, 26 (mod 40).
-Therefore, 97 ^ y = 416, 185 (mod 601).
-So 5 ^ x = 412, 181 (mod 601), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 97 ^ y is impossible.
+if y >= 1, 5 ^ x = 93 (mod 97).
+So x = 20 (mod 96), 
+which implies x = 20, 116 (mod 192).
+Therefore, 5 ^ x = 131, 62 (mod 193).
+So 97 ^ y = 135, 66 (mod 193), but this is impossible.
+Therefore, y < 1.
+So 5 ^ x + 4 = 97 ^ y is impossible.
 -/
 theorem diophantine1_5_4_97 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 97 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+  by_cases h6 : y >= 1
+  have h7 := Claim (97 ^ y % 97 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 97 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 6) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 97 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (97 ^ y % 601) [416, 185]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 6, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 601) [412, 181]) [
-    {prop := List.Mem (97 ^ y % 601) [416, 185], proof := h10},
-    {prop := 5 ^ x + 4 = 97 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
+  have h8 : 5 ^ x % 97 = 93 := by omega
+  have h9 := Claim (x % 96 = 20) [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 601) [412, 181], proof := h11},
+    {prop := 5 ^ x % 97 = 93, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (5 ^ x % 193) [131, 62]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 96 = 20, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (97 ^ y % 193) [135, 66]) [
+    {prop := List.Mem (5 ^ x % 193) [131, 62], proof := h10},
+    {prop := 5 ^ x + 4 = 97 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (97 ^ y % 193) [135, 66], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : x <= 1 := by omega
+  have h7 : y <= 0 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 97 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   5 ^ x + 4 = 98 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 98 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 2).
+-/
+theorem diophantine1_5_4_98 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 98 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (98 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 5 ^ x % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 3 of 99 ...
+-- Trying to disprove x >= 1 with prime factor 5 of 5 ...
+-- Trying to disprove y >= 2 with prime factor 3 of 99 ...
+-- Trying to disprove y >= 1 with prime factor 11 of 99 ...
+-- Succeeded.
 /-
 (Class II, Front Mode, no magic prime)   5 ^ x + 4 = 99 ^ y
 For positive integers x, y satisfying 5 ^ x + 4 = 99 ^ y,
@@ -1738,2691 +3382,29 @@ theorem diophantine1_5_4_99 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 4 = 99 ^ y, proof := h3},
     {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
 /-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 101 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 101 ^ y,
-if x >= 1, 101 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 101 ^ y is impossible.
+(Class I, Type i)   5 ^ x + 4 = 100 ^ y
+For positive integers x, y satisfying 5 ^ x + 4 = 100 ^ y,
+this is impossible, because it implies that 5 ^ x = 0 (mod 4).
 -/
-theorem diophantine1_5_4_101 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 101 ^ y) :
+theorem diophantine1_5_4_100 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 100 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 101 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
+  have h6 := Claim (100 ^ y % 4 = 0) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := 101 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
+  ] "pow_mod_eq_zero"
+  have h7 : 5 ^ x % 4 = 0 := by omega
   have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 101 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 61)   5 ^ x + 4 = 103 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 103 ^ y,
-if x >= 2, 103 ^ y = 4 (mod 25).
-So y = 6 (mod 20), 
-which implies y = 1, 6, 11 (mod 15).
-Therefore, 103 ^ y = 42, 58, 22 (mod 61).
-So 5 ^ x = 38, 54, 18 (mod 61), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 103 ^ y is impossible.
--/
-theorem diophantine1_5_4_103 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 103 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 103 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 6) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 103 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (103 ^ y % 61) [42, 58, 22]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 6, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 61) [38, 54, 18]) [
-    {prop := List.Mem (103 ^ y % 61) [42, 58, 22], proof := h10},
-    {prop := 5 ^ x + 4 = 103 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 61) [38, 54, 18], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 103 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 107 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 107 ^ y,
-if x >= 2, 107 ^ y = 4 (mod 25).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 107 ^ y is impossible.
--/
-theorem diophantine1_5_4_107 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 107 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 107 ^ y % 25 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 107 ^ y % 25 = 4, proof := h8},
+    {prop := 5 ^ x % 4 = 0, proof := h7},
   ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 107 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 11)   5 ^ x + 4 = 109 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 109 ^ y,
-if x >= 2, 109 ^ y = 4 (mod 25).
-So y = 3 (mod 10), 
-which implies y = 1 (mod 2).
-Therefore, 109 ^ y = 10 (mod 11).
-So 5 ^ x = 6 (mod 11), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 109 ^ y is impossible.
--/
-theorem diophantine1_5_4_109 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 109 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 109 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 10 = 3) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 109 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (109 ^ y % 11) [10]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 10 = 3, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 11) [6]) [
-    {prop := List.Mem (109 ^ y % 11) [10], proof := h10},
-    {prop := 5 ^ x + 4 = 109 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 11) [6], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 109 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 111 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 111 ^ y,
-if x >= 1, 111 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 111 ^ y is impossible.
--/
-theorem diophantine1_5_4_111 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 111 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 111 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 111 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 111 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 41)   5 ^ x + 4 = 113 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 113 ^ y,
-if x >= 2, 113 ^ y = 4 (mod 25).
-So y = 18 (mod 20), 
-which implies y = 8 (mod 10).
-Therefore, 113 ^ y = 16 (mod 41).
-So 5 ^ x = 12 (mod 41), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 113 ^ y is impossible.
--/
-theorem diophantine1_5_4_113 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 113 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 113 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 18) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 113 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (113 ^ y % 41) [16]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 18, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 41) [12]) [
-    {prop := List.Mem (113 ^ y % 41) [16], proof := h10},
-    {prop := 5 ^ x + 4 = 113 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 41) [12], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 113 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   5 ^ x + 4 = 117 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 117 ^ y,
-if y >= 1, 5 ^ x = 9 (mod 13).
-However, this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 117 ^ y is impossible.
--/
-theorem diophantine1_5_4_117 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 117 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (117 ^ y % 13 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 13 = 9 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 13 = 9, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 117 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, with magic prime 97)   5 ^ x + 4 = 119 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 119 ^ y,
-if y >= 1, 5 ^ x = 13 (mod 17).
-So x = 4 (mod 16), 
-which implies x = 4, 20, 36, 52, 68, 84 (mod 96).
-Therefore, 5 ^ x = 43, 93, 50, 54, 4, 47 (mod 97).
-So 119 ^ y = 47, 0, 54, 58, 8, 51 (mod 97), but this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 119 ^ y is impossible.
--/
-theorem diophantine1_5_4_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 119 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (119 ^ y % 17 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 17 = 13 := by omega
-  have h9 := Claim (x % 16 = 4) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 17 = 13, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (5 ^ x % 97) [43, 93, 50, 54, 4, 47]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 16 = 4, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (119 ^ y % 97) [47, 0, 54, 58, 8, 51]) [
-    {prop := List.Mem (5 ^ x % 97) [43, 93, 50, 54, 4, 47], proof := h10},
-    {prop := 5 ^ x + 4 = 119 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := List.Mem (119 ^ y % 97) [47, 0, 54, 58, 8, 51], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 119 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 121 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 121 ^ y,
-if x >= 1, 121 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 121 ^ y is impossible.
--/
-theorem diophantine1_5_4_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 121 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 121 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 121 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 121 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 401)   5 ^ x + 4 = 123 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 123 ^ y,
-if x >= 2, 123 ^ y = 4 (mod 25).
-So y = 2 (mod 20), 
-which implies y = 2, 22, 42, 62, 82, 102, 122, 142, 162, 182, 202, 222, 242, 262, 282, 302, 322, 342, 362, 382 (mod 400).
-Therefore, 123 ^ y = 292, 232, 47, 312, 160, 226, 229, 138, 225, 393, 109, 169, 354, 89, 241, 175, 172, 263, 176, 8 (mod 401).
-So 5 ^ x = 288, 228, 43, 308, 156, 222, 225, 134, 221, 389, 105, 165, 350, 85, 237, 171, 168, 259, 172, 4 (mod 401), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 123 ^ y is impossible.
--/
-theorem diophantine1_5_4_123 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 123 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 123 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 2) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 123 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (123 ^ y % 401) [292, 232, 47, 312, 160, 226, 229, 138, 225, 393, 109, 169, 354, 89, 241, 175, 172, 263, 176, 8]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 2, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 401) [288, 228, 43, 308, 156, 222, 225, 134, 221, 389, 105, 165, 350, 85, 237, 171, 168, 259, 172, 4]) [
-    {prop := List.Mem (123 ^ y % 401) [292, 232, 47, 312, 160, 226, 229, 138, 225, 393, 109, 169, 354, 89, 241, 175, 172, 263, 176, 8], proof := h10},
-    {prop := 5 ^ x + 4 = 123 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 401) [288, 228, 43, 308, 156, 222, 225, 134, 221, 389, 105, 165, 350, 85, 237, 171, 168, 259, 172, 4], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 123 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 41)   5 ^ x + 4 = 127 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 127 ^ y,
-if x >= 2, 127 ^ y = 4 (mod 25).
-So y = 2 (mod 20), 
-which implies y = 2 (mod 10).
-Therefore, 127 ^ y = 16 (mod 41).
-So 5 ^ x = 12 (mod 41), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 127 ^ y is impossible.
--/
-theorem diophantine1_5_4_127 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 127 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 127 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 2) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 127 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (127 ^ y % 41) [16]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 2, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 41) [12]) [
-    {prop := List.Mem (127 ^ y % 41) [16], proof := h10},
-    {prop := 5 ^ x + 4 = 127 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 41) [12], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 127 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, with magic prime 127)   5 ^ x + 4 = 129 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 129 ^ y,
-if y >= 3, 5 ^ x = 23 (mod 27).
-So x = 13 (mod 18), 
-which implies x = 1, 7, 13, 19, 25, 31, 37 (mod 42).
-Therefore, 5 ^ x = 5, 20, 80, 66, 10, 40, 33 (mod 127).
-So 129 ^ y = 9, 24, 84, 70, 14, 44, 37 (mod 127), but this is impossible.
-Therefore, y < 3.
-Further examination shows that (x, y) = (3, 1).
--/
-theorem diophantine1_5_4_129 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 129 ^ y) :
-  List.Mem (x, y) [(3, 1)]
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 3
-  have h7 := Claim (129 ^ y % 27 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 27 = 23 := by omega
-  have h9 := Claim (x % 18 = 13) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 27 = 23, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (5 ^ x % 127) [5, 20, 80, 66, 10, 40, 33]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 18 = 13, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (129 ^ y % 127) [9, 24, 84, 70, 14, 44, 37]) [
-    {prop := List.Mem (5 ^ x % 127) [5, 20, 80, 66, 10, 40, 33], proof := h10},
-    {prop := 5 ^ x + 4 = 129 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := List.Mem (129 ^ y % 127) [9, 24, 84, 70, 14, 44, 37], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : y <= 2 := by omega
-  have h8 := Claim (List.Mem (x, y) [(3, 1)]) [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 129 ^ y, proof := h3},
-    {prop := y <= 2, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 131 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 131 ^ y,
-if x >= 1, 131 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 131 ^ y is impossible.
--/
-theorem diophantine1_5_4_131 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 131 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 131 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 131 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 131 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   5 ^ x + 4 = 133 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 133 ^ y,
-if y >= 1, 5 ^ x = 15 (mod 19).
-However, this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 133 ^ y is impossible.
--/
-theorem diophantine1_5_4_133 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 133 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (133 ^ y % 19 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 19 = 15 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 19 = 15, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 133 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 101)   5 ^ x + 4 = 137 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 137 ^ y,
-if x >= 2, 137 ^ y = 4 (mod 25).
-So y = 18 (mod 20), 
-which implies y = 3 (mod 5).
-Therefore, 137 ^ y = 95 (mod 101).
-So 5 ^ x = 91 (mod 101), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 137 ^ y is impossible.
--/
-theorem diophantine1_5_4_137 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 137 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 137 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 18) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 137 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (137 ^ y % 101) [95]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 18, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 101) [91]) [
-    {prop := List.Mem (137 ^ y % 101) [95], proof := h10},
-    {prop := 5 ^ x + 4 = 137 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 101) [91], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 137 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 11)   5 ^ x + 4 = 139 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 139 ^ y,
-if x >= 2, 139 ^ y = 4 (mod 25).
-So y = 7 (mod 10), 
-Therefore, 139 ^ y = 6 (mod 11).
-So 5 ^ x = 2 (mod 11), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 139 ^ y is impossible.
--/
-theorem diophantine1_5_4_139 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 139 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 139 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 10 = 7) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 139 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (139 ^ y % 11) [6]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 10 = 7, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 11) [2]) [
-    {prop := List.Mem (139 ^ y % 11) [6], proof := h10},
-    {prop := 5 ^ x + 4 = 139 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 11) [2], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 139 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 141 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 141 ^ y,
-if x >= 1, 141 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 141 ^ y is impossible.
--/
-theorem diophantine1_5_4_141 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 141 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 141 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 141 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 141 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   5 ^ x + 4 = 143 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 143 ^ y,
-if y >= 1, 5 ^ x = 7 (mod 11).
-However, this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 143 ^ y is impossible.
--/
-theorem diophantine1_5_4_143 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 143 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (143 ^ y % 11 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 11 = 7 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 11 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 143 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 101)   5 ^ x + 4 = 147 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 147 ^ y,
-if x >= 2, 147 ^ y = 4 (mod 25).
-So y = 6 (mod 20), 
-which implies y = 6, 26, 46, 66, 86 (mod 100).
-Therefore, 147 ^ y = 77, 45, 4, 43, 33 (mod 101).
-So 5 ^ x = 73, 41, 0, 39, 29 (mod 101), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 147 ^ y is impossible.
--/
-theorem diophantine1_5_4_147 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 147 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 147 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 6) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 147 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (147 ^ y % 101) [77, 45, 4, 43, 33]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 6, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 101) [73, 41, 0, 39, 29]) [
-    {prop := List.Mem (147 ^ y % 101) [77, 45, 4, 43, 33], proof := h10},
-    {prop := 5 ^ x + 4 = 147 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 101) [73, 41, 0, 39, 29], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 147 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 149 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 149 ^ y,
-if x >= 2, 149 ^ y = 4 (mod 25).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 149 ^ y is impossible.
--/
-theorem diophantine1_5_4_149 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 149 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 149 ^ y % 25 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 149 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 149 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 151 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 151 ^ y,
-if x >= 1, 151 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 151 ^ y is impossible.
--/
-theorem diophantine1_5_4_151 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 151 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 151 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 151 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 151 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, with magic prime 113)   5 ^ x + 4 = 153 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 153 ^ y,
-if y >= 1, 5 ^ x = 13 (mod 17).
-So x = 4 (mod 16), 
-which implies x = 4, 20, 36, 52, 68, 84, 100 (mod 112).
-Therefore, 5 ^ x = 60, 105, 99, 32, 56, 98, 2 (mod 113).
-So 153 ^ y = 64, 109, 103, 36, 60, 102, 6 (mod 113), but this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 153 ^ y is impossible.
--/
-theorem diophantine1_5_4_153 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 153 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (153 ^ y % 17 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 17 = 13 := by omega
-  have h9 := Claim (x % 16 = 4) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 17 = 13, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (5 ^ x % 113) [60, 105, 99, 32, 56, 98, 2]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 16 = 4, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (153 ^ y % 113) [64, 109, 103, 36, 60, 102, 6]) [
-    {prop := List.Mem (5 ^ x % 113) [60, 105, 99, 32, 56, 98, 2], proof := h10},
-    {prop := 5 ^ x + 4 = 153 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := List.Mem (153 ^ y % 113) [64, 109, 103, 36, 60, 102, 6], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 153 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 157 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 157 ^ y,
-if x >= 2, 157 ^ y = 4 (mod 25).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 157 ^ y is impossible.
--/
-theorem diophantine1_5_4_157 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 157 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 157 ^ y % 25 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 157 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 157 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 11)   5 ^ x + 4 = 159 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 159 ^ y,
-if x >= 2, 159 ^ y = 4 (mod 25).
-So y = 3 (mod 10), 
-which implies y = 3 (mod 5).
-Therefore, 159 ^ y = 4 (mod 11).
-So 5 ^ x = 0 (mod 11), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 159 ^ y is impossible.
--/
-theorem diophantine1_5_4_159 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 159 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 159 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 10 = 3) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 159 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (159 ^ y % 11) [4]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 10 = 3, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 11) [0]) [
-    {prop := List.Mem (159 ^ y % 11) [4], proof := h10},
-    {prop := 5 ^ x + 4 = 159 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 11) [0], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 159 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 161 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 161 ^ y,
-if x >= 1, 161 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 161 ^ y is impossible.
--/
-theorem diophantine1_5_4_161 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 161 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 161 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 161 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 161 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 41)   5 ^ x + 4 = 163 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 163 ^ y,
-if x >= 2, 163 ^ y = 4 (mod 25).
-So y = 18 (mod 20), 
-which implies y = 0 (mod 2).
-Therefore, 163 ^ y = 1 (mod 41).
-So 5 ^ x = 38 (mod 41), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 163 ^ y is impossible.
--/
-theorem diophantine1_5_4_163 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 163 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 163 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 18) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 163 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (163 ^ y % 41) [1]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 18, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 41) [38]) [
-    {prop := List.Mem (163 ^ y % 41) [1], proof := h10},
-    {prop := 5 ^ x + 4 = 163 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 41) [38], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 163 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 61)   5 ^ x + 4 = 167 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 167 ^ y,
-if x >= 2, 167 ^ y = 4 (mod 25).
-So y = 14 (mod 20), 
-which implies y = 4, 14, 24 (mod 30).
-Therefore, 167 ^ y = 22, 42, 58 (mod 61).
-So 5 ^ x = 18, 38, 54 (mod 61), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 167 ^ y is impossible.
--/
-theorem diophantine1_5_4_167 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 167 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 167 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 14) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 167 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (167 ^ y % 61) [22, 42, 58]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 14, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 61) [18, 38, 54]) [
-    {prop := List.Mem (167 ^ y % 61) [22, 42, 58], proof := h10},
-    {prop := 5 ^ x + 4 = 167 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 61) [18, 38, 54], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 167 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   5 ^ x + 4 = 169 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 169 ^ y,
-if y >= 1, 5 ^ x = 9 (mod 13).
-However, this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 169 ^ y is impossible.
--/
-theorem diophantine1_5_4_169 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 169 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (169 ^ y % 13 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 13 = 9 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 13 = 9, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 169 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 171 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 171 ^ y,
-if x >= 1, 171 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 171 ^ y is impossible.
--/
-theorem diophantine1_5_4_171 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 171 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 171 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 171 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 171 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 101)   5 ^ x + 4 = 173 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 173 ^ y,
-if x >= 2, 173 ^ y = 4 (mod 25).
-So y = 2 (mod 20), 
-which implies y = 2, 22, 42, 62, 82 (mod 100).
-Therefore, 173 ^ y = 33, 4, 77, 43, 45 (mod 101).
-So 5 ^ x = 29, 0, 73, 39, 41 (mod 101), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 173 ^ y is impossible.
--/
-theorem diophantine1_5_4_173 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 173 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 173 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 2) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 173 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (173 ^ y % 101) [33, 4, 77, 43, 45]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 2, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 101) [29, 0, 73, 39, 41]) [
-    {prop := List.Mem (173 ^ y % 101) [33, 4, 77, 43, 45], proof := h10},
-    {prop := 5 ^ x + 4 = 173 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 101) [29, 0, 73, 39, 41], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 173 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 401)   5 ^ x + 4 = 177 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 177 ^ y,
-if x >= 2, 177 ^ y = 4 (mod 25).
-So y = 2 (mod 20), 
-which implies y = 2, 12, 22, 32, 42 (mod 50).
-Therefore, 177 ^ y = 51, 385, 178, 125, 63 (mod 401).
-So 5 ^ x = 47, 381, 174, 121, 59 (mod 401), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 177 ^ y is impossible.
--/
-theorem diophantine1_5_4_177 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 177 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 177 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 2) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 177 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (177 ^ y % 401) [51, 385, 178, 125, 63]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 2, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 401) [47, 381, 174, 121, 59]) [
-    {prop := List.Mem (177 ^ y % 401) [51, 385, 178, 125, 63], proof := h10},
-    {prop := 5 ^ x + 4 = 177 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 401) [47, 381, 174, 121, 59], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 177 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 11)   5 ^ x + 4 = 179 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 179 ^ y,
-if x >= 2, 179 ^ y = 4 (mod 25).
-So y = 1 (mod 10), 
-which implies y = 1 (mod 5).
-Therefore, 179 ^ y = 3 (mod 11).
-So 5 ^ x = 10 (mod 11), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 179 ^ y is impossible.
--/
-theorem diophantine1_5_4_179 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 179 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 179 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 10 = 1) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 179 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (179 ^ y % 11) [3]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 10 = 1, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 11) [10]) [
-    {prop := List.Mem (179 ^ y % 11) [3], proof := h10},
-    {prop := 5 ^ x + 4 = 179 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 11) [10], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 179 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 181 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 181 ^ y,
-if x >= 1, 181 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 181 ^ y is impossible.
--/
-theorem diophantine1_5_4_181 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 181 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 181 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 181 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 181 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 241)   5 ^ x + 4 = 183 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 183 ^ y,
-if x >= 2, 183 ^ y = 4 (mod 25).
-So y = 14 (mod 20), 
-which implies y = 4, 9, 14 (mod 15).
-Therefore, 183 ^ y = 100, 87, 54 (mod 241).
-So 5 ^ x = 96, 83, 50 (mod 241), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 183 ^ y is impossible.
--/
-theorem diophantine1_5_4_183 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 183 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 183 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 14) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 183 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (183 ^ y % 241) [100, 87, 54]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 14, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 241) [96, 83, 50]) [
-    {prop := List.Mem (183 ^ y % 241) [100, 87, 54], proof := h10},
-    {prop := 5 ^ x + 4 = 183 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 241) [96, 83, 50], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 183 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   5 ^ x + 4 = 187 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 187 ^ y,
-if y >= 1, 5 ^ x = 7 (mod 11).
-However, this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 187 ^ y is impossible.
--/
-theorem diophantine1_5_4_187 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 187 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (187 ^ y % 11 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 11 = 7 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 11 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 187 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 31)   5 ^ x + 4 = 189 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 189 ^ y,
-if x >= 2, 189 ^ y = 4 (mod 25).
-So y = 7 (mod 10), 
-which implies y = 7, 17, 27 (mod 30).
-Therefore, 189 ^ y = 17, 22, 23 (mod 31).
-So 5 ^ x = 13, 18, 19 (mod 31), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 189 ^ y is impossible.
--/
-theorem diophantine1_5_4_189 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 189 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 189 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 10 = 7) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 189 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (189 ^ y % 31) [17, 22, 23]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 10 = 7, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 31) [13, 18, 19]) [
-    {prop := List.Mem (189 ^ y % 31) [17, 22, 23], proof := h10},
-    {prop := 5 ^ x + 4 = 189 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 31) [13, 18, 19], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 189 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 191 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 191 ^ y,
-if x >= 1, 191 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 191 ^ y is impossible.
--/
-theorem diophantine1_5_4_191 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 191 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 191 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 191 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 191 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 193 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 193 ^ y,
-if x >= 2, 193 ^ y = 4 (mod 25).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 193 ^ y is impossible.
--/
-theorem diophantine1_5_4_193 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 193 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 193 ^ y % 25 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 193 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 193 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 41)   5 ^ x + 4 = 197 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 197 ^ y,
-if x >= 2, 197 ^ y = 4 (mod 25).
-So y = 6 (mod 20), 
-Therefore, 197 ^ y = 31 (mod 41).
-So 5 ^ x = 27 (mod 41), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 197 ^ y is impossible.
--/
-theorem diophantine1_5_4_197 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 197 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 197 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 6) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 197 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (197 ^ y % 41) [31]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 6, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 41) [27]) [
-    {prop := List.Mem (197 ^ y % 41) [31], proof := h10},
-    {prop := 5 ^ x + 4 = 197 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 41) [27], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 197 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 199 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 199 ^ y,
-if x >= 2, 199 ^ y = 4 (mod 25).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 199 ^ y is impossible.
--/
-theorem diophantine1_5_4_199 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 199 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 199 ^ y % 25 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 199 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 199 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 201 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 201 ^ y,
-if x >= 1, 201 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 201 ^ y is impossible.
--/
-theorem diophantine1_5_4_201 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 201 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 201 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 201 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 201 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 41)   5 ^ x + 4 = 203 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 203 ^ y,
-if x >= 2, 203 ^ y = 4 (mod 25).
-So y = 6 (mod 20), 
-Therefore, 203 ^ y = 23 (mod 41).
-So 5 ^ x = 19 (mod 41), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 203 ^ y is impossible.
--/
-theorem diophantine1_5_4_203 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 203 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 203 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 6) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 203 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (203 ^ y % 41) [23]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 6, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 41) [19]) [
-    {prop := List.Mem (203 ^ y % 41) [23], proof := h10},
-    {prop := 5 ^ x + 4 = 203 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 41) [19], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 203 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, with magic prime 199)   5 ^ x + 4 = 207 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 207 ^ y,
-if y >= 1, 5 ^ x = 19 (mod 23).
-So x = 15 (mod 22), 
-which implies x = 4, 15, 26 (mod 33).
-Therefore, 5 ^ x = 28, 188, 182 (mod 199).
-So 207 ^ y = 32, 192, 186 (mod 199), but this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 207 ^ y is impossible.
--/
-theorem diophantine1_5_4_207 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 207 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (207 ^ y % 23 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 23 = 19 := by omega
-  have h9 := Claim (x % 22 = 15) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 23 = 19, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (5 ^ x % 199) [28, 188, 182]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 22 = 15, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (207 ^ y % 199) [32, 192, 186]) [
-    {prop := List.Mem (5 ^ x % 199) [28, 188, 182], proof := h10},
-    {prop := 5 ^ x + 4 = 207 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := List.Mem (207 ^ y % 199) [32, 192, 186], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 207 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   5 ^ x + 4 = 209 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 209 ^ y,
-if y >= 1, 5 ^ x = 7 (mod 11).
-However, this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 209 ^ y is impossible.
--/
-theorem diophantine1_5_4_209 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 209 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (209 ^ y % 11 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 11 = 7 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 11 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 209 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 211 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 211 ^ y,
-if x >= 1, 211 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 211 ^ y is impossible.
--/
-theorem diophantine1_5_4_211 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 211 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 211 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 211 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 211 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 181)   5 ^ x + 4 = 213 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 213 ^ y,
-if x >= 2, 213 ^ y = 4 (mod 25).
-So y = 18 (mod 20), 
-which implies y = 2, 6, 10, 14, 18, 22, 26, 30, 34 (mod 36).
-Therefore, 213 ^ y = 119, 49, 116, 101, 180, 138, 142, 133, 108 (mod 181).
-So 5 ^ x = 115, 45, 112, 97, 176, 134, 138, 129, 104 (mod 181), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 213 ^ y is impossible.
--/
-theorem diophantine1_5_4_213 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 213 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 213 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 18) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 213 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (213 ^ y % 181) [119, 49, 116, 101, 180, 138, 142, 133, 108]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 18, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 181) [115, 45, 112, 97, 176, 134, 138, 129, 104]) [
-    {prop := List.Mem (213 ^ y % 181) [119, 49, 116, 101, 180, 138, 142, 133, 108], proof := h10},
-    {prop := 5 ^ x + 4 = 213 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 181) [115, 45, 112, 97, 176, 134, 138, 129, 104], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 213 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 101)   5 ^ x + 4 = 217 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 217 ^ y,
-if x >= 2, 217 ^ y = 4 (mod 25).
-So y = 14 (mod 20), 
-which implies y = 14, 34, 54, 74, 94 (mod 100).
-Therefore, 217 ^ y = 4, 45, 77, 33, 43 (mod 101).
-So 5 ^ x = 0, 41, 73, 29, 39 (mod 101), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 217 ^ y is impossible.
--/
-theorem diophantine1_5_4_217 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 217 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 217 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 14) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 217 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (217 ^ y % 101) [4, 45, 77, 33, 43]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 14, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 101) [0, 41, 73, 29, 39]) [
-    {prop := List.Mem (217 ^ y % 101) [4, 45, 77, 33, 43], proof := h10},
-    {prop := 5 ^ x + 4 = 217 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 101) [0, 41, 73, 29, 39], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 217 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 11)   5 ^ x + 4 = 219 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 219 ^ y,
-if x >= 2, 219 ^ y = 4 (mod 25).
-So y = 9 (mod 10), 
-which implies y = 1 (mod 2).
-Therefore, 219 ^ y = 10 (mod 11).
-So 5 ^ x = 6 (mod 11), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 219 ^ y is impossible.
--/
-theorem diophantine1_5_4_219 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 219 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 219 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 10 = 9) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 219 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (219 ^ y % 11) [10]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 10 = 9, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 11) [6]) [
-    {prop := List.Mem (219 ^ y % 11) [10], proof := h10},
-    {prop := 5 ^ x + 4 = 219 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 11) [6], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 219 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 221 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 221 ^ y,
-if x >= 1, 221 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 221 ^ y is impossible.
--/
-theorem diophantine1_5_4_221 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 221 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 221 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 221 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 221 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 181)   5 ^ x + 4 = 223 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 223 ^ y,
-if x >= 2, 223 ^ y = 4 (mod 25).
-So y = 2 (mod 20), 
-which implies y = 2 (mod 5).
-Therefore, 223 ^ y = 135 (mod 181).
-So 5 ^ x = 131 (mod 181), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 223 ^ y is impossible.
--/
-theorem diophantine1_5_4_223 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 223 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 223 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 2) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 223 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (223 ^ y % 181) [135]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 2, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 181) [131]) [
-    {prop := List.Mem (223 ^ y % 181) [135], proof := h10},
-    {prop := 5 ^ x + 4 = 223 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 181) [131], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 223 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 181)   5 ^ x + 4 = 227 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 227 ^ y,
-if x >= 2, 227 ^ y = 4 (mod 25).
-So y = 2 (mod 20), 
-which implies y = 2 (mod 10).
-Therefore, 227 ^ y = 125 (mod 181).
-So 5 ^ x = 121 (mod 181), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 227 ^ y is impossible.
--/
-theorem diophantine1_5_4_227 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 227 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 227 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 2) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 227 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (227 ^ y % 181) [125]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 2, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 181) [121]) [
-    {prop := List.Mem (227 ^ y % 181) [125], proof := h10},
-    {prop := 5 ^ x + 4 = 227 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 181) [121], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 227 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 191)   5 ^ x + 4 = 229 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 229 ^ y,
-if x >= 2, 229 ^ y = 4 (mod 25).
-So y = 1 (mod 10), 
-which implies y = 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37 (mod 38).
-Therefore, 229 ^ y = 38, 55, 155, 159, 14, 161, 37, 139, 166, 190, 84, 11, 31, 70, 41, 185, 122, 66, 186 (mod 191).
-So 5 ^ x = 34, 51, 151, 155, 10, 157, 33, 135, 162, 186, 80, 7, 27, 66, 37, 181, 118, 62, 182 (mod 191), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 229 ^ y is impossible.
--/
-theorem diophantine1_5_4_229 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 229 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 229 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 10 = 1) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 229 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (229 ^ y % 191) [38, 55, 155, 159, 14, 161, 37, 139, 166, 190, 84, 11, 31, 70, 41, 185, 122, 66, 186]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 10 = 1, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 191) [34, 51, 151, 155, 10, 157, 33, 135, 162, 186, 80, 7, 27, 66, 37, 181, 118, 62, 182]) [
-    {prop := List.Mem (229 ^ y % 191) [38, 55, 155, 159, 14, 161, 37, 139, 166, 190, 84, 11, 31, 70, 41, 185, 122, 66, 186], proof := h10},
-    {prop := 5 ^ x + 4 = 229 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 191) [34, 51, 151, 155, 10, 157, 33, 135, 162, 186, 80, 7, 27, 66, 37, 181, 118, 62, 182], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 229 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 231 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 231 ^ y,
-if x >= 1, 231 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 231 ^ y is impossible.
--/
-theorem diophantine1_5_4_231 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 231 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 231 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 231 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 231 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 241)   5 ^ x + 4 = 233 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 233 ^ y,
-if x >= 2, 233 ^ y = 4 (mod 25).
-So y = 14 (mod 20), 
-which implies y = 2, 6 (mod 8).
-Therefore, 233 ^ y = 64, 177 (mod 241).
-So 5 ^ x = 60, 173 (mod 241), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 233 ^ y is impossible.
--/
-theorem diophantine1_5_4_233 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 233 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 233 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 14) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 233 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (233 ^ y % 241) [64, 177]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 14, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 241) [60, 173]) [
-    {prop := List.Mem (233 ^ y % 241) [64, 177], proof := h10},
-    {prop := 5 ^ x + 4 = 233 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 241) [60, 173], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 233 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 181)   5 ^ x + 4 = 237 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 237 ^ y,
-if x >= 2, 237 ^ y = 4 (mod 25).
-So y = 18 (mod 20), 
-which implies y = 8 (mod 10).
-Therefore, 237 ^ y = 135 (mod 181).
-So 5 ^ x = 131 (mod 181), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 237 ^ y is impossible.
--/
-theorem diophantine1_5_4_237 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 237 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 237 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 20 = 18) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 237 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (237 ^ y % 181) [135]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 20 = 18, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 181) [131]) [
-    {prop := List.Mem (237 ^ y % 181) [135], proof := h10},
-    {prop := 5 ^ x + 4 = 237 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 181) [131], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 237 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 71)   5 ^ x + 4 = 239 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 239 ^ y,
-if x >= 2, 239 ^ y = 4 (mod 25).
-So y = 7 (mod 10), 
-which implies y = 1, 3, 5, 7, 9, 11, 13 (mod 14).
-Therefore, 239 ^ y = 26, 39, 23, 70, 34, 51, 41 (mod 71).
-So 5 ^ x = 22, 35, 19, 66, 30, 47, 37 (mod 71), but this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 239 ^ y is impossible.
--/
-theorem diophantine1_5_4_239 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 239 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 239 ^ y % 25 = 4 := by omega
-  have h9 := Claim (y % 10 = 7) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 239 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (239 ^ y % 71) [26, 39, 23, 70, 34, 51, 41]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 10 = 7, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (5 ^ x % 71) [22, 35, 19, 66, 30, 47, 37]) [
-    {prop := List.Mem (239 ^ y % 71) [26, 39, 23, 70, 34, 51, 41], proof := h10},
-    {prop := 5 ^ x + 4 = 239 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (5 ^ x % 71) [22, 35, 19, 66, 30, 47, 37], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 239 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 241 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 241 ^ y,
-if x >= 1, 241 ^ y = 4 (mod 5).
-However, this is impossible.
-Therefore, x < 1.
-So 5 ^ x + 4 = 241 ^ y is impossible.
--/
-theorem diophantine1_5_4_241 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 241 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 1
-  have h7 := Claim (5 ^ x % 5 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 241 ^ y % 5 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 241 ^ y % 5 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 241 ^ y, proof := h3},
-    {prop := x <= 0, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 243 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 243 ^ y,
-if x >= 2, 243 ^ y = 4 (mod 25).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 243 ^ y is impossible.
--/
-theorem diophantine1_5_4_243 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 243 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 243 ^ y % 25 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 243 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 243 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   5 ^ x + 4 = 247 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 247 ^ y,
-if y >= 1, 5 ^ x = 9 (mod 13).
-However, this is impossible.
-Therefore, y < 1.
-So 5 ^ x + 4 = 247 ^ y is impossible.
--/
-theorem diophantine1_5_4_247 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 247 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (247 ^ y % 13 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 5 ^ x % 13 = 9 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 5 ^ x % 13 = 9, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 247 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   5 ^ x + 4 = 249 ^ y
-For positive integers x, y satisfying 5 ^ x + 4 = 249 ^ y,
-if x >= 2, 249 ^ y = 4 (mod 25).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 5 ^ x + 4 = 249 ^ y is impossible.
--/
-theorem diophantine1_5_4_249 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 4 = 249 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (5 ^ x % 25 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 249 ^ y % 25 = 4 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 249 ^ y % 25 = 4, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 5 ^ x + 4 = 249 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
   exact h8
 
 def main : IO Unit :=

@@ -3,8 +3,8 @@
 -- a, b and c range over the following intervals:
 -- 6 <= a <= 6
 -- 7 <= b <= 7
--- 2 <= c <= 250
--- trivial cases where a, b, c are not pairwise coprime are skipped.
+-- 2 <= c <= 100
+-- trivial cases where a, b, c are not pairwise coprime are not skipped.
 
 
 -- Claim Structure
@@ -18,6 +18,113 @@ axiom Claim (prop_to_claim : Prop)
   : prop_to_claim
 
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 2 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 2 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 2 ^ y is impossible.
+-/
+theorem diophantine1_6_7_2 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 2 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (2 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 2 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 3 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 3 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 3 ^ y is impossible.
+-/
+theorem diophantine1_6_7_3 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 3 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (3 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 3 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 4 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 4 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 4 ^ y is impossible.
+-/
+theorem diophantine1_6_7_4 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 4 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (4 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 4 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 5 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 5 ^ y,
@@ -51,9 +158,173 @@ theorem diophantine1_6_7_5 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 :
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 5 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 6 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 6 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 6 ^ y is impossible.
+-/
+theorem diophantine1_6_7_6 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 6 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (6 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 6 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   6 ^ x + 7 = 7 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 7 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_7 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 7 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 8 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 8 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 8 ^ y is impossible.
+-/
+theorem diophantine1_6_7_8 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 8 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (8 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 8 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 9 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 9 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 9 ^ y is impossible.
+-/
+theorem diophantine1_6_7_9 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 9 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (9 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 9 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 10 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 10 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 10 ^ y is impossible.
+-/
+theorem diophantine1_6_7_10 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 10 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (10 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 10 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 11 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 11 ^ y,
@@ -87,9 +358,46 @@ theorem diophantine1_6_7_11 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 11 ^ y, proof := h3},
     {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 12 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 12 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 12 ^ y is impossible.
+-/
+theorem diophantine1_6_7_12 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 12 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (12 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 12 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 13 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 13 ^ y,
@@ -123,9 +431,104 @@ theorem diophantine1_6_7_13 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 13 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   6 ^ x + 7 = 14 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 14 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_14 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 14 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (14 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 15 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 15 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 15 ^ y is impossible.
+-/
+theorem diophantine1_6_7_15 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 15 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (15 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 15 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 16 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 16 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 16 ^ y is impossible.
+-/
+theorem diophantine1_6_7_16 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 16 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (16 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 16 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 17 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 17 ^ y,
@@ -159,9 +562,49 @@ theorem diophantine1_6_7_17 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 17 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 18 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 18 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 18 ^ y is impossible.
+-/
+theorem diophantine1_6_7_18 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 18 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (18 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 18 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 19 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 19 ^ y,
@@ -195,62 +638,208 @@ theorem diophantine1_6_7_19 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 19 ^ y, proof := h3},
     {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
 /-
-(Class II, Front Mode, with magic prime 859)   6 ^ x + 7 = 23 ^ y
+(Class I, Type iii)   6 ^ x + 7 = 20 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 20 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 20 ^ y is impossible.
+-/
+theorem diophantine1_6_7_20 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 20 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (20 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 20 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   6 ^ x + 7 = 21 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 21 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_21 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 21 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (21 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 22 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 22 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 22 ^ y is impossible.
+-/
+theorem diophantine1_6_7_22 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 22 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (22 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 22 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 6 ...
+-- Trying to disprove y >= 1 with prime factor 23 of 23 ...
+-- Trying prime 67...
+-- Trying prime 89...
+-- Trying prime 199...
+-- Trying prime 331...
+-- Trying prime 353...
+-- Trying to disprove x >= 3 with prime factor 3 of 6 ...
+-- Trying prime 19...
+-- Trying prime 37...
+-- Succeeded.
+/-
+(Class II, Back Mode, with magic prime 37)   6 ^ x + 7 = 23 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 23 ^ y,
-if y >= 1, 6 ^ x = 16 (mod 23).
-So x = 9 (mod 11), 
-which implies x = 9, 20, 31, 42, 53, 64, 75, 86, 97, 108, 119, 130, 141 (mod 143).
-Therefore, 6 ^ x = 767, 618, 181, 110, 755, 848, 354, 87, 480, 249, 811, 61, 692 (mod 859).
-So 23 ^ y = 774, 625, 188, 117, 762, 855, 361, 94, 487, 256, 818, 68, 699 (mod 859), but this is impossible.
-Therefore, y < 1.
-So 6 ^ x + 7 = 23 ^ y is impossible.
+if x >= 3, 23 ^ y = 7 (mod 27).
+So y = 8 (mod 18), 
+which implies y = 2, 8 (mod 12).
+Therefore, 23 ^ y = 11, 26 (mod 37).
+So 6 ^ x = 4, 19 (mod 37), but this is impossible.
+Therefore, x < 3.
+Further examination shows that 6 ^ x + 7 = 23 ^ y is impossible.
 -/
 theorem diophantine1_6_7_23 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 23 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (23 ^ y % 23 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
+  by_cases h6 : x >= 3
+  have h7 := Claim (6 ^ x % 27 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6},
   ] "pow_mod_eq_zero"
-  have h8 : 6 ^ x % 23 = 16 := by omega
-  have h9 := Claim (x % 11 = 9) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 6 ^ x % 23 = 16, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (6 ^ x % 859) [767, 618, 181, 110, 755, 848, 354, 87, 480, 249, 811, 61, 692]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 11 = 9, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (23 ^ y % 859) [774, 625, 188, 117, 762, 855, 361, 94, 487, 256, 818, 68, 699]) [
-    {prop := List.Mem (6 ^ x % 859) [767, 618, 181, 110, 755, 848, 354, 87, 480, 249, 811, 61, 692], proof := h10},
-    {prop := 6 ^ x + 7 = 23 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
+  have h8 : 23 ^ y % 27 = 7 := by omega
+  have h9 := Claim (y % 18 = 8) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := List.Mem (23 ^ y % 859) [774, 625, 188, 117, 762, 855, 361, 94, 487, 256, 818, 68, 699], proof := h11},
+    {prop := 23 ^ y % 27 = 7, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (23 ^ y % 37) [11, 26]) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := y % 18 = 8, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (6 ^ x % 37) [4, 19]) [
+    {prop := List.Mem (23 ^ y % 37) [11, 26], proof := h10},
+    {prop := 6 ^ x + 7 = 23 ^ y, proof := h3},
+  ] "compute_mod_sub"
+  have h12 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := List.Mem (6 ^ x % 37) [4, 19], proof := h11},
   ] "exhaust_mod_cycle"
   apply False.elim h12
-  have h7 : y <= 0 := by omega
+  have h7 : x <= 2 := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 23 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+    {prop := x <= 2, proof := h7},
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 24 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 24 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 24 ^ y is impossible.
+-/
+theorem diophantine1_6_7_24 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 24 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (24 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 24 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 25 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 25 ^ y,
@@ -284,9 +873,104 @@ theorem diophantine1_6_7_25 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 25 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 26 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 26 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 26 ^ y is impossible.
+-/
+theorem diophantine1_6_7_26 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 26 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (26 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 26 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 27 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 27 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 27 ^ y is impossible.
+-/
+theorem diophantine1_6_7_27 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 27 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (27 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 27 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   6 ^ x + 7 = 28 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 28 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_28 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 28 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (28 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 29 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 29 ^ y,
@@ -320,9 +1004,51 @@ theorem diophantine1_6_7_29 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 29 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 30 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 30 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 30 ^ y is impossible.
+-/
+theorem diophantine1_6_7_30 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 30 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (30 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 30 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 31 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 31 ^ y,
@@ -356,9 +1082,172 @@ theorem diophantine1_6_7_31 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 31 ^ y, proof := h3},
     {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 32 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 32 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 32 ^ y is impossible.
+-/
+theorem diophantine1_6_7_32 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 32 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (32 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 32 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 33 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 33 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 33 ^ y is impossible.
+-/
+theorem diophantine1_6_7_33 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 33 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (33 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 33 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 34 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 34 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 34 ^ y is impossible.
+-/
+theorem diophantine1_6_7_34 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 34 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (34 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 34 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   6 ^ x + 7 = 35 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 35 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_35 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 35 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (35 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 36 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 36 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 36 ^ y is impossible.
+-/
+theorem diophantine1_6_7_36 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 36 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (36 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 36 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 37 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 37 ^ y,
@@ -392,9 +1281,116 @@ theorem diophantine1_6_7_37 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 37 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 38 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 38 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 38 ^ y is impossible.
+-/
+theorem diophantine1_6_7_38 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 38 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (38 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 38 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 39 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 39 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 39 ^ y is impossible.
+-/
+theorem diophantine1_6_7_39 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 39 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (39 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 39 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 40 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 40 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 40 ^ y is impossible.
+-/
+theorem diophantine1_6_7_40 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 40 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (40 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 40 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 41 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 41 ^ y,
@@ -428,9 +1424,34 @@ theorem diophantine1_6_7_41 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 41 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   6 ^ x + 7 = 42 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 42 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_42 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 42 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (42 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 43 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 43 ^ y,
@@ -464,9 +1485,119 @@ theorem diophantine1_6_7_43 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 43 ^ y, proof := h3},
     {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 44 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 44 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 44 ^ y is impossible.
+-/
+theorem diophantine1_6_7_44 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 44 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (44 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 44 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 45 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 45 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 45 ^ y is impossible.
+-/
+theorem diophantine1_6_7_45 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 45 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (45 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 45 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 46 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 46 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 46 ^ y is impossible.
+-/
+theorem diophantine1_6_7_46 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 46 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (46 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 46 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 47 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 47 ^ y,
@@ -500,9 +1631,172 @@ theorem diophantine1_6_7_47 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 47 ^ y, proof := h3},
     {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 48 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 48 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 48 ^ y is impossible.
+-/
+theorem diophantine1_6_7_48 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 48 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (48 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 48 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   6 ^ x + 7 = 49 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 49 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_49 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 49 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (49 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 50 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 50 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 50 ^ y is impossible.
+-/
+theorem diophantine1_6_7_50 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 50 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (50 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 50 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 51 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 51 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 51 ^ y is impossible.
+-/
+theorem diophantine1_6_7_51 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 51 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (51 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 51 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 52 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 52 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 52 ^ y is impossible.
+-/
+theorem diophantine1_6_7_52 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 52 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (52 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 52 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 53 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 53 ^ y,
@@ -536,9 +1830,49 @@ theorem diophantine1_6_7_53 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 53 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 54 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 54 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 54 ^ y is impossible.
+-/
+theorem diophantine1_6_7_54 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 54 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (54 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 54 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove y >= 1 with prime factor 5 of 55 ...
+-- Succeeded.
 /-
 (Class II, Front Mode, no magic prime)   6 ^ x + 7 = 55 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 55 ^ y,
@@ -572,9 +1906,105 @@ theorem diophantine1_6_7_55 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 55 ^ y, proof := h3},
     {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   6 ^ x + 7 = 56 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 56 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_56 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 56 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (56 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 57 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 57 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 57 ^ y is impossible.
+-/
+theorem diophantine1_6_7_57 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 57 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (57 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 57 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 58 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 58 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 58 ^ y is impossible.
+-/
+theorem diophantine1_6_7_58 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 58 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (58 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 58 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 59 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 59 ^ y,
@@ -608,9 +2038,48 @@ theorem diophantine1_6_7_59 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 59 ^ y, proof := h3},
     {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 60 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 60 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 60 ^ y is impossible.
+-/
+theorem diophantine1_6_7_60 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 60 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (60 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 60 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 61 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 61 ^ y,
@@ -644,9 +2113,104 @@ theorem diophantine1_6_7_61 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 61 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 62 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 62 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 62 ^ y is impossible.
+-/
+theorem diophantine1_6_7_62 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 62 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (62 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 62 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   6 ^ x + 7 = 63 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 63 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_63 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 63 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (63 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 64 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 64 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 64 ^ y is impossible.
+-/
+theorem diophantine1_6_7_64 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 64 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (64 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 64 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 65 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 65 ^ y,
@@ -680,9 +2244,49 @@ theorem diophantine1_6_7_65 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 65 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 66 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 66 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 66 ^ y is impossible.
+-/
+theorem diophantine1_6_7_66 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 66 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (66 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 66 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 67 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 67 ^ y,
@@ -716,9 +2320,106 @@ theorem diophantine1_6_7_67 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 67 ^ y, proof := h3},
     {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 68 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 68 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 68 ^ y is impossible.
+-/
+theorem diophantine1_6_7_68 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 68 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (68 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 68 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 69 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 69 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 69 ^ y is impossible.
+-/
+theorem diophantine1_6_7_69 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 69 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (69 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 69 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   6 ^ x + 7 = 70 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 70 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_70 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 70 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (70 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 71 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 71 ^ y,
@@ -752,9 +2453,48 @@ theorem diophantine1_6_7_71 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 71 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 72 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 72 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 72 ^ y is impossible.
+-/
+theorem diophantine1_6_7_72 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 72 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (72 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 72 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 73 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 73 ^ y,
@@ -788,9 +2528,175 @@ theorem diophantine1_6_7_73 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 73 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 74 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 74 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 74 ^ y is impossible.
+-/
+theorem diophantine1_6_7_74 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 74 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (74 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 74 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 75 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 75 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 75 ^ y is impossible.
+-/
+theorem diophantine1_6_7_75 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 75 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (75 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 75 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 76 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 76 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 76 ^ y is impossible.
+-/
+theorem diophantine1_6_7_76 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 76 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (76 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 76 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   6 ^ x + 7 = 77 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 77 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_77 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 77 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (77 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 78 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 78 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 78 ^ y is impossible.
+-/
+theorem diophantine1_6_7_78 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 78 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (78 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 78 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 79 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 79 ^ y,
@@ -824,9 +2730,117 @@ theorem diophantine1_6_7_79 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 79 ^ y, proof := h3},
     {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 80 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 80 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 80 ^ y is impossible.
+-/
+theorem diophantine1_6_7_80 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 80 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (80 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 80 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 81 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 81 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 81 ^ y is impossible.
+-/
+theorem diophantine1_6_7_81 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 81 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (81 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 81 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 82 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 82 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 82 ^ y is impossible.
+-/
+theorem diophantine1_6_7_82 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 82 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (82 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 82 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 83 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 83 ^ y,
@@ -860,9 +2874,36 @@ theorem diophantine1_6_7_83 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 83 ^ y, proof := h3},
     {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type i)   6 ^ x + 7 = 84 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 84 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_84 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 84 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (84 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 85 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 85 ^ y,
@@ -896,9 +2937,116 @@ theorem diophantine1_6_7_85 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 85 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 86 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 86 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 86 ^ y is impossible.
+-/
+theorem diophantine1_6_7_86 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 86 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (86 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 86 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 87 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 87 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 87 ^ y is impossible.
+-/
+theorem diophantine1_6_7_87 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 87 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (87 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 87 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 88 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 88 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 88 ^ y is impossible.
+-/
+theorem diophantine1_6_7_88 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 88 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (88 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 88 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 89 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 89 ^ y,
@@ -932,9 +3080,173 @@ theorem diophantine1_6_7_89 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 89 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 90 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 90 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 90 ^ y is impossible.
+-/
+theorem diophantine1_6_7_90 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 90 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (90 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 90 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type i)   6 ^ x + 7 = 91 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 91 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
+-/
+theorem diophantine1_6_7_91 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 91 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (91 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 92 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 92 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 92 ^ y is impossible.
+-/
+theorem diophantine1_6_7_92 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 92 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (92 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 92 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 93 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 93 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 93 ^ y is impossible.
+-/
+theorem diophantine1_6_7_93 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 93 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (93 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 93 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   6 ^ x + 7 = 94 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 94 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 94 ^ y is impossible.
+-/
+theorem diophantine1_6_7_94 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 94 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 3) (y >= 3)
+  have h7 := Claim (6 ^ x % 8 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (94 ^ y % 8 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 94 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Trying to disprove y >= 1 with prime factor 5 of 95 ...
+-- Succeeded.
 /-
 (Class II, Front Mode, no magic prime)   6 ^ x + 7 = 95 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 95 ^ y,
@@ -968,9 +3280,48 @@ theorem diophantine1_6_7_95 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 95 ^ y, proof := h3},
     {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
+/-
+(Class I, Type iii)   6 ^ x + 7 = 96 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 96 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 36), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 96 ^ y is impossible.
+-/
+theorem diophantine1_6_7_96 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 96 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (6 ^ x % 36 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (96 ^ y % 36 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 6 ^ x + 7 = 96 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 6 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 6 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 6 ...
+-- Succeeded.
 /-
 (Class II, Back Mode, no magic prime)   6 ^ x + 7 = 97 ^ y
 For positive integers x, y satisfying 6 ^ x + 7 = 97 ^ y,
@@ -1004,1622 +3355,97 @@ theorem diophantine1_6_7_97 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 
     {prop :=  y >= 1, proof := h2},
     {prop := 6 ^ x + 7 = 97 ^ y, proof := h3},
     {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+  ] "diophantine1_enumeration"
   exact h8
 
 /-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 101 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 101 ^ y,
-if x >= 2, 101 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 101 ^ y is impossible.
+(Class I, Type i)   6 ^ x + 7 = 98 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 98 ^ y,
+this is impossible, because it implies that 6 ^ x = 0 (mod 7).
 -/
-theorem diophantine1_6_7_101 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 101 ^ y) :
+theorem diophantine1_6_7_98 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 98 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 101 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
+  have h6 := Claim (98 ^ y % 7 = 0) [
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
-    {prop := 101 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
+  ] "pow_mod_eq_zero"
+  have h7 : 6 ^ x % 7 = 0 := by omega
   have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 101 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 1297)   6 ^ x + 7 = 103 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 103 ^ y,
-if x >= 4, 103 ^ y = 7 (mod 81).
-So y = 5 (mod 27), 
-which implies y = 5, 32, 59, 86, 113, 140, 167, 194, 221, 248, 275, 302, 329, 356, 383, 410, 437, 464, 491, 518, 545, 572, 599, 626 (mod 648).
-Therefore, 103 ^ y = 400, 1054, 741, 1103, 1136, 555, 133, 331, 736, 798, 689, 525, 897, 243, 556, 194, 161, 742, 1164, 966, 561, 499, 608, 772 (mod 1297).
-So 6 ^ x = 393, 1047, 734, 1096, 1129, 548, 126, 324, 729, 791, 682, 518, 890, 236, 549, 187, 154, 735, 1157, 959, 554, 492, 601, 765 (mod 1297), but this is impossible.
-Therefore, x < 4.
-Further examination shows that 6 ^ x + 7 = 103 ^ y is impossible.
--/
-theorem diophantine1_6_7_103 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 103 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (6 ^ x % 81 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 103 ^ y % 81 = 7 := by omega
-  have h9 := Claim (y % 27 = 5) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 103 ^ y % 81 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (103 ^ y % 1297) [400, 1054, 741, 1103, 1136, 555, 133, 331, 736, 798, 689, 525, 897, 243, 556, 194, 161, 742, 1164, 966, 561, 499, 608, 772]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 27 = 5, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (6 ^ x % 1297) [393, 1047, 734, 1096, 1129, 548, 126, 324, 729, 791, 682, 518, 890, 236, 549, 187, 154, 735, 1157, 959, 554, 492, 601, 765]) [
-    {prop := List.Mem (103 ^ y % 1297) [400, 1054, 741, 1103, 1136, 555, 133, 331, 736, 798, 689, 525, 897, 243, 556, 194, 161, 742, 1164, 966, 561, 499, 608, 772], proof := h10},
-    {prop := 6 ^ x + 7 = 103 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
     {prop := x % 1 = 0, proof := h4},
     {prop := x >= 1, proof := h1},
-    {prop := List.Mem (6 ^ x % 1297) [393, 1047, 734, 1096, 1129, 548, 126, 324, 729, 791, 682, 518, 890, 236, 549, 187, 154, 735, 1157, 959, 554, 492, 601, 765], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 3 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 103 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 107 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 107 ^ y,
-if x >= 3, 107 ^ y = 7 (mod 8).
-However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 6 ^ x + 7 = 107 ^ y is impossible.
--/
-theorem diophantine1_6_7_107 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 107 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (6 ^ x % 8 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 107 ^ y % 8 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 107 ^ y % 8 = 7, proof := h8},
+    {prop := 6 ^ x % 7 = 0, proof := h7},
   ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 2 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 107 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
   exact h8
 
 /-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 109 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 109 ^ y,
-if x >= 2, 109 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 109 ^ y is impossible.
+(Class I, Type iii)   6 ^ x + 7 = 99 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 99 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 9), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 6 ^ x + 7 = 99 ^ y is impossible.
 -/
-theorem diophantine1_6_7_109 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 109 ^ y) :
+theorem diophantine1_6_7_99 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 99 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 109 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 109 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 109 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 113 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 113 ^ y,
-if x >= 2, 113 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 113 ^ y is impossible.
--/
-theorem diophantine1_6_7_113 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 113 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 113 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 113 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 113 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   6 ^ x + 7 = 115 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 115 ^ y,
-if y >= 1, 6 ^ x = 3 (mod 5).
-However, this is impossible.
-Therefore, y < 1.
-So 6 ^ x + 7 = 115 ^ y is impossible.
--/
-theorem diophantine1_6_7_115 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 115 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (115 ^ y % 5 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 6 ^ x % 5 = 3 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 6 ^ x % 5 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 115 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 121 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 121 ^ y,
-if x >= 2, 121 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 121 ^ y is impossible.
--/
-theorem diophantine1_6_7_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 121 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 121 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 121 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 121 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 125 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 125 ^ y,
-if x >= 2, 125 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 125 ^ y is impossible.
--/
-theorem diophantine1_6_7_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 125 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 125 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 125 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 125 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 127 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 127 ^ y,
-if x >= 2, 127 ^ y = 7 (mod 9).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 127 ^ y is impossible.
--/
-theorem diophantine1_6_7_127 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 127 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
+  by_cases h6 : And (x >= 2) (y >= 2)
   have h7 := Claim (6 ^ x % 9 = 0) [
     {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
+    {prop := x >= 2, proof := h6.left},
   ] "pow_mod_eq_zero"
-  have h8 : 127 ^ y % 9 = 7 := by omega
-  have h9 := Claim False [
+  have h8 := Claim (99 ^ y % 9 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 127 ^ y % 9 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 127 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
+    {prop := 6 ^ x + 7 = 99 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
   exact h8
 
 /-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 131 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 131 ^ y,
-if x >= 3, 131 ^ y = 7 (mod 8).
-However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 6 ^ x + 7 = 131 ^ y is impossible.
+(Class I, Type iii)   6 ^ x + 7 = 100 ^ y
+For positive integers x, y satisfying 6 ^ x + 7 = 100 ^ y,
+if x >= 3 and y >= 3,
+7 = 0 (mod 8), which is impossible.
+Therefore, x < 3 or y < 3.
+Further examination shows that 6 ^ x + 7 = 100 ^ y is impossible.
 -/
-theorem diophantine1_6_7_131 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 131 ^ y) :
+theorem diophantine1_6_7_100 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 100 ^ y) :
   False
   := by
   have h4 : x % 1 = 0 := by omega
   have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
+  by_cases h6 : And (x >= 3) (y >= 3)
   have h7 := Claim (6 ^ x % 8 = 0) [
     {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
+    {prop := x >= 3, proof := h6.left},
   ] "pow_mod_eq_zero"
-  have h8 : 131 ^ y % 8 = 7 := by omega
-  have h9 := Claim False [
+  have h8 := Claim (100 ^ y % 8 = 0) [
     {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 131 ^ y % 8 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 2 := by omega
+    {prop := y >= 3, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 2) (y <= 2) := by omega
   have h8 := Claim False [
     {prop :=  x % 1 = 0, proof := h4},
     {prop :=  x >= 1, proof := h1},
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 131 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 137 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 137 ^ y,
-if x >= 2, 137 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 137 ^ y is impossible.
--/
-theorem diophantine1_6_7_137 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 137 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 137 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 137 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 137 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 139 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 139 ^ y,
-if x >= 3, 139 ^ y = 7 (mod 8).
-However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 6 ^ x + 7 = 139 ^ y is impossible.
--/
-theorem diophantine1_6_7_139 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 139 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (6 ^ x % 8 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 139 ^ y % 8 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 139 ^ y % 8 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 2 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 139 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 143 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 143 ^ y,
-if x >= 2, 143 ^ y = 7 (mod 9).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 143 ^ y is impossible.
--/
-theorem diophantine1_6_7_143 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 143 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 9 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 143 ^ y % 9 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 143 ^ y % 9 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 143 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 145 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 145 ^ y,
-if x >= 2, 145 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 145 ^ y is impossible.
--/
-theorem diophantine1_6_7_145 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 145 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 145 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 145 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 145 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 149 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 149 ^ y,
-if x >= 2, 149 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 149 ^ y is impossible.
--/
-theorem diophantine1_6_7_149 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 149 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 149 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 149 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 149 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 163)   6 ^ x + 7 = 151 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 151 ^ y,
-if x >= 4, 151 ^ y = 7 (mod 81).
-So y = 22 (mod 27), 
-which implies y = 22, 49, 76 (mod 81).
-Therefore, 151 ^ y = 41, 96, 26 (mod 163).
-So 6 ^ x = 34, 89, 19 (mod 163), but this is impossible.
-Therefore, x < 4.
-Further examination shows that 6 ^ x + 7 = 151 ^ y is impossible.
--/
-theorem diophantine1_6_7_151 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 151 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (6 ^ x % 81 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 151 ^ y % 81 = 7 := by omega
-  have h9 := Claim (y % 27 = 22) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 151 ^ y % 81 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (151 ^ y % 163) [41, 96, 26]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 27 = 22, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (6 ^ x % 163) [34, 89, 19]) [
-    {prop := List.Mem (151 ^ y % 163) [41, 96, 26], proof := h10},
-    {prop := 6 ^ x + 7 = 151 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (6 ^ x % 163) [34, 89, 19], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 3 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 151 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   6 ^ x + 7 = 155 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 155 ^ y,
-if y >= 1, 6 ^ x = 3 (mod 5).
-However, this is impossible.
-Therefore, y < 1.
-So 6 ^ x + 7 = 155 ^ y is impossible.
--/
-theorem diophantine1_6_7_155 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 155 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (155 ^ y % 5 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 6 ^ x % 5 = 3 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 6 ^ x % 5 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 155 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 157 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 157 ^ y,
-if x >= 2, 157 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 157 ^ y is impossible.
--/
-theorem diophantine1_6_7_157 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 157 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 157 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 157 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 157 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 163 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 163 ^ y,
-if x >= 3, 163 ^ y = 7 (mod 8).
-However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 6 ^ x + 7 = 163 ^ y is impossible.
--/
-theorem diophantine1_6_7_163 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 163 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (6 ^ x % 8 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 163 ^ y % 8 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 163 ^ y % 8 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 2 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 163 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, with magic prime 19)   6 ^ x + 7 = 167 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 167 ^ y,
-if x >= 3, 167 ^ y = 7 (mod 27).
-So y = 14 (mod 18), 
-Therefore, 167 ^ y = 17 (mod 19).
-So 6 ^ x = 10 (mod 19), but this is impossible.
-Therefore, x < 3.
-Further examination shows that 6 ^ x + 7 = 167 ^ y is impossible.
--/
-theorem diophantine1_6_7_167 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 167 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (6 ^ x % 27 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 167 ^ y % 27 = 7 := by omega
-  have h9 := Claim (y % 18 = 14) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 167 ^ y % 27 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (167 ^ y % 19) [17]) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := y % 18 = 14, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (6 ^ x % 19) [10]) [
-    {prop := List.Mem (167 ^ y % 19) [17], proof := h10},
-    {prop := 6 ^ x + 7 = 167 ^ y, proof := h3},
-  ] "compute_mod_sub"
-  have h12 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := List.Mem (6 ^ x % 19) [10], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : x <= 2 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 167 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 169 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 169 ^ y,
-if x >= 2, 169 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 169 ^ y is impossible.
--/
-theorem diophantine1_6_7_169 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 169 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 169 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 169 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 169 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 173 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 173 ^ y,
-if x >= 2, 173 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 173 ^ y is impossible.
--/
-theorem diophantine1_6_7_173 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 173 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 173 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 173 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 173 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 179 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 179 ^ y,
-if x >= 3, 179 ^ y = 7 (mod 8).
-However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 6 ^ x + 7 = 179 ^ y is impossible.
--/
-theorem diophantine1_6_7_179 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 179 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (6 ^ x % 8 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 179 ^ y % 8 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 179 ^ y % 8 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 2 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 179 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 181 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 181 ^ y,
-if x >= 2, 181 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 181 ^ y is impossible.
--/
-theorem diophantine1_6_7_181 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 181 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 181 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 181 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 181 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 185 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 185 ^ y,
-if x >= 2, 185 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 185 ^ y is impossible.
--/
-theorem diophantine1_6_7_185 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 185 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 185 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 185 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 185 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 187 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 187 ^ y,
-if x >= 3, 187 ^ y = 7 (mod 8).
-However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 6 ^ x + 7 = 187 ^ y is impossible.
--/
-theorem diophantine1_6_7_187 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 187 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (6 ^ x % 8 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 187 ^ y % 8 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 187 ^ y % 8 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 2 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 187 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 191 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 191 ^ y,
-if x >= 4, 191 ^ y = 7 (mod 16).
-However, this is impossible.
-Therefore, x < 4.
-Further examination shows that 6 ^ x + 7 = 191 ^ y is impossible.
--/
-theorem diophantine1_6_7_191 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 191 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (6 ^ x % 16 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 191 ^ y % 16 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 191 ^ y % 16 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 3 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 191 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 193 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 193 ^ y,
-if x >= 2, 193 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 193 ^ y is impossible.
--/
-theorem diophantine1_6_7_193 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 193 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 193 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 193 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 193 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 197 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 197 ^ y,
-if x >= 2, 197 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 197 ^ y is impossible.
--/
-theorem diophantine1_6_7_197 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 197 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 197 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 197 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 197 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 199 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 199 ^ y,
-if x >= 2, 199 ^ y = 7 (mod 9).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 199 ^ y is impossible.
--/
-theorem diophantine1_6_7_199 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 199 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 9 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 199 ^ y % 9 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 199 ^ y % 9 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 199 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 205 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 205 ^ y,
-if x >= 2, 205 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 205 ^ y is impossible.
--/
-theorem diophantine1_6_7_205 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 205 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 205 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 205 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 205 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 209 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 209 ^ y,
-if x >= 2, 209 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 209 ^ y is impossible.
--/
-theorem diophantine1_6_7_209 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 209 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 209 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 209 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 209 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 211 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 211 ^ y,
-if x >= 3, 211 ^ y = 7 (mod 8).
-However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 6 ^ x + 7 = 211 ^ y is impossible.
--/
-theorem diophantine1_6_7_211 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 211 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (6 ^ x % 8 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 211 ^ y % 8 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 211 ^ y % 8 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 2 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 211 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   6 ^ x + 7 = 215 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 215 ^ y,
-if y >= 1, 6 ^ x = 3 (mod 5).
-However, this is impossible.
-Therefore, y < 1.
-So 6 ^ x + 7 = 215 ^ y is impossible.
--/
-theorem diophantine1_6_7_215 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 215 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (215 ^ y % 5 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 6 ^ x % 5 = 3 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 6 ^ x % 5 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 215 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 221 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 221 ^ y,
-if x >= 2, 221 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 221 ^ y is impossible.
--/
-theorem diophantine1_6_7_221 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 221 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 221 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 221 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 221 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 223 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 223 ^ y,
-if x >= 4, 223 ^ y = 7 (mod 16).
-However, this is impossible.
-Therefore, x < 4.
-Further examination shows that (x, y) = (3, 1).
--/
-theorem diophantine1_6_7_223 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 223 ^ y) :
-  List.Mem (x, y) [(3, 1)]
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (6 ^ x % 16 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 223 ^ y % 16 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 223 ^ y % 16 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 3 := by omega
-  have h8 := Claim (List.Mem (x, y) [(3, 1)]) [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 223 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 227 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 227 ^ y,
-if x >= 3, 227 ^ y = 7 (mod 8).
-However, this is impossible.
-Therefore, x < 3.
-Further examination shows that 6 ^ x + 7 = 227 ^ y is impossible.
--/
-theorem diophantine1_6_7_227 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 227 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 3
-  have h7 := Claim (6 ^ x % 8 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 3, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 227 ^ y % 8 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 227 ^ y % 8 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 2 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 227 ^ y, proof := h3},
-    {prop := x <= 2, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 229 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 229 ^ y,
-if x >= 2, 229 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 229 ^ y is impossible.
--/
-theorem diophantine1_6_7_229 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 229 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 229 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 229 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 229 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 233 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 233 ^ y,
-if x >= 2, 233 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 233 ^ y is impossible.
--/
-theorem diophantine1_6_7_233 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 233 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 233 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 233 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 233 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, no magic prime)   6 ^ x + 7 = 235 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 235 ^ y,
-if y >= 1, 6 ^ x = 3 (mod 5).
-However, this is impossible.
-Therefore, y < 1.
-So 6 ^ x + 7 = 235 ^ y is impossible.
--/
-theorem diophantine1_6_7_235 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 235 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (235 ^ y % 5 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 6 ^ x % 5 = 3 := by omega
-  have h9 := Claim False [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 6 ^ x % 5 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 235 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 239 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 239 ^ y,
-if x >= 4, 239 ^ y = 7 (mod 16).
-However, this is impossible.
-Therefore, x < 4.
-Further examination shows that 6 ^ x + 7 = 239 ^ y is impossible.
--/
-theorem diophantine1_6_7_239 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 239 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 4
-  have h7 := Claim (6 ^ x % 16 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 4, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 239 ^ y % 16 = 7 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 239 ^ y % 16 = 7, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 3 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 239 ^ y, proof := h3},
-    {prop := x <= 3, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Back Mode, no magic prime)   6 ^ x + 7 = 241 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 241 ^ y,
-if x >= 2, 241 ^ y = 3 (mod 4).
-However, this is impossible.
-Therefore, x < 2.
-Further examination shows that 6 ^ x + 7 = 241 ^ y is impossible.
--/
-theorem diophantine1_6_7_241 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 241 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : x >= 2
-  have h7 := Claim (6 ^ x % 4 = 0) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 2, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 241 ^ y % 4 = 3 := by omega
-  have h9 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := 241 ^ y % 4 = 3, proof := h8},
-  ] "observe_mod_cycle"
-  apply False.elim h9
-  have h7 : x <= 1 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 241 ^ y, proof := h3},
-    {prop := x <= 1, proof := h7},
-  ] "diophantine1_front_enumeration"
-  exact h8
-
-/-
-(Class II, Front Mode, with magic prime 37)   6 ^ x + 7 = 247 ^ y
-For positive integers x, y satisfying 6 ^ x + 7 = 247 ^ y,
-if y >= 1, 6 ^ x = 6 (mod 13).
-So x = 1 (mod 12), 
-which implies x = 1 (mod 4).
-Therefore, 6 ^ x = 6 (mod 37).
-So 247 ^ y = 13 (mod 37), but this is impossible.
-Therefore, y < 1.
-So 6 ^ x + 7 = 247 ^ y is impossible.
--/
-theorem diophantine1_6_7_247 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 6 ^ x + 7 = 247 ^ y) :
-  False
-  := by
-  have h4 : x % 1 = 0 := by omega
-  have h5 : y % 1 = 0 := by omega
-  by_cases h6 : y >= 1
-  have h7 := Claim (247 ^ y % 13 = 0) [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h6},
-  ] "pow_mod_eq_zero"
-  have h8 : 6 ^ x % 13 = 6 := by omega
-  have h9 := Claim (x % 12 = 1) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := 6 ^ x % 13 = 6, proof := h8},
-  ] "observe_mod_cycle"
-  have h10 := Claim (List.Mem (6 ^ x % 37) [6]) [
-    {prop := x % 1 = 0, proof := h4},
-    {prop := x >= 1, proof := h1},
-    {prop := x % 12 = 1, proof := h9},
-  ] "utilize_mod_cycle"
-  have h11 := Claim (List.Mem (247 ^ y % 37) [13]) [
-    {prop := List.Mem (6 ^ x % 37) [6], proof := h10},
-    {prop := 6 ^ x + 7 = 247 ^ y, proof := h3},
-  ] "compute_mod_add"
-  have h12 := Claim False [
-    {prop := y % 1 = 0, proof := h5},
-    {prop := y >= 1, proof := h2},
-    {prop := List.Mem (247 ^ y % 37) [13], proof := h11},
-  ] "exhaust_mod_cycle"
-  apply False.elim h12
-  have h7 : y <= 0 := by omega
-  have h8 := Claim False [
-    {prop :=  x % 1 = 0, proof := h4},
-    {prop :=  x >= 1, proof := h1},
-    {prop :=  y % 1 = 0, proof := h5},
-    {prop :=  y >= 1, proof := h2},
-    {prop := 6 ^ x + 7 = 247 ^ y, proof := h3},
-    {prop := y <= 0, proof := h7},
-  ] "diophantine1_back_enumeration"
+    {prop := 6 ^ x + 7 = 100 ^ y, proof := h3},
+    {prop := Or (x <= 2) (y <= 2), proof := h7},
+  ] "diophantine1_enumeration"
   exact h8
 
 def main : IO Unit :=

@@ -1,5 +1,5 @@
 import sympy
-from ...config import *
+from ..config import *
 
 
 __all__ = [

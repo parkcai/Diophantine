@@ -1,6 +1,6 @@
 from typing import List
 from typing import Set
-from meta.uid.uid_generator import *
+from pywheels.blueprints.uid_generator import UIDGenerator
 
 
 __all__ = [

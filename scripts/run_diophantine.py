@@ -1,10 +1,9 @@
-import sys
+
 import math
 import subprocess
 from tqdm import tqdm
 from os.path import sep as seperator
 from pywheels.file_tools import delete_file
-from pywheels.file_tools import assert_file_exist
 from pywheels.file_tools import guarantee_file_exist
 from .utils import *
 
@@ -12,59 +11,63 @@ from .utils import *
 def execute_diophantine(
     input_data: str, 
     output_path: str, 
-    exe_path: str
+    input_encoding: str = "UTF-8",
+    output_encoding: str = "UTF-8",
+    error_encoding: str = "UTF-8",
 ):
     
     with open(
         file = output_path, 
         mode = "w", 
-        encoding = "UTF-8"
+        encoding = output_encoding,
     ) as out:
         
-        proc = subprocess.run(
-            exe_path,
-            input = input_data.encode("UTF-8"),
+        process = subprocess.run(
+            diophantine_exec_path,
+            input = input_data.encode(input_encoding),
             stdout = out,
             stderr = subprocess.PIPE,
         )
 
-    if proc.returncode != 0:
+    if process.returncode != 0:
         
-        raise RuntimeError(f"【Diophantine 执行错误】{proc.stderr.decode('UTF-8')}")
+        raise RuntimeError(
+            f"【Diophantine 执行错误】{process.stderr.decode(error_encoding)}"
+        )
 
 
 def main():
     
     guarantee_file_exist("results", is_directory=True)
-    
-    diophantine_exec_path = "diophantine.exe" if sys.platform == "win32" else "diophantine"
-    
-    assert_file_exist(diophantine_exec_path, f"请先生成 diophantine.c 并编译至 {diophantine_exec_path}！")
 
-    print("请输入参数范围（直接回车使用默认值）：")
+    print("Please enter a value (press Enter to use the default):")
     a_max = get_integer_input("a_max", 500)
+    a_min = get_integer_input("a_min", 2)
     b_max = get_integer_input("b_max", 500)
     c_max = get_integer_input("c_max", 500)
+    a_start = get_integer_input("a_start", 2)
+    b_start = get_integer_input("b_start", 1)
+    exclude_trivial = get_boolean_input("exclude_trivial", True)
+    clear_all_previous_results = get_boolean_input("clear_all_previous_results", True)
     
-    progress_bar = tqdm(range((a_max - 1) * b_max), smoothing = 0)
+    if clear_all_previous_results:
+        delete_file("results"); guarantee_file_exist("results", True)
+    
+    progress_bar = tqdm(range((a_max - a_min + 1) * b_max), smoothing = 0)
 
-    for a in range(2, a_max + 1):
-        
+    for a in range(a_min, a_max + 1):
         for b in range(1, b_max + 1):
             
-            lean_file_path = f"results{seperator}{a}-{b}.lean"
+            if exclude_trivial and math.gcd(a, b) >= 2:
+                progress_bar.update(1); continue
+                
+            if not(a >= (a_start + 1) or (a == a_start and b >= b_start)):
+                progress_bar.update(1); continue
             
-            if math.gcd(a, b) >= 2:
-                
-                delete_file(lean_file_path)
-                
-            else:
-                
-                execute_diophantine(
-                    input_data = f"2 {a} {a} {b} {b} {c_max} 2", 
-                    output_path = f"results{seperator}{a}-{b}.lean", 
-                    exe_path = diophantine_exec_path
-                )
+            execute_diophantine(
+                input_data = f"2 {1 if exclude_trivial else 0} {a} {a} {b} {b} {c_max} 2", 
+                output_path = f"results{seperator}{a}-{b}.lean", 
+            )
                     
             progress_bar.update(1)
     

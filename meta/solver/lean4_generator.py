@@ -147,7 +147,7 @@ generate_Lean4_code_v1_code = f""" void generate_Lean4_code_v1 () {{
             {printf("    {prop :=  y >= 1, proof := h2},", [], 3)}
             {printf("    {prop := %d ^ x + %d = %d ^ y, proof := h3},", ["a", "b", "c"], 3)}
             {printf("    {prop := Or (x <= %d) (y <= %d), proof := h7},", ["dp_power-1, dp_power-1"], 3)}
-            {printf('  ] "diophantine1_double_enumeration"', [], 3)}
+            {printf('  ] "diophantine1_enumeration"', [], 3)}
             {printf("  exact h8", [], 3)}
         }}else{{
             {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 3)}
@@ -200,7 +200,7 @@ generate_Lean4_code_v1_code = f""" void generate_Lean4_code_v1 () {{
                 {printf("    {prop :=  y >= 1, proof := h2},", [], 4)}
                 {printf("    {prop := %d ^ x + %d = %d ^ y, proof := h3},", ["a", "b", "c"], 4)}
                 {printf("    {prop := x <= %d, proof := h7},", ["dp_power-1"], 4)}
-                {printf('  ] "diophantine1_front_enumeration"', [], 4)}
+                {printf('  ] "diophantine1_enumeration"', [], 4)}
                 {printf("  exact h8", [], 4)}
             // c ^ y = R (mod M) => y = yr (mod k)
             // e.g. 2 ^ x + 1 = 17 ^ y
@@ -305,7 +305,7 @@ generate_Lean4_code_v1_code = f""" void generate_Lean4_code_v1 () {{
                 {printf("    {prop :=  y >= 1, proof := h2},", [], 4)}
                 {printf("    {prop := %d ^ x + %d = %d ^ y, proof := h3},", ["a", "b", "c"], 4)}
                 {printf("    {prop := x <= %d, proof := h7},", ["dp_power-1"], 4)}
-                {printf('  ] "diophantine1_front_enumeration"', [], 4)}
+                {printf('  ] "diophantine1_enumeration"', [], 4)}
                 {printf("  exact h8", [], 4)}
             }}
         // Front Mode: Obtain x = xr (mod k) by disproof assumption and search series {{n*k + 1}} for an appropriate prime number
@@ -351,7 +351,7 @@ generate_Lean4_code_v1_code = f""" void generate_Lean4_code_v1 () {{
                 {printf("    {prop :=  y >= 1, proof := h2},", [], 4)}
                 {printf("    {prop := %d ^ x + %d = %d ^ y, proof := h3},", ["a", "b", "c"], 4)}
                 {printf("    {prop := y <= %d, proof := h7},", ["dp_power-1"], 4)}
-                {printf('  ] "diophantine1_back_enumeration"', [], 4)}
+                {printf('  ] "diophantine1_enumeration"', [], 4)}
                 {printf("  exact h8", [], 4)}
             // a ^ x = R (mod M) => x = xr (mod k)
             // e.g. 2 ^ x + 1 = 3 ^ y
@@ -456,7 +456,7 @@ generate_Lean4_code_v1_code = f""" void generate_Lean4_code_v1 () {{
                 {printf("    {prop :=  y >= 1, proof := h2},", [], 4)}
                 {printf("    {prop := %d ^ x + %d = %d ^ y, proof := h3},", ["a", "b", "c"], 4)}
                 {printf("    {prop := y <= %d, proof := h7},", ["dp_power-1"], 4)}
-                {printf('  ] "diophantine1_back_enumeration"', [], 4)}
+                {printf('  ] "diophantine1_enumeration"', [], 4)}
                 {printf("  exact h8", [], 4)} 
             }} 
         }}else{{

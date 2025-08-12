@@ -1,13 +1,13 @@
 from .config import *
 from .SysY.basic import *
 from .SysY.utils import *
-from .code.docstring import *
-from .code.include import *
-from .code.math.arithmetic import *
-from .code.math.prime_list import *
-from .code.solver.api import *
-from .code.solver.solver_v1 import *
-from .code.solver.lean4_generator import *
+from .solver.docstring import *
+from .solver.include import *
+from .math.arithmetic import *
+from .math.prime_list import *
+from .solver.api import *
+from .solver.core import *
+from .solver.lean4_generator import *
 from .SysY.printf import *
 
 

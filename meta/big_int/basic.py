@@ -1,4 +1,4 @@
-from ...config import is_toy
+from ..config import is_toy
 
 
 __all__ = [

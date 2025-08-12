@@ -1,6 +1,12 @@
+from .utils import get_integer_input
+
+
 def main():
+
+    a = get_integer_input("Please input a: ", 5)
+    b = get_integer_input("Please input b: ", 3)
+    c = get_integer_input("Please input c: ", 2)
     
-    a = int(input()); b = int(input()); c = int(input())
     solutions = []
     
     A = a; x = 1; C = c; y = 1

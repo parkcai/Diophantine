@@ -1,6 +1,6 @@
-from ...config import *
-from ...SysY.printf import *
-from ..solver.big_int import *
+from ..config import *
+from ..SysY.printf import *
+from ..big_int import *
 
 
 __all__ = [

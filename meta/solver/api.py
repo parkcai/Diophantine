@@ -44,7 +44,8 @@ Solve_Diophantine1_generate_Lean4_code = f"""void Solve_Diophantine1_generate_Le
 
 Solve_Diophantine1_backdoor_code = f"""void Solve_Diophantine1_backdoor() {{
     max_trial_num_v1 = getint();
-    mod_threshold_v1 = getint();
+    // mod_threshold_v1 = getint();
+    hijack_settings = 1;
 }}
 """
 
@@ -152,12 +153,14 @@ Solve_Diophantine1_shell_code = f"""void Solve_Diophantine1_shell() {{
 
 
 Solve_Diophantine1_research_code = f"""void Solve_Diophantine1_research() {{
+    int exclude_trivial = getint();
     int a_max = getint();
     int a_min = getint();
     int b_max = getint();
     int b_min = getint();
     int c_max = getint();
     int c_min = getint();
+    {make_assertion("exclude_trivial == 0 || exclude_trivial == 1", "exclude_trivial should be 0 or 1!", 1)}
     {make_assertion("a_max >= a_min && a_min >= 2", "a_max >= a_min >= 2 isn't satisfied!", 1)}
     {make_assertion("b_max >= b_min && b_min >= 1", "b_max >= b_min >= 1 isn't satisfied!", 1)}
     {make_assertion("c_max >= c_min && c_min >= 2", "c_max >= c_min >= 2 isn't satisfied!", 1)}
@@ -167,7 +170,11 @@ Solve_Diophantine1_research_code = f"""void Solve_Diophantine1_research() {{
     {printf("-- %d <= a <= %d", ["a_min, a_max"], 1)}
     {printf("-- %d <= b <= %d", ["b_min, b_max"], 1)}
     {printf("-- %d <= c <= %d", ["c_min, c_max"], 1)}
-    {printf("-- trivial cases where a, b, c are not pairwise coprime are skipped.", [], 1)}
+    if (exclude_trivial) {{
+        {printf("-- trivial cases where a, b, c are not pairwise coprime are skipped.", [], 2)}
+    }}else {{
+        {printf("-- trivial cases where a, b, c are not pairwise coprime are not skipped.", [], 2)}
+    }}
     print_line(newline); print_line(newline);
     generate_Claim_Structure();
     print_line(newline); print_line(newline);
@@ -178,7 +185,7 @@ Solve_Diophantine1_research_code = f"""void Solve_Diophantine1_research() {{
         while (b <= b_max) {{
             int c = c_min;
             while (c <= c_max) {{
-                if (greatest_common_divisor(a, b) >= 2 || greatest_common_divisor(b, c) >= 2 || greatest_common_divisor(a, c) >= 2) {{
+                if (exclude_trivial && (greatest_common_divisor(a, b) >= 2 || greatest_common_divisor(b, c) >= 2 || greatest_common_divisor(a, c) >= 2)) {{
                     c = c + 1;
                     continue;
                 }}
@@ -209,7 +216,7 @@ Solve_Diophantine1_document_code = f"""void Solve_Diophantine1_document() {{
     {printf("-- transcendental_diophantine1.lean", [], 1)}
     {printf("-- The 'Type-I transcendental Diophantine equation' refers to equations of the form a ^ x + b = c ^ y in positive integers x and y, where a >= 2, b >= 1, and c >= 2 are fixed integers. While it is difficult to rigorously prove a general algorithm that takes arbitrary (a, b, c) and outputs a complete proof, I propose a heuristic algorithm that is intuitive and extensively validated in finite cases, mainly relying on modular arithmetic and the apparent randomness of primes. Under this approach, such equations fall into two major classes and seven subtypes, with two representative equations provided for each subtype in this file.", [], 1)}
     {printf("-- Note that these proofs do not fully rely on traditional Lean methods; instead, Lean serves as a skeleton, while many reusable reasoning primitives are declared using `Claim` and externally verified by the CoLean system in a second-pass revalidation. This is partly due to my limited understanding of Lean and a preference for keeping the document purely ASCII. Nonetheless, I believe the CoLean framework -- using Lean as a scaffold and delegating complex inferences -- has broader relevance for domains less amenable to full formalization, such as physics or philosophy. This file also serves as an early proof-of-concept and testbed for CoLean's development.", [], 1)}
-    {printf("-- Eureka Lab, Zeyu Cai, 25/08/01.", [], 1)}
+    {printf("-- Eureka Lab, parkcai, 25/08/01.", [], 1)}
     print_line(newline); print_line(newline); print_line(newline);
     generate_Claim_Structure();
     print_line(newline); print_line(newline); print_line(newline);
