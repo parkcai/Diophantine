@@ -4,7 +4,10 @@ import subprocess
 from tqdm import tqdm
 from os.path import sep as seperator
 from pywheels.file_tools import delete_file
+from pywheels.file_tools import append_to_file
 from pywheels.file_tools import guarantee_file_exist
+from concurrent.futures import TimeoutError
+from concurrent.futures import ThreadPoolExecutor
 from .utils import *
 
 
@@ -53,16 +56,40 @@ def main():
     for a in range(a_min, a_max + 1):
         for b in range(b_min, b_max + 1):
             
+            lean_file_path = f"results{seperator}{a}-{b}.lean"
+            
             if not(a >= (a_start + 1) or (a == a_start and b >= b_start)):
                 progress_bar.update(1); continue
             
             if exclude_trivial and math.gcd(a, b) >= 2:
                 progress_bar.update(1); continue
+            
+            with ThreadPoolExecutor(
+                max_workers=1
+            ) as executor:
                 
-            execute_diophantine(
-                input_data = f"2 {1 if exclude_trivial else 0} {a} {a} {b} {b} {c_max} {c_min}", 
-                output_path = f"results{seperator}{a}-{b}.lean", 
-            )
+                future = executor.submit(
+                    execute_diophantine,
+                    input_data = f"2 {1 if exclude_trivial else 0} {a} {a} {b} {b} {c_max} {c_min}",
+                    output_path = lean_file_path,
+                )
+                
+                try:
+                    future.result(
+                        timeout = run_diophantine_timeout_seconds,
+                    )
+                    
+                except TimeoutError:
+                    
+                    append_to_file(
+                        file_path = recorder_path, 
+                        content = (
+                            f"file {lean_file_path} not successfully generated, "
+                            f"error: timeout!"
+                        )
+                    )
+                    
+                    progress_bar.update(1); continue
                     
             progress_bar.update(1)
     

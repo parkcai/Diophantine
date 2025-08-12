@@ -3,7 +3,7 @@
 -- a, b and c range over the following intervals:
 -- 10 <= a <= 10
 -- 10 <= b <= 10
--- 2 <= c <= 100
+-- 2 <= c <= 125
 -- trivial cases where a, b, c are not pairwise coprime are not skipped.
 
 
@@ -2314,6 +2314,580 @@ theorem diophantine1_10_10_100 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (
     {prop := 10 ^ x + 10 = 100 ^ y, proof := h3},
     {prop := Or (x <= 1) (y <= 1), proof := h7},
   ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 101 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 101 ^ y,
+this is impossible, because it implies that 101 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_101 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 101 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 101 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 101 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 102 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 102 ^ y,
+this is impossible, because it implies that 102 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_102 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 102 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 102 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 102 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 103 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 103 ^ y,
+this is impossible, because it implies that 103 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_103 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 103 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 103 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 103 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 104 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 104 ^ y,
+this is impossible, because it implies that 104 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_104 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 104 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 104 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 104 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 105 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 105 ^ y,
+this is impossible, because it implies that 105 ^ y = 0 (mod 2).
+-/
+theorem diophantine1_10_10_105 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 105 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 2 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 105 ^ y % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 105 ^ y % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 106 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 106 ^ y,
+this is impossible, because it implies that 106 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_106 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 106 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 106 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 106 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 107 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 107 ^ y,
+this is impossible, because it implies that 107 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_107 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 107 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 107 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 107 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 108 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 108 ^ y,
+this is impossible, because it implies that 108 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_108 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 108 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 108 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 108 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 109 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 109 ^ y,
+this is impossible, because it implies that 109 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_109 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 109 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 109 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 109 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   10 ^ x + 10 = 110 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 110 ^ y,
+if x >= 2 and y >= 2,
+10 = 0 (mod 100), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that (x, y) = (2, 1).
+-/
+theorem diophantine1_10_10_110 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 110 ^ y) :
+  List.Mem (x, y) [(2, 1)]
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (10 ^ x % 100 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (110 ^ y % 100 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim (List.Mem (x, y) [(2, 1)]) [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 10 ^ x + 10 = 110 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 111 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 111 ^ y,
+this is impossible, because it implies that 111 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_111 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 111 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 111 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 111 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 112 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 112 ^ y,
+this is impossible, because it implies that 112 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_112 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 112 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 112 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 112 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 113 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 113 ^ y,
+this is impossible, because it implies that 113 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_113 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 113 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 113 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 113 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 114 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 114 ^ y,
+this is impossible, because it implies that 114 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_114 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 114 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 114 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 114 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 115 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 115 ^ y,
+this is impossible, because it implies that 115 ^ y = 0 (mod 2).
+-/
+theorem diophantine1_10_10_115 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 115 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 2 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 115 ^ y % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 115 ^ y % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 116 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 116 ^ y,
+this is impossible, because it implies that 116 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_116 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 116 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 116 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 116 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 117 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 117 ^ y,
+this is impossible, because it implies that 117 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_117 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 117 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 117 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 117 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 118 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 118 ^ y,
+this is impossible, because it implies that 118 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_118 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 118 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 118 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 118 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 119 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 119 ^ y,
+this is impossible, because it implies that 119 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 119 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 119 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 119 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   10 ^ x + 10 = 120 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 120 ^ y,
+if x >= 2 and y >= 2,
+10 = 0 (mod 100), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 10 ^ x + 10 = 120 ^ y is impossible.
+-/
+theorem diophantine1_10_10_120 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 120 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (10 ^ x % 100 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (120 ^ y % 100 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 10 ^ x + 10 = 120 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 121 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 121 ^ y,
+this is impossible, because it implies that 121 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 121 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 121 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 121 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 122 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 122 ^ y,
+this is impossible, because it implies that 122 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_122 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 122 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 122 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 122 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 123 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 123 ^ y,
+this is impossible, because it implies that 123 ^ y = 0 (mod 10).
+-/
+theorem diophantine1_10_10_123 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 123 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 10 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 123 ^ y % 10 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 123 ^ y % 10 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 124 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 124 ^ y,
+this is impossible, because it implies that 124 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_10_10_124 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 124 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 124 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 124 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   10 ^ x + 10 = 125 ^ y
+For positive integers x, y satisfying 10 ^ x + 10 = 125 ^ y,
+this is impossible, because it implies that 125 ^ y = 0 (mod 2).
+-/
+theorem diophantine1_10_10_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 10 ^ x + 10 = 125 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (10 ^ x % 2 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 125 ^ y % 2 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 125 ^ y % 2 = 0, proof := h7},
+  ] "observe_mod_cycle"
   exact h8
 
 def main : IO Unit :=

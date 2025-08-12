@@ -3,7 +3,7 @@
 -- a, b and c range over the following intervals:
 -- 5 <= a <= 5
 -- 5 <= b <= 5
--- 2 <= c <= 100
+-- 2 <= c <= 125
 -- trivial cases where a, b, c are not pairwise coprime are not skipped.
 
 
@@ -2432,6 +2432,616 @@ theorem diophantine1_5_5_100 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 5 ^ x + 5 = 100 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 101 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 101 ^ y,
+this is impossible, because it implies that 101 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_101 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 101 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 101 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 101 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 102 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 102 ^ y,
+this is impossible, because it implies that 102 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_102 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 102 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 102 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 102 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 103 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 103 ^ y,
+this is impossible, because it implies that 103 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_103 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 103 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 103 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 103 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 104 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 104 ^ y,
+this is impossible, because it implies that 104 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_104 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 104 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 104 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 104 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 5 = 105 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 105 ^ y,
+if x >= 2 and y >= 2,
+5 = 0 (mod 25), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 5 ^ x + 5 = 105 ^ y is impossible.
+-/
+theorem diophantine1_5_5_105 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 105 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (5 ^ x % 25 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (105 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 5 = 105 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 106 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 106 ^ y,
+this is impossible, because it implies that 106 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_106 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 106 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 106 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 106 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 107 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 107 ^ y,
+this is impossible, because it implies that 107 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_107 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 107 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 107 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 107 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 108 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 108 ^ y,
+this is impossible, because it implies that 108 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_108 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 108 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 108 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 108 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 109 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 109 ^ y,
+this is impossible, because it implies that 109 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_109 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 109 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 109 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 109 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 5 = 110 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 110 ^ y,
+if x >= 2 and y >= 2,
+5 = 0 (mod 25), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 5 ^ x + 5 = 110 ^ y is impossible.
+-/
+theorem diophantine1_5_5_110 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 110 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (5 ^ x % 25 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (110 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 5 = 110 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 111 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 111 ^ y,
+this is impossible, because it implies that 111 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_111 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 111 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 111 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 111 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 112 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 112 ^ y,
+this is impossible, because it implies that 112 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_112 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 112 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 112 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 112 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 113 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 113 ^ y,
+this is impossible, because it implies that 113 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_113 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 113 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 113 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 113 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 114 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 114 ^ y,
+this is impossible, because it implies that 114 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_114 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 114 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 114 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 114 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 5 = 115 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 115 ^ y,
+if x >= 2 and y >= 2,
+5 = 0 (mod 25), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 5 ^ x + 5 = 115 ^ y is impossible.
+-/
+theorem diophantine1_5_5_115 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 115 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (5 ^ x % 25 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (115 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 5 = 115 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 116 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 116 ^ y,
+this is impossible, because it implies that 116 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_116 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 116 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 116 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 116 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 117 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 117 ^ y,
+this is impossible, because it implies that 117 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_117 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 117 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 117 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 117 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 118 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 118 ^ y,
+this is impossible, because it implies that 118 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_118 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 118 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 118 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 118 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 119 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 119 ^ y,
+this is impossible, because it implies that 119 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 119 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 119 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 119 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 5 = 120 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 120 ^ y,
+if x >= 2 and y >= 2,
+5 = 0 (mod 25), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 5 ^ x + 5 = 120 ^ y is impossible.
+-/
+theorem diophantine1_5_5_120 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 120 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (5 ^ x % 25 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (120 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 5 = 120 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 121 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 121 ^ y,
+this is impossible, because it implies that 121 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 121 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 121 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 121 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 122 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 122 ^ y,
+this is impossible, because it implies that 122 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_122 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 122 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 122 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 122 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 123 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 123 ^ y,
+this is impossible, because it implies that 123 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_123 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 123 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 123 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 123 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   5 ^ x + 5 = 124 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 124 ^ y,
+this is impossible, because it implies that 124 ^ y = 0 (mod 5).
+-/
+theorem diophantine1_5_5_124 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 124 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (5 ^ x % 5 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 124 ^ y % 5 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 124 ^ y % 5 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   5 ^ x + 5 = 125 ^ y
+For positive integers x, y satisfying 5 ^ x + 5 = 125 ^ y,
+if x >= 2 and y >= 2,
+5 = 0 (mod 25), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 5 ^ x + 5 = 125 ^ y is impossible.
+-/
+theorem diophantine1_5_5_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 5 ^ x + 5 = 125 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (5 ^ x % 25 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (125 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 5 ^ x + 5 = 125 ^ y, proof := h3},
     {prop := Or (x <= 1) (y <= 1), proof := h7},
   ] "diophantine1_enumeration"
   exact h8

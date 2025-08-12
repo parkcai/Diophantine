@@ -3,7 +3,7 @@
 -- a, b and c range over the following intervals:
 -- 7 <= a <= 7
 -- 7 <= b <= 7
--- 2 <= c <= 100
+-- 2 <= c <= 125
 -- trivial cases where a, b, c are not pairwise coprime are not skipped.
 
 
@@ -2361,6 +2361,592 @@ theorem diophantine1_7_7_100 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
     {prop := y % 1 = 0, proof := h5},
     {prop := y >= 1, proof := h2},
     {prop := 100 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 101 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 101 ^ y,
+this is impossible, because it implies that 101 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_101 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 101 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 101 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 101 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 102 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 102 ^ y,
+this is impossible, because it implies that 102 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_102 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 102 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 102 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 102 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 103 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 103 ^ y,
+this is impossible, because it implies that 103 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_103 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 103 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 103 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 103 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 104 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 104 ^ y,
+this is impossible, because it implies that 104 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_104 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 104 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 104 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 104 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   7 ^ x + 7 = 105 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 105 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 49), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 7 ^ x + 7 = 105 ^ y is impossible.
+-/
+theorem diophantine1_7_7_105 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 105 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (7 ^ x % 49 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (105 ^ y % 49 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 7 ^ x + 7 = 105 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 106 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 106 ^ y,
+this is impossible, because it implies that 106 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_106 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 106 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 106 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 106 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 107 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 107 ^ y,
+this is impossible, because it implies that 107 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_107 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 107 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 107 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 107 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 108 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 108 ^ y,
+this is impossible, because it implies that 108 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_108 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 108 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 108 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 108 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 109 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 109 ^ y,
+this is impossible, because it implies that 109 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_109 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 109 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 109 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 109 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 110 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 110 ^ y,
+this is impossible, because it implies that 110 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_110 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 110 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 110 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 110 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 111 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 111 ^ y,
+this is impossible, because it implies that 111 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_111 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 111 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 111 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 111 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   7 ^ x + 7 = 112 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 112 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 49), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 7 ^ x + 7 = 112 ^ y is impossible.
+-/
+theorem diophantine1_7_7_112 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 112 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (7 ^ x % 49 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (112 ^ y % 49 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 7 ^ x + 7 = 112 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 113 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 113 ^ y,
+this is impossible, because it implies that 113 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_113 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 113 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 113 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 113 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 114 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 114 ^ y,
+this is impossible, because it implies that 114 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_114 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 114 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 114 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 114 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 115 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 115 ^ y,
+this is impossible, because it implies that 115 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_115 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 115 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 115 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 115 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 116 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 116 ^ y,
+this is impossible, because it implies that 116 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_116 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 116 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 116 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 116 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 117 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 117 ^ y,
+this is impossible, because it implies that 117 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_117 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 117 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 117 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 117 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 118 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 118 ^ y,
+this is impossible, because it implies that 118 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_118 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 118 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 118 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 118 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   7 ^ x + 7 = 119 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 119 ^ y,
+if x >= 2 and y >= 2,
+7 = 0 (mod 49), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 7 ^ x + 7 = 119 ^ y is impossible.
+-/
+theorem diophantine1_7_7_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 119 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (7 ^ x % 49 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (119 ^ y % 49 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 7 ^ x + 7 = 119 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 120 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 120 ^ y,
+this is impossible, because it implies that 120 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_120 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 120 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 120 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 120 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 121 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 121 ^ y,
+this is impossible, because it implies that 121 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 121 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 121 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 121 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 122 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 122 ^ y,
+this is impossible, because it implies that 122 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_122 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 122 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 122 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 122 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 123 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 123 ^ y,
+this is impossible, because it implies that 123 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_123 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 123 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 123 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 123 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 124 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 124 ^ y,
+this is impossible, because it implies that 124 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_124 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 124 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 124 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 124 ^ y % 7 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type ii)   7 ^ x + 7 = 125 ^ y
+For positive integers x, y satisfying 7 ^ x + 7 = 125 ^ y,
+this is impossible, because it implies that 125 ^ y = 0 (mod 7).
+-/
+theorem diophantine1_7_7_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 7 ^ x + 7 = 125 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (7 ^ x % 7 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 125 ^ y % 7 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 125 ^ y % 7 = 0, proof := h7},
   ] "observe_mod_cycle"
   exact h8
 

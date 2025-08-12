@@ -3,7 +3,7 @@
 -- a, b and c range over the following intervals:
 -- 4 <= a <= 4
 -- 1 <= b <= 1
--- 2 <= c <= 100
+-- 2 <= c <= 125
 -- trivial cases where a, b, c are not pairwise coprime are not skipped.
 
 
@@ -4042,6 +4042,1054 @@ theorem diophantine1_4_1_100 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
     {prop :=  y >= 1, proof := h2},
     {prop := 4 ^ x + 1 = 100 ^ y, proof := h3},
     {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 5 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 6 with prime factor 2 of 4 ...
+-- Trying prime 17...
+-- Succeeded.
+/-
+(Class II, Back Mode, with magic prime 17)   4 ^ x + 1 = 101 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 101 ^ y,
+if x >= 6, 101 ^ y = 1 (mod 64).
+So y = 0 (mod 16), 
+which implies y = 0 (mod 2).
+Therefore, 101 ^ y = 1 (mod 17).
+So 4 ^ x = 0 (mod 17), but this is impossible.
+Therefore, x < 6.
+Further examination shows that 4 ^ x + 1 = 101 ^ y is impossible.
+-/
+theorem diophantine1_4_1_101 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 101 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : x >= 6
+  have h7 := Claim (4 ^ x % 64 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 6, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 101 ^ y % 64 = 1 := by omega
+  have h9 := Claim (y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 101 ^ y % 64 = 1, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (101 ^ y % 17) [1]) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := y % 16 = 0, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (4 ^ x % 17) [0]) [
+    {prop := List.Mem (101 ^ y % 17) [1], proof := h10},
+    {prop := 4 ^ x + 1 = 101 ^ y, proof := h3},
+  ] "compute_mod_sub"
+  have h12 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := List.Mem (4 ^ x % 17) [0], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : x <= 5 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 101 ^ y, proof := h3},
+    {prop := x <= 5, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 102 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 102 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 2), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 102 ^ y is impossible.
+-/
+theorem diophantine1_4_1_102 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 102 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 2 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (102 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 102 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 5 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 6 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 103 of 103 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   4 ^ x + 1 = 103 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 103 ^ y,
+if y >= 1, 4 ^ x = 102 (mod 103).
+However, this is impossible.
+Therefore, y < 1.
+So 4 ^ x + 1 = 103 ^ y is impossible.
+-/
+theorem diophantine1_4_1_103 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 103 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (103 ^ y % 103 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 103 = 102 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 103 = 102, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 103 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 104 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 104 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 4), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 104 ^ y is impossible.
+-/
+theorem diophantine1_4_1_104 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 104 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (104 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 104 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 3 of 105 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   4 ^ x + 1 = 105 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 105 ^ y,
+if y >= 1, 4 ^ x = 2 (mod 3).
+However, this is impossible.
+Therefore, y < 1.
+So 4 ^ x + 1 = 105 ^ y is impossible.
+-/
+theorem diophantine1_4_1_105 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 105 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (105 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 3 = 2 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 3 = 2, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 105 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 106 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 106 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 2), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 106 ^ y is impossible.
+-/
+theorem diophantine1_4_1_106 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 106 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 2 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (106 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 106 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 5 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 6 with prime factor 2 of 4 ...
+-- Trying prime 17...
+-- Succeeded.
+/-
+(Class II, Back Mode, with magic prime 17)   4 ^ x + 1 = 107 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 107 ^ y,
+if x >= 6, 107 ^ y = 1 (mod 64).
+So y = 0 (mod 16), 
+Therefore, 107 ^ y = 1 (mod 17).
+So 4 ^ x = 0 (mod 17), but this is impossible.
+Therefore, x < 6.
+Further examination shows that 4 ^ x + 1 = 107 ^ y is impossible.
+-/
+theorem diophantine1_4_1_107 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 107 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : x >= 6
+  have h7 := Claim (4 ^ x % 64 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 6, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 107 ^ y % 64 = 1 := by omega
+  have h9 := Claim (y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 107 ^ y % 64 = 1, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (107 ^ y % 17) [1]) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := y % 16 = 0, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (4 ^ x % 17) [0]) [
+    {prop := List.Mem (107 ^ y % 17) [1], proof := h10},
+    {prop := 4 ^ x + 1 = 107 ^ y, proof := h3},
+  ] "compute_mod_sub"
+  have h12 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := List.Mem (4 ^ x % 17) [0], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : x <= 5 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 107 ^ y, proof := h3},
+    {prop := x <= 5, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 108 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 108 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 4), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 108 ^ y is impossible.
+-/
+theorem diophantine1_4_1_108 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 108 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (108 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 108 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 5 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 6 with prime factor 2 of 4 ...
+-- Trying prime 17...
+-- Succeeded.
+/-
+(Class II, Back Mode, with magic prime 17)   4 ^ x + 1 = 109 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 109 ^ y,
+if x >= 6, 109 ^ y = 1 (mod 64).
+So y = 0 (mod 16), 
+Therefore, 109 ^ y = 1 (mod 17).
+So 4 ^ x = 0 (mod 17), but this is impossible.
+Therefore, x < 6.
+Further examination shows that 4 ^ x + 1 = 109 ^ y is impossible.
+-/
+theorem diophantine1_4_1_109 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 109 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : x >= 6
+  have h7 := Claim (4 ^ x % 64 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 6, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 109 ^ y % 64 = 1 := by omega
+  have h9 := Claim (y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 109 ^ y % 64 = 1, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (109 ^ y % 17) [1]) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := y % 16 = 0, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (4 ^ x % 17) [0]) [
+    {prop := List.Mem (109 ^ y % 17) [1], proof := h10},
+    {prop := 4 ^ x + 1 = 109 ^ y, proof := h3},
+  ] "compute_mod_sub"
+  have h12 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := List.Mem (4 ^ x % 17) [0], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : x <= 5 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 109 ^ y, proof := h3},
+    {prop := x <= 5, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 110 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 110 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 2), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 110 ^ y is impossible.
+-/
+theorem diophantine1_4_1_110 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 110 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 2 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (110 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 110 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 3 of 111 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   4 ^ x + 1 = 111 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 111 ^ y,
+if y >= 1, 4 ^ x = 2 (mod 3).
+However, this is impossible.
+Therefore, y < 1.
+So 4 ^ x + 1 = 111 ^ y is impossible.
+-/
+theorem diophantine1_4_1_111 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 111 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (111 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 3 = 2 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 3 = 2, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 111 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 112 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 112 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 4), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 112 ^ y is impossible.
+-/
+theorem diophantine1_4_1_112 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 112 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (112 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 112 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 5 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 6 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 113 of 113 ...
+-- Trying prime 29...
+-- Succeeded.
+/-
+(Class II, Front Mode, with magic prime 29)   4 ^ x + 1 = 113 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 113 ^ y,
+if y >= 1, 4 ^ x = 112 (mod 113).
+So x = 7 (mod 14).
+Therefore, 4 ^ x = 28 (mod 29).
+So 113 ^ y = 0 (mod 29), but this is impossible.
+Therefore, y < 1.
+So 4 ^ x + 1 = 113 ^ y is impossible.
+-/
+theorem diophantine1_4_1_113 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 113 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (113 ^ y % 113 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 113 = 112 := by omega
+  have h9 := Claim (x % 14 = 7) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 113 = 112, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (4 ^ x % 29) [28]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 14 = 7, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (113 ^ y % 29) [0]) [
+    {prop := List.Mem (4 ^ x % 29) [28], proof := h10},
+    {prop := 4 ^ x + 1 = 113 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (113 ^ y % 29) [0], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 113 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 114 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 114 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 2), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 114 ^ y is impossible.
+-/
+theorem diophantine1_4_1_114 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 114 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 2 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (114 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 114 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 5 of 115 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 23 of 115 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   4 ^ x + 1 = 115 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 115 ^ y,
+if y >= 1, 4 ^ x = 22 (mod 23).
+However, this is impossible.
+Therefore, y < 1.
+So 4 ^ x + 1 = 115 ^ y is impossible.
+-/
+theorem diophantine1_4_1_115 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 115 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (115 ^ y % 23 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 23 = 22 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 23 = 22, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 115 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 116 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 116 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 4), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 116 ^ y is impossible.
+-/
+theorem diophantine1_4_1_116 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 116 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (116 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 116 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 3 of 117 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   4 ^ x + 1 = 117 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 117 ^ y,
+if y >= 1, 4 ^ x = 2 (mod 3).
+However, this is impossible.
+Therefore, y < 1.
+So 4 ^ x + 1 = 117 ^ y is impossible.
+-/
+theorem diophantine1_4_1_117 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 117 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (117 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 3 = 2 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 3 = 2, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 117 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 118 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 118 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 2), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 118 ^ y is impossible.
+-/
+theorem diophantine1_4_1_118 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 118 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 2 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (118 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 118 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 7 of 119 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   4 ^ x + 1 = 119 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 119 ^ y,
+if y >= 1, 4 ^ x = 6 (mod 7).
+However, this is impossible.
+Therefore, y < 1.
+So 4 ^ x + 1 = 119 ^ y is impossible.
+-/
+theorem diophantine1_4_1_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 119 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (119 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 7 = 6 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 7 = 6, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 119 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 120 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 120 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 4), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 120 ^ y is impossible.
+-/
+theorem diophantine1_4_1_120 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 120 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (120 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 120 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 11 of 121 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   4 ^ x + 1 = 121 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 121 ^ y,
+if y >= 1, 4 ^ x = 10 (mod 11).
+However, this is impossible.
+Therefore, y < 1.
+So 4 ^ x + 1 = 121 ^ y is impossible.
+-/
+theorem diophantine1_4_1_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 121 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (121 ^ y % 11 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 11 = 10 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 11 = 10, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 121 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 122 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 122 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 2), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 122 ^ y is impossible.
+-/
+theorem diophantine1_4_1_122 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 122 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 2 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (122 ^ y % 2 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 122 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 3 of 123 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   4 ^ x + 1 = 123 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 123 ^ y,
+if y >= 1, 4 ^ x = 2 (mod 3).
+However, this is impossible.
+Therefore, y < 1.
+So 4 ^ x + 1 = 123 ^ y is impossible.
+-/
+theorem diophantine1_4_1_123 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 123 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (123 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 3 = 2 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 3 = 2, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 123 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 1 = 124 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 124 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 4), which is impossible.
+Therefore, x < 1 or y < 1.
+So 4 ^ x + 1 = 124 ^ y is impossible.
+-/
+theorem diophantine1_4_1_124 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 124 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (124 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 124 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 2 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 1 with prime factor 5 of 125 ...
+-- Trying to disprove x >= 3 with prime factor 2 of 4 ...
+-- Trying to disprove x >= 4 with prime factor 2 of 4 ...
+-- Trying to disprove y >= 2 with prime factor 5 of 125 ...
+-- Trying prime 11...
+-- Succeeded.
+/-
+(Class II, Front Mode, with magic prime 11)   4 ^ x + 1 = 125 ^ y
+For positive integers x, y satisfying 4 ^ x + 1 = 125 ^ y,
+if y >= 2, 4 ^ x = 24 (mod 25).
+So x = 5 (mod 10), 
+which implies x = 0 (mod 5).
+Therefore, 4 ^ x = 1 (mod 11).
+So 125 ^ y = 2 (mod 11), but this is impossible.
+Therefore, y < 2.
+Further examination shows that 4 ^ x + 1 = 125 ^ y is impossible.
+-/
+theorem diophantine1_4_1_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 1 = 125 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (125 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 4 ^ x % 25 = 24 := by omega
+  have h9 := Claim (x % 10 = 5) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 4 ^ x % 25 = 24, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (4 ^ x % 11) [1]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 10 = 5, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (125 ^ y % 11) [2]) [
+    {prop := List.Mem (4 ^ x % 11) [1], proof := h10},
+    {prop := 4 ^ x + 1 = 125 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (125 ^ y % 11) [2], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 1 = 125 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
   ] "diophantine1_enumeration"
   exact h8
 

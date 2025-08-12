@@ -4,6 +4,8 @@ from tqdm import tqdm
 from os.path import sep as seperator
 from pywheels.file_tools import append_to_file
 from pywheels.file_tools import assert_file_exist
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import TimeoutError
 from .utils import *
 
 
@@ -48,11 +50,33 @@ def main():
                 
                 lean_code = file_pointer.read()
             
-            valid = diophantine_rechecker.revalidate(
-                lean_code = lean_code,
-                mode = "string",
-                show_progress = False,
-            )
+            with ThreadPoolExecutor(
+                max_workers=1
+            ) as executor:
+                
+                future = executor.submit(
+                    diophantine_rechecker.revalidate,
+                    lean_code = lean_code,
+                    mode = "string",
+                    show_progress = False,
+                )
+                
+                try:
+                    valid = future.result(
+                        timeout = revalidate_timeout_seconds,
+                    )
+                    
+                except TimeoutError:
+                    
+                    append_to_file(
+                        file_path = recorder_path, 
+                        content = (
+                            f"file {lean_file_path} not valid, "
+                            f"error: timeout!"
+                        )
+                    )
+                    
+                    progress_bar.update(1); continue
             
             if not valid: 
                 

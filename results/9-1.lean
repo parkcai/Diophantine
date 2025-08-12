@@ -3,7 +3,7 @@
 -- a, b and c range over the following intervals:
 -- 9 <= a <= 9
 -- 1 <= b <= 1
--- 2 <= c <= 100
+-- 2 <= c <= 125
 -- trivial cases where a, b, c are not pairwise coprime are not skipped.
 
 
@@ -4087,6 +4087,1041 @@ theorem diophantine1_9_1_100 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
     {prop :=  y % 1 = 0, proof := h5},
     {prop :=  y >= 1, proof := h2},
     {prop := 9 ^ x + 1 = 100 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 3 with prime factor 3 of 9 ...
+-- Trying prime 19...
+-- Succeeded.
+/-
+(Class II, Back Mode, with magic prime 19)   9 ^ x + 1 = 101 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 101 ^ y,
+if x >= 3, 101 ^ y = 1 (mod 27).
+So y = 0 (mod 18), 
+which implies y = 0 (mod 9).
+Therefore, 101 ^ y = 1 (mod 19).
+So 9 ^ x = 0 (mod 19), but this is impossible.
+Therefore, x < 3.
+Further examination shows that 9 ^ x + 1 = 101 ^ y is impossible.
+-/
+theorem diophantine1_9_1_101 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 101 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : x >= 3
+  have h7 := Claim (9 ^ x % 27 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 101 ^ y % 27 = 1 := by omega
+  have h9 := Claim (y % 18 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 101 ^ y % 27 = 1, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (101 ^ y % 19) [1]) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := y % 18 = 0, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (9 ^ x % 19) [0]) [
+    {prop := List.Mem (101 ^ y % 19) [1], proof := h10},
+    {prop := 9 ^ x + 1 = 101 ^ y, proof := h3},
+  ] "compute_mod_sub"
+  have h12 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := List.Mem (9 ^ x % 19) [0], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : x <= 2 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 101 ^ y, proof := h3},
+    {prop := x <= 2, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   9 ^ x + 1 = 102 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 102 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 3), which is impossible.
+Therefore, x < 1 or y < 1.
+So 9 ^ x + 1 = 102 ^ y is impossible.
+-/
+theorem diophantine1_9_1_102 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 102 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (9 ^ x % 3 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (102 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 102 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 3 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 4 with prime factor 3 of 9 ...
+-- Trying prime 109...
+-- Trying prime 163...
+-- Trying prime 271...
+-- Trying prime 379...
+-- Trying prime 433...
+-- Trying to disprove y >= 1 with prime factor 103 of 103 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 103 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 103 ^ y,
+if y >= 1, 9 ^ x = 102 (mod 103).
+However, this is impossible.
+Therefore, y < 1.
+So 9 ^ x + 1 = 103 ^ y is impossible.
+-/
+theorem diophantine1_9_1_103 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 103 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (103 ^ y % 103 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 103 = 102 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 103 = 102, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 103 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 2 of 104 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 2 with prime factor 2 of 104 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 104 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 104 ^ y,
+if y >= 2, 9 ^ x = 3 (mod 4).
+However, this is impossible.
+Therefore, y < 2.
+Further examination shows that 9 ^ x + 1 = 104 ^ y is impossible.
+-/
+theorem diophantine1_9_1_104 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 104 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (104 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 4 = 3 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 4 = 3, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 104 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   9 ^ x + 1 = 105 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 105 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 3), which is impossible.
+Therefore, x < 1 or y < 1.
+So 9 ^ x + 1 = 105 ^ y is impossible.
+-/
+theorem diophantine1_9_1_105 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 105 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (9 ^ x % 3 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (105 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 105 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 2 of 106 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 2 with prime factor 2 of 106 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 106 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 106 ^ y,
+if y >= 2, 9 ^ x = 3 (mod 4).
+However, this is impossible.
+Therefore, y < 2.
+Further examination shows that 9 ^ x + 1 = 106 ^ y is impossible.
+-/
+theorem diophantine1_9_1_106 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 106 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (106 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 4 = 3 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 4 = 3, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 106 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 3 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 4 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 1 with prime factor 107 of 107 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 107 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 107 ^ y,
+if y >= 1, 9 ^ x = 106 (mod 107).
+However, this is impossible.
+Therefore, y < 1.
+So 9 ^ x + 1 = 107 ^ y is impossible.
+-/
+theorem diophantine1_9_1_107 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 107 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (107 ^ y % 107 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 107 = 106 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 107 = 106, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 107 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   9 ^ x + 1 = 108 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 108 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 9), which is impossible.
+Therefore, x < 1 or y < 1.
+So 9 ^ x + 1 = 108 ^ y is impossible.
+-/
+theorem diophantine1_9_1_108 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 108 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (9 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (108 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 108 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 3 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 4 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 1 with prime factor 109 of 109 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 109 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 109 ^ y,
+if y >= 1, 9 ^ x = 108 (mod 109).
+However, this is impossible.
+Therefore, y < 1.
+So 9 ^ x + 1 = 109 ^ y is impossible.
+-/
+theorem diophantine1_9_1_109 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 109 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (109 ^ y % 109 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 109 = 108 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 109 = 108, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 109 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 2 of 110 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 2 with prime factor 2 of 110 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 110 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 110 ^ y,
+if y >= 2, 9 ^ x = 3 (mod 4).
+However, this is impossible.
+Therefore, y < 2.
+Further examination shows that 9 ^ x + 1 = 110 ^ y is impossible.
+-/
+theorem diophantine1_9_1_110 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 110 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (110 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 4 = 3 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 4 = 3, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 110 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   9 ^ x + 1 = 111 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 111 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 3), which is impossible.
+Therefore, x < 1 or y < 1.
+So 9 ^ x + 1 = 111 ^ y is impossible.
+-/
+theorem diophantine1_9_1_111 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 111 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (9 ^ x % 3 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (111 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 111 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 2 of 112 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 2 with prime factor 2 of 112 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 112 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 112 ^ y,
+if y >= 2, 9 ^ x = 3 (mod 4).
+However, this is impossible.
+Therefore, y < 2.
+Further examination shows that 9 ^ x + 1 = 112 ^ y is impossible.
+-/
+theorem diophantine1_9_1_112 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 112 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (112 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 4 = 3 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 4 = 3, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 112 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 3 with prime factor 3 of 9 ...
+-- Trying prime 19...
+-- Succeeded.
+/-
+(Class II, Back Mode, with magic prime 19)   9 ^ x + 1 = 113 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 113 ^ y,
+if x >= 3, 113 ^ y = 1 (mod 27).
+So y = 0 (mod 18), 
+which implies y = 0 (mod 2).
+Therefore, 113 ^ y = 1 (mod 19).
+So 9 ^ x = 0 (mod 19), but this is impossible.
+Therefore, x < 3.
+Further examination shows that 9 ^ x + 1 = 113 ^ y is impossible.
+-/
+theorem diophantine1_9_1_113 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 113 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : x >= 3
+  have h7 := Claim (9 ^ x % 27 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 3, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 113 ^ y % 27 = 1 := by omega
+  have h9 := Claim (y % 18 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 113 ^ y % 27 = 1, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (113 ^ y % 19) [1]) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := y % 18 = 0, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (9 ^ x % 19) [0]) [
+    {prop := List.Mem (113 ^ y % 19) [1], proof := h10},
+    {prop := 9 ^ x + 1 = 113 ^ y, proof := h3},
+  ] "compute_mod_sub"
+  have h12 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := List.Mem (9 ^ x % 19) [0], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : x <= 2 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 113 ^ y, proof := h3},
+    {prop := x <= 2, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   9 ^ x + 1 = 114 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 114 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 3), which is impossible.
+Therefore, x < 1 or y < 1.
+So 9 ^ x + 1 = 114 ^ y is impossible.
+-/
+theorem diophantine1_9_1_114 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 114 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (9 ^ x % 3 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (114 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 114 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 1 with prime factor 5 of 115 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 1 with prime factor 23 of 115 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 115 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 115 ^ y,
+if y >= 1, 9 ^ x = 22 (mod 23).
+However, this is impossible.
+Therefore, y < 1.
+So 9 ^ x + 1 = 115 ^ y is impossible.
+-/
+theorem diophantine1_9_1_115 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 115 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (115 ^ y % 23 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 23 = 22 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 23 = 22, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 115 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 2 of 116 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 2 with prime factor 2 of 116 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 116 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 116 ^ y,
+if y >= 2, 9 ^ x = 3 (mod 4).
+However, this is impossible.
+Therefore, y < 2.
+Further examination shows that 9 ^ x + 1 = 116 ^ y is impossible.
+-/
+theorem diophantine1_9_1_116 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 116 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (116 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 4 = 3 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 4 = 3, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 116 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   9 ^ x + 1 = 117 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 117 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 9), which is impossible.
+Therefore, x < 1 or y < 1.
+So 9 ^ x + 1 = 117 ^ y is impossible.
+-/
+theorem diophantine1_9_1_117 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 117 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (9 ^ x % 9 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (117 ^ y % 9 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 117 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 2 of 118 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 2 with prime factor 2 of 118 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 118 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 118 ^ y,
+if y >= 2, 9 ^ x = 3 (mod 4).
+However, this is impossible.
+Therefore, y < 2.
+Further examination shows that 9 ^ x + 1 = 118 ^ y is impossible.
+-/
+theorem diophantine1_9_1_118 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 118 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (118 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 4 = 3 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 4 = 3, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 118 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 1 with prime factor 7 of 119 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 119 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 119 ^ y,
+if y >= 1, 9 ^ x = 6 (mod 7).
+However, this is impossible.
+Therefore, y < 1.
+So 9 ^ x + 1 = 119 ^ y is impossible.
+-/
+theorem diophantine1_9_1_119 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 119 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (119 ^ y % 7 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 7 = 6 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 7 = 6, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 119 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   9 ^ x + 1 = 120 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 120 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 3), which is impossible.
+Therefore, x < 1 or y < 1.
+So 9 ^ x + 1 = 120 ^ y is impossible.
+-/
+theorem diophantine1_9_1_120 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 120 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (9 ^ x % 3 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (120 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 120 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 1 with prime factor 11 of 121 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 121 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 121 ^ y,
+if y >= 1, 9 ^ x = 10 (mod 11).
+However, this is impossible.
+Therefore, y < 1.
+So 9 ^ x + 1 = 121 ^ y is impossible.
+-/
+theorem diophantine1_9_1_121 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 121 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 1
+  have h7 := Claim (121 ^ y % 11 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 11 = 10 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 11 = 10, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 0 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 121 ^ y, proof := h3},
+    {prop := y <= 0, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 2 of 122 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 2 with prime factor 2 of 122 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 122 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 122 ^ y,
+if y >= 2, 9 ^ x = 3 (mod 4).
+However, this is impossible.
+Therefore, y < 2.
+Further examination shows that 9 ^ x + 1 = 122 ^ y is impossible.
+-/
+theorem diophantine1_9_1_122 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 122 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (122 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 4 = 3 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 4 = 3, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 122 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type iii)   9 ^ x + 1 = 123 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 123 ^ y,
+if x >= 1 and y >= 1,
+1 = 0 (mod 3), which is impossible.
+Therefore, x < 1 or y < 1.
+So 9 ^ x + 1 = 123 ^ y is impossible.
+-/
+theorem diophantine1_9_1_123 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 123 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 1) (y >= 1)
+  have h7 := Claim (9 ^ x % 3 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (123 ^ y % 3 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 0) (y <= 0) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 123 ^ y, proof := h3},
+    {prop := Or (x <= 0) (y <= 0), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove y >= 1 with prime factor 2 of 124 ...
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 2 with prime factor 2 of 124 ...
+-- Succeeded.
+/-
+(Class II, Front Mode, no magic prime)   9 ^ x + 1 = 124 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 124 ^ y,
+if y >= 2, 9 ^ x = 3 (mod 4).
+However, this is impossible.
+Therefore, y < 2.
+Further examination shows that 9 ^ x + 1 = 124 ^ y is impossible.
+-/
+theorem diophantine1_9_1_124 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 124 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (124 ^ y % 4 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 4 = 3 := by omega
+  have h9 := Claim False [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 4 = 3, proof := h8},
+  ] "observe_mod_cycle"
+  apply False.elim h9
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 124 ^ y, proof := h3},
+    {prop := y <= 1, proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+-- Verbose mode on.
+-- Trying to disprove x >= 1 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 1 with prime factor 5 of 125 ...
+-- Trying to disprove x >= 2 with prime factor 3 of 9 ...
+-- Trying to disprove y >= 2 with prime factor 5 of 125 ...
+-- Trying prime 11...
+-- Succeeded.
+/-
+(Class II, Front Mode, with magic prime 11)   9 ^ x + 1 = 125 ^ y
+For positive integers x, y satisfying 9 ^ x + 1 = 125 ^ y,
+if y >= 2, 9 ^ x = 24 (mod 25).
+So x = 5 (mod 10), 
+which implies x = 0 (mod 5).
+Therefore, 9 ^ x = 1 (mod 11).
+So 125 ^ y = 2 (mod 11), but this is impossible.
+Therefore, y < 2.
+Further examination shows that 9 ^ x + 1 = 125 ^ y is impossible.
+-/
+theorem diophantine1_9_1_125 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 9 ^ x + 1 = 125 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : y >= 2
+  have h7 := Claim (125 ^ y % 25 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6},
+  ] "pow_mod_eq_zero"
+  have h8 : 9 ^ x % 25 = 24 := by omega
+  have h9 := Claim (x % 10 = 5) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := 9 ^ x % 25 = 24, proof := h8},
+  ] "observe_mod_cycle"
+  have h10 := Claim (List.Mem (9 ^ x % 11) [1]) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+    {prop := x % 10 = 5, proof := h9},
+  ] "utilize_mod_cycle"
+  have h11 := Claim (List.Mem (125 ^ y % 11) [2]) [
+    {prop := List.Mem (9 ^ x % 11) [1], proof := h10},
+    {prop := 9 ^ x + 1 = 125 ^ y, proof := h3},
+  ] "compute_mod_add"
+  have h12 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := List.Mem (125 ^ y % 11) [2], proof := h11},
+  ] "exhaust_mod_cycle"
+  apply False.elim h12
+  have h7 : y <= 1 := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 9 ^ x + 1 = 125 ^ y, proof := h3},
     {prop := y <= 1, proof := h7},
   ] "diophantine1_enumeration"
   exact h8
