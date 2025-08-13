@@ -11,7 +11,7 @@ from .utils import *
 
 def main():
     
-    a_max, a_min, b_max, b_min, c_max, c_min, a_start, b_start, exclude_trivial = \
+    a_max, a_min, b_max, b_min, c_max, c_min, a_start, b_start, exclude_trivial, timeout = \
         get_diophantine_parameters()
 
     progress_bar = tqdm(range((a_max - a_min + 1) * (b_max - b_min + 1)))
@@ -63,7 +63,7 @@ def main():
                 
                 try:
                     valid = future.result(
-                        timeout = revalidate_timeout_seconds,
+                        timeout = revalidate_timeout_seconds if timeout else None,
                     )
                     
                 except TimeoutError:

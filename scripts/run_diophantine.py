@@ -43,7 +43,7 @@ def main():
     
     guarantee_file_exist("results", is_directory=True)
     
-    a_max, a_min, b_max, b_min, c_max, c_min, a_start, b_start, exclude_trivial = \
+    a_max, a_min, b_max, b_min, c_max, c_min, a_start, b_start, exclude_trivial, timeout = \
         get_diophantine_parameters()
     
     clear_all_previous_results = get_boolean_input("clear_all_previous_results", True)
@@ -76,7 +76,7 @@ def main():
                 
                 try:
                     future.result(
-                        timeout = run_diophantine_timeout_seconds,
+                        timeout = run_diophantine_timeout_seconds if timeout else None,
                     )
                     
                 except TimeoutError:

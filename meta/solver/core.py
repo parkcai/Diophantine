@@ -1,3 +1,4 @@
+from .tune import *
 from ..big_int import *
 from ..config import *
 from ..SysY.printf import *
@@ -50,8 +51,8 @@ int solver_v1_success = 0;
 int int_threshold = 2100000000;
 // 这两个设小了可能会导致求解失败
 // 设大了可能导致那些需要多试几个方案的方程在一个方案上耗费的时间过长
-int mod_threshold_v1 = {21_0000_0000};
-int max_trial_num_v1 = 5;
+int mod_threshold_v1 = {10_0000_0000};
+int max_trial_num_v1 = 25;
 int max_trial_num_v1_backup;
 int mod_threshold_v1_backup;
 int disproof_priorlist_prime[{_disproof_list_length}];
@@ -103,7 +104,7 @@ set_xy_name_v1_code = f"""void set_xy_name_v1(int x_name[], int y_name[], int x_
 
 
 write_solution_v1_code = f"""void write_solution_v1(int x) {{
-    {make_assertion("solution_v1_pointer >= 0 && solution_v1_pointer < solution_max_length_v1", "[Solver V1] solution pointer out of legal range!", 1)}
+    {make_assertion("solution_v1_pointer >= 0 && solution_v1_pointer < solution_max_length_v1", "-- [Solver V1] solution pointer out of legal range!", 1)}
     solution_v1[solution_v1_pointer] = x;
     solution_v1_pointer = solution_v1_pointer + 1;
     solution_v1_length = solution_v1_length + 1;
@@ -113,7 +114,7 @@ write_solution_v1_code = f"""void write_solution_v1(int x) {{
 
 
 read_solution_v1_code = f"""int read_solution_v1() {{
-    {make_assertion("solution_v1_pointer >= 0 && solution_v1_pointer < solution_max_length_v1", "[Solver V1] solution pointer out of legal range!", 1, True)}
+    {make_assertion("solution_v1_pointer >= 0 && solution_v1_pointer < solution_max_length_v1", "-- [Solver V1] solution pointer out of legal range!", 1, True)}
     solution_v1_pointer = solution_v1_pointer + 1;
     return solution_v1[solution_v1_pointer-1];
 }}
@@ -317,7 +318,7 @@ Solve_Diophantine1_II_disproof_C_code = f"""void Solve_Diophantine1_II_disproof_
 
 
 insert_disproof_evidence_code = f"""void insert_disproof_evidence(int prime, int _power, int type) {{
-{make_assertion("disproof_priorlist_length < 100", "[Solver V1] disproof list needs more space!", 1)}
+{make_assertion("disproof_priorlist_length < 100", "-- [Solver V1] disproof list needs more space!", 1)}
     disproof_priorlist_length = disproof_priorlist_length + 1;
     disproof_priorlist_prime[disproof_priorlist_length-1] = prime;
     disproof_priorlist_power[disproof_priorlist_length-1] = _power;
@@ -327,7 +328,7 @@ insert_disproof_evidence_code = f"""void insert_disproof_evidence(int prime, int
     while (list_index >= 1) {{
         A = power(disproof_priorlist_prime[list_index-1], disproof_priorlist_power[list_index-1], -1);
         B = power(disproof_priorlist_prime[list_index], disproof_priorlist_power[list_index], -1);
-        {make_assertion("A!= B", "[Solver V1] unknown error encountered in insert_disproof_evidence!", 2)}
+        {make_assertion("A!= B", "-- [Solver V1] unknown error encountered in insert_disproof_evidence!", 2)}
         if (A > B) {{
             int temp;
             temp = disproof_priorlist_prime[list_index-1];
@@ -351,7 +352,7 @@ insert_disproof_evidence_code = f"""void insert_disproof_evidence(int prime, int
 
 
 get_disproof_evidence_code = f"""void get_disproof_evidence() {{
-    {make_assertion("disproof_priorlist_length", "[Solver V1] can't get disproof evidence: list is empty!", 1)}
+    {make_assertion("disproof_priorlist_length", "-- [Solver V1] can't get disproof evidence: list is empty!", 1)}
     int list_index = 0;
     while (list_index < disproof_priorlist_length) {{
         if (list_index == 0) {{
@@ -410,7 +411,7 @@ Solve_Diophantine1_I_iii_code = f"""void Solve_Diophantine1_I_iii() {{
             {big_int_sub("TMP", "C", "TMP")}
             if ({big_int_gt_int("TMP", "0")}) {{
                 if ({"A > int_threshold / a0" if is_toy else "0"}) {{
-                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 5)}
+                    {printf(f"-- [Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 5)}
                     return;
                 }}
                 {big_int_mul_int("A", "A", "a0")}
@@ -423,14 +424,14 @@ Solve_Diophantine1_I_iii_code = f"""void Solve_Diophantine1_I_iii() {{
                     if(!assertion) return;
                     solution_v1[array_pointer] = solution_v1[array_pointer] + 1;
                     if ({"C > int_threshold / c0" if is_toy else "0"}) {{
-                        {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 6)}
+                        {printf(f"-- [Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 6)}
                         return;
                     }}
                     {big_int_mul_int("C", "C", "c0")}
                     y = y + 1;
                 }}else{{
                     if ({"C > int_threshold / c0" if is_toy else "0"}) {{
-                        {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 6)}
+                        {printf(f"-- [Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 6)}
                         return;
                     }}
                     {big_int_mul_int("C", "C", "c0")}
@@ -454,61 +455,6 @@ Solve_Diophantine1_I_iii_code = f"""void Solve_Diophantine1_I_iii() {{
 """
 
 
-# (a, b, c, tuned_max_trial_num)
-_special_trial_num_list = [
-    (31, 2, 47, 25), 
-    (31, 4, 47, 25),
-    (31, 4, 53, 25),
-    (43, 21, 59, 25),
-    (43, 21, 101, 25),
-    (43, 21, 107, 25),
-    (43, 47, 107, 25), 
-    (47, 49, 59, 25), 
-    (47, 81, 73, 25),
-    (47, 81, 83, 25), 
-    (47, 84, 19, 25), 
-    (47, 84, 59, 25),
-    (47, 84, 83, 25), 
-    (47, 84, 89, 25), 
-    (47, 84, 107, 25), 
-    (47, 91, 31, 25), 
-    (47, 96, 59, 25),
-    (47, 97, 59, 25), 
-    (47, 102, 59, 25),
-    (47, 122, 31, 25),
-    (59, 31, 47, 25), 
-    (59, 73, 47, 25),
-    (59, 87, 47, 25), 
-    (59, 99, 47, 25), 
-    (59, 42, 67, 25), 
-    (59, 42, 83, 25), 
-    (59, 42, 89, 25), 
-    (59, 85, 83, 10), 
-    (83, 7, 59, 25), 
-    (83, 11, 59, 25), 
-    (83, 18, 19, 25), 
-    (83, 21, 59, 25), 
-    (83, 29, 59, 25), 
-    (83, 30, 59, 10), 
-    (83, 33, 47, 25),
-    (83, 33, 89, 25), 
-    (83, 40, 59, 10), 
-    (83, 51, 59, 25), 
-    (83, 61, 59, 25), 
-    (83, 78, 59, 25), 
-    (83, 84, 59, 25), 
-    (83, 84, 89, 25), 
-    (83, 84, 107, 25),
-    (83, 85, 47, 50), 
-    (83, 93, 89, 25), 
-    (83, 94, 59, 10), 
-    (83, 95, 59, 10),
-    (83, 106, 59, 25),
-    (107, 34, 59, 25),
-    (107, 82, 43, 25),
-]
-
-
 _enter = "\n"
 
 
@@ -519,11 +465,15 @@ tune_settings_code = f"""void tune_settings(int a, int b, int c) {{
     // 点状设置（优先生效）
 {f"{_enter}".join([
     f"    if (a == {a} && b == {b} && c == {c}) {{ max_trial_num_v1 = {d}; mod_threshold_v1 = 1000000000; return; }}" 
-    for a, b, c, d in _special_trial_num_list
+    for a, b, c, d in special_trial_num_list
 ])}
     // 面状设置
     if (a <= 125 && b <= 125 && c <= 125) {{
-        max_trial_num_v1 = 5; mod_threshold_v1 = 1000000000;
+        max_trial_num_v1 = 5; mod_threshold_v1 = {10_0000_0000};
+        return;
+    }}
+    if (a <= 250 && b <= 250 && c <= 250) {{
+        max_trial_num_v1 = 25; mod_threshold_v1 = {10_0000_0000};
         return;
     }}
 }}
@@ -589,11 +539,11 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
     // 希望对所有小于500的a, b, c顺利求解，这里开得稍大一点
     while (prime_list[prime_list_index] < 600) {{
         if (c_v1 % prime_list[prime_list_index] == 0) {{
-            {make_assertion("a_v1 % prime_list[prime_list_index] != 0", "[Solver V1] unknown error encountered in situation II!", 3)}
+            {make_assertion("a_v1 % prime_list[prime_list_index] != 0", "-- [Solver V1] unknown error encountered in situation II!", 3)}
             insert_disproof_evidence(prime_list[prime_list_index], y0, 2);
         }}
         if (a_v1 % prime_list[prime_list_index] == 0) {{
-            {make_assertion("c_v1 % prime_list[prime_list_index] != 0", "[Solver V1] unknown error encountered in situation II!", 3)}
+            {make_assertion("c_v1 % prime_list[prime_list_index] != 0", "-- [Solver V1] unknown error encountered in situation II!", 3)}
             insert_disproof_evidence(prime_list[prime_list_index], x0, 1);
         }}
         prime_list_index = prime_list_index + 1;
@@ -615,7 +565,7 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
             }}else if (disproof_type == 2) {{
                 {printf("-- Trying to disprove y >= %d with prime factor %d of %d ...", ["disproof_power", "disproof_prime", "c0"], 4)}
             }}else{{
-                {make_assertion("0", "[Solver V1] unknown error encountered in situation II!", 3)} 
+                {make_assertion("0", "-- [Solver V1] unknown error encountered in situation II!", 3)} 
             }}
         }}
         if (disproof_type == 1) {{
@@ -644,7 +594,7 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
                         {big_int_sub("TMP", "C", "TMP")}
                         if ({big_int_gt_int("TMP", "0")}) {{
                             if ({"A > int_threshold / a0" if is_toy else "0"}) {{
-                                {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 8)}
+                                {printf(f"-- [Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 8)}
                                 solver_v1_success = 0;
                                 return;
                             }}
@@ -658,7 +608,7 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
                                 if(!assertion) return;
                                 solution_v1[solution_v1_pointer_backup] = solution_v1[solution_v1_pointer_backup]+1;
                                 if ({"C > int_threshold / c0" if is_toy else "0"}) {{
-                                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
+                                    {printf(f"-- [Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
                                     solver_v1_success = 0;
                                     return;
                                 }}
@@ -666,7 +616,7 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
                                 y = y + 1;
                             }}else{{
                                 if ({"C > int_threshold / c0" if is_toy else "0"}) {{
-                                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
+                                    {printf(f"-- [Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
                                     solver_v1_success = 0;
                                     return;
                                 }}
@@ -714,7 +664,7 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
                         {big_int_sub("TMP", "C", "TMP")}
                         if ({big_int_gt_int("TMP", "0")}) {{
                             if ({"A > int_threshold / a0" if is_toy else "0"}) {{
-                                {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 8)}
+                                {printf(f"-- [Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 8)}
                                 solver_v1_success = 0;
                                 return;
                             }}
@@ -728,7 +678,7 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
                                 if(!assertion) return;
                                 solution_v1[solution_v1_pointer_backup] = solution_v1[solution_v1_pointer_backup]+1;
                                 if ({"C > int_threshold / c0" if is_toy else "0"}) {{
-                                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
+                                    {printf(f"-- [Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
                                     solver_v1_success = 0;
                                     return;
                                 }}
@@ -736,7 +686,7 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
                                 y = y + 1;
                             }}else{{
                                 if ({"C > int_threshold / c0" if is_toy else "0"}) {{
-                                    {printf(f"[Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
+                                    {printf(f"-- [Solver V1] Runtime Warning: exceeding range of int32; try the non-toy version to solve this case!", [], 9)}
                                     solver_v1_success = 0;
                                     return;
                                 }}
@@ -759,7 +709,7 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
                 }}
             }}
         }}else{{ 
-            {make_assertion("0", "[Solver V1] unknown error encountered in situation II!", 3)}
+            {make_assertion("0", "-- [Solver V1] unknown error encountered in situation II!", 3)}
         }}
         if (power(disproof_prime, disproof_power, -1) < mod_threshold_v1 / disproof_prime) {{
             insert_disproof_evidence(disproof_prime, disproof_power+1, disproof_type);
@@ -772,7 +722,7 @@ Solve_Diophantine1_II_code = f"""void Solve_Diophantine1_II() {{
 
 
 Solve_Diophantine1_code = f"""void Solve_Diophantine1() {{
-    {make_assertion("abc_set_status_v1", "[Solver V1] a, b, c not set, can't solve now!", 1)}
+    {make_assertion("abc_set_status_v1", "-- [Solver V1] a, b, c not set, can't solve now!", 1)}
 
     solution_v1_pointer = 1;
     solution_v1_length = 1;
@@ -891,7 +841,7 @@ exhaust_solution_v1_code = f"""void exhaust_solution_v1(int nsolutions_pointer) 
 
 
 print_solution_v1_code = f"""void print_solution_v1() {{
-    {make_assertion("solver_v1_success && xy_name_set_status_v1", "[Solver V1] solver failed or name not set, can't print solution!", 1)}
+    {make_assertion("solver_v1_success && xy_name_set_status_v1", "-- [Solver V1] solver failed or name not set, can't print solution!", 1)}
     int a = solution_v1[1];
     int b = solution_v1[2];
     int c = solution_v1[3];
@@ -909,7 +859,7 @@ print_solution_v1_code = f"""void print_solution_v1() {{
             int nsolutions_pointer = 8;
             exhaust_solution_v1(nsolutions_pointer);
         }}else {{
-            {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 3)}
+            {make_assertion("0", "-- [Solver V1] solution vector format is incorrect for unknown reason!", 3)}
         }}
     }}else if (solution_v1[4] == 2) {{
         // disproof prime, power and type
@@ -1086,10 +1036,10 @@ print_solution_v1_code = f"""void print_solution_v1() {{
                 exhaust_solution_v1(solution_v1_pointer);
             }}
         }}else{{
-        {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 3)}
+        {make_assertion("0", "-- [Solver V1] solution vector format is incorrect for unknown reason!", 3)}
         }}
     }}else{{
-        {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 2)}
+        {make_assertion("0", "-- [Solver V1] solution vector format is incorrect for unknown reason!", 2)}
     }}
 }}
 """

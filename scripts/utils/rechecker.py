@@ -3,8 +3,6 @@ import math
 from typing import Dict
 from typing import List
 from typing import Tuple
-from typing import FrozenSet
-from functools import lru_cache
 from pywheels.file_tools import append_to_file
 from pywheels.blueprints.colean import CoLeanRechecker
 from .config import recorder_path
@@ -21,16 +19,7 @@ _verbose: bool = False
 def _get_modular_multiplicative_cycle(
     base: int, 
     mod: int
-)-> Tuple[List[int], Dict[int, int]]:
-    
-    cycle_t, seen_f = _get_modular_multiplicative_cycle_cached(base, mod)
-    return list(cycle_t), dict(seen_f)
-
-@lru_cache(maxsize = 8192)
-def _get_modular_multiplicative_cycle_cached(
-    base: int, 
-    mod: int,
-)-> Tuple[Tuple[int, ...], FrozenSet[Tuple[int, int]]]:
+) -> Tuple[List[int], Dict[int, int]]:
     
     if base < 1 or mod < 2 or math.gcd(base, mod) != 1:
         raise ValueError
@@ -47,7 +36,7 @@ def _get_modular_multiplicative_cycle_cached(
         seen[value] = len(cycle)
         cycle.append(value)
 
-    return tuple(cycle), frozenset(seen.items())
+    return cycle, seen
 
 
 def _exhaust_diophantine1(a, b, c, x_max, y_max):
@@ -622,3 +611,19 @@ diophantine_rechecker.add_revalidators(
             diophantine1_enumeration),
     ],
 )
+
+
+if __name__ == "__main__":
+    
+    from time import perf_counter
+    
+    start_time = perf_counter()
+    
+    cycle, _ = _get_modular_multiplicative_cycle(31, 46330093)
+
+    print(len(cycle))
+    print((cycle[-1] * 31) % 46330093)
+    
+    end_time = perf_counter()
+    
+    print(f"{end_time - start_time}s")

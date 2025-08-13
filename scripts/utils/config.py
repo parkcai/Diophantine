@@ -5,6 +5,7 @@ __all__ = [
     "recorder_path",
     "diophantine_exec_path",
     "run_diophantine_timeout_seconds",
+    "original_lean_check_timeout_seconds",
     "revalidate_timeout_seconds",
 ]
 
@@ -17,6 +18,5 @@ diophantine_exec_path = "diophantine.exe" \
     
     
 run_diophantine_timeout_seconds = 20
-    
-    
+original_lean_check_timeout_seconds = 10
 revalidate_timeout_seconds = 20

@@ -56,7 +56,7 @@ print_Lean4_int_array_code = f"""void print_Lean4_int_array (int nsolutions_poin
 
 
 generate_Lean4_code_v1_code = f""" void generate_Lean4_code_v1 () {{
-    {make_assertion("solver_v1_success && xy_name_set_status_v1", "[Solver V1] solver failed or name not set, can't generate Lean4 code!", 1)}
+    {make_assertion("solver_v1_success && xy_name_set_status_v1", "-- [Solver V1] solver failed or name not set, can't generate Lean4 code!", 1)}
     int a = solution_v1[1];
     int b = solution_v1[2];
     int c = solution_v1[3];
@@ -150,7 +150,7 @@ generate_Lean4_code_v1_code = f""" void generate_Lean4_code_v1 () {{
             {printf('  ] "diophantine1_enumeration"', [], 3)}
             {printf("  exact h8", [], 3)}
         }}else{{
-            {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 3)}
+            {make_assertion("0", "-- [Solver V1] solution vector format is incorrect for unknown reason!", 3)}
         }}    
     }}else if (class == 2){{
         int dp_prime = solution_v1[5];
@@ -460,10 +460,10 @@ generate_Lean4_code_v1_code = f""" void generate_Lean4_code_v1 () {{
                 {printf("  exact h8", [], 4)} 
             }} 
         }}else{{
-            {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 3)}
+            {make_assertion("0", "-- [Solver V1] solution vector format is incorrect for unknown reason!", 3)}
         }}
     }}else{{
-        {make_assertion("0", "[Solver V1] solution vector format is incorrect for unknown reason!", 2)}
+        {make_assertion("0", "-- [Solver V1] solution vector format is incorrect for unknown reason!", 2)}
     }}
 }}
 """

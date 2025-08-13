@@ -36,7 +36,7 @@ Solve_Diophantine1_generate_Lean4_code = f"""void Solve_Diophantine1_generate_Le
         generate_Lean4_code_v1();
         if(!assertion) return;
     }}else{{
-        {printf("[Solver V1] solver failed!", [], 2)}
+        {printf("-- [Solver V1] solver failed!", [], 2)}
     }}
 }}
 """
@@ -128,7 +128,7 @@ Solve_Diophantine1_shell_code = f"""void Solve_Diophantine1_shell() {{
             }}
             if(!assertion) return;
         }}else{{
-            {printf("[Solver V1] solver failed!", [], 3)}
+            {printf("-- [Solver V1] solver failed!", [], 3)}
         }}
         
         while (1) {{
@@ -196,7 +196,7 @@ Solve_Diophantine1_research_code = f"""void Solve_Diophantine1_research() {{
                 }}
                 Solve_Diophantine1_generate_Lean4_code(a, b, c);
                 if (!solver_v1_success) {{
-                    {printf("panic: solver_v1 has failed.", [], 5)}
+                    {printf("-- panic: solver_v1 has failed.", [], 5)}
                     return;
                 }}
                 c = c + 1;
