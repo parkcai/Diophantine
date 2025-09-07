@@ -458,15 +458,26 @@ Solve_Diophantine1_I_iii_code = f"""void Solve_Diophantine1_I_iii() {{
 _enter = "\n"
 
 
-tune_settings_code = f"""void tune_settings(int a, int b, int c) {{
+tune_settings_code = f"""int special_as[{len(special_trial_num_list)}] = {{{', '.join([str(_tuple[0]) for _tuple in special_trial_num_list])}}};
+int special_bs[{len(special_trial_num_list)}] = {{{', '.join([str(_tuple[1]) for _tuple in special_trial_num_list])}}};
+int special_cs[{len(special_trial_num_list)}] = {{{', '.join([str(_tuple[2]) for _tuple in special_trial_num_list])}}};
+int special_xs[{len(special_trial_num_list)}] = {{{', '.join([str(_tuple[3]) for _tuple in special_trial_num_list])}}};
+int special_ys[{len(special_trial_num_list)}] = {{{', '.join([str(_tuple[4]) for _tuple in special_trial_num_list])}}};
+
+void tune_settings(int a, int b, int c) {{
     if (hijack_settings) return;
     max_trial_num_v1_backup = max_trial_num_v1;
     mod_threshold_v1_backup = mod_threshold_v1;
+
     // 点状设置（优先生效）
-{f"{_enter}".join([
-    f"    if (a == {a} && b == {b} && c == {c}) {{ max_trial_num_v1 = {x}; mod_threshold_v1 = {y}; return; }}" 
-    for a, b, c, x, y in special_trial_num_list
-])}
+    int i = 0;
+    while (i < {len(special_trial_num_list)}) {{
+        if (a == special_as[i] && b == special_bs[i] && c == special_cs[i]) {{
+            max_trial_num_v1 = special_xs[i]; mod_threshold_v1 = special_ys[i]; return;
+        }}
+        i = i + 1;
+    }}
+    
     // 面状设置
     if (a <= 125 && b <= 125 && c <= 125) {{
         max_trial_num_v1 = 5; mod_threshold_v1 = {10_0000_0000};

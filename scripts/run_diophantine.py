@@ -16,6 +16,7 @@ def execute_diophantine(
     input_data: str, 
     output_path: str, 
     timeout: bool,
+    timeout_seconds: int,
     input_encoding: str = "UTF-8",
     output_encoding: str = "UTF-8",
     error_encoding: str = "UTF-8",
@@ -32,7 +33,7 @@ def execute_diophantine(
             input = input_data.encode(input_encoding),
             stdout = out,
             stderr = subprocess.PIPE,
-            timeout = run_diophantine_timeout_seconds if timeout else None,
+            timeout = timeout_seconds if timeout else None,
         )
 
     if process.returncode != 0:
@@ -48,6 +49,8 @@ def main():
     
     a_max, a_min, b_max, b_min, c_max, c_min, a_start, b_start, exclude_trivial, timeout = \
         get_diophantine_parameters()
+        
+    timeout_seconds = get_integer_input("请输入超时时间（秒）：", run_diophantine_timeout_seconds)
         
     # multi_thread = get_boolean_input("multi_thread", True)
     multi_thread = False
@@ -84,6 +87,7 @@ def main():
                 input_data = f"2 {1 if exclude_trivial else 0} {a} {a} {b} {b} {c_max} {c_min}",
                 output_path = lean_file_path,
                 timeout = timeout,
+                timeout_seconds = timeout_seconds,
             )
             
         except subprocess.TimeoutExpired:
@@ -115,8 +119,8 @@ def main():
                 
             except Exception as e:
                 append_to_file(
-                    file_path=recorder_path,
-                    content=f"Unexpected error processing task a={a}, b={b}: {str(e)}"
+                    file_path = recorder_path,
+                    content = f"Unexpected error processing task a={a}, b={b}: {str(e)}"
                 )
     
     progress_bar.close()
