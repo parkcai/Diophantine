@@ -464,8 +464,8 @@ tune_settings_code = f"""void tune_settings(int a, int b, int c) {{
     mod_threshold_v1_backup = mod_threshold_v1;
     // 点状设置（优先生效）
 {f"{_enter}".join([
-    f"    if (a == {a} && b == {b} && c == {c}) {{ max_trial_num_v1 = {d}; mod_threshold_v1 = 1000000000; return; }}" 
-    for a, b, c, d in special_trial_num_list
+    f"    if (a == {a} && b == {b} && c == {c}) {{ max_trial_num_v1 = {x}; mod_threshold_v1 = {y}; return; }}" 
+    for a, b, c, x, y in special_trial_num_list
 ])}
     // 面状设置
     if (a <= 125 && b <= 125 && c <= 125) {{
@@ -474,6 +474,10 @@ tune_settings_code = f"""void tune_settings(int a, int b, int c) {{
     }}
     if (a <= 250 && b <= 250 && c <= 250) {{
         max_trial_num_v1 = 25; mod_threshold_v1 = {10_0000_0000};
+        return;
+    }}
+    if (a <= 500 && b <= 500 && c <= 500) {{
+        max_trial_num_v1 = 15; mod_threshold_v1 = {5000_0000};
         return;
     }}
 }}

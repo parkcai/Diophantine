@@ -44,7 +44,7 @@ Solve_Diophantine1_generate_Lean4_code = f"""void Solve_Diophantine1_generate_Le
 
 Solve_Diophantine1_backdoor_code = f"""void Solve_Diophantine1_backdoor() {{
     max_trial_num_v1 = getint();
-    // mod_threshold_v1 = getint();
+    mod_threshold_v1 = getint();
     hijack_settings = 1;
 }}
 """

@@ -3,7 +3,7 @@
 -- a, b and c range over the following intervals:
 -- 4 <= a <= 4
 -- 8 <= b <= 8
--- 2 <= c <= 250
+-- 2 <= c <= 500
 -- trivial cases where a, b, c are not pairwise coprime are not skipped.
 
 
@@ -6993,6 +6993,7006 @@ theorem diophantine1_4_8_250 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3
     {prop :=  y >= 1, proof := h2},
     {prop := 4 ^ x + 8 = 250 ^ y, proof := h3},
     {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 251 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 251 ^ y,
+this is impossible, because it implies that 251 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_251 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 251 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 251 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 251 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 252 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 252 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 252 ^ y is impossible.
+-/
+theorem diophantine1_4_8_252 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 252 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (252 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 252 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 253 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 253 ^ y,
+this is impossible, because it implies that 253 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_253 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 253 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 253 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 253 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 254 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 254 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 254 ^ y is impossible.
+-/
+theorem diophantine1_4_8_254 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 254 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (254 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 254 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 255 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 255 ^ y,
+this is impossible, because it implies that 255 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_255 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 255 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 255 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 255 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 256 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 256 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 256 ^ y is impossible.
+-/
+theorem diophantine1_4_8_256 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 256 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (256 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 256 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 257 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 257 ^ y,
+this is impossible, because it implies that 257 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_257 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 257 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 257 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 257 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 258 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 258 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 258 ^ y is impossible.
+-/
+theorem diophantine1_4_8_258 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 258 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (258 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 258 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 259 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 259 ^ y,
+this is impossible, because it implies that 259 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_259 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 259 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 259 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 259 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 260 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 260 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 260 ^ y is impossible.
+-/
+theorem diophantine1_4_8_260 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 260 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (260 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 260 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 261 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 261 ^ y,
+this is impossible, because it implies that 261 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_261 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 261 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 261 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 261 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 262 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 262 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 262 ^ y is impossible.
+-/
+theorem diophantine1_4_8_262 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 262 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (262 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 262 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 263 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 263 ^ y,
+this is impossible, because it implies that 263 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_263 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 263 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 263 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 263 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 264 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 264 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that (x, y) = (4, 1).
+-/
+theorem diophantine1_4_8_264 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 264 ^ y) :
+  List.Mem (x, y) [(4, 1)]
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (264 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim (List.Mem (x, y) [(4, 1)]) [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 264 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 265 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 265 ^ y,
+this is impossible, because it implies that 265 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_265 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 265 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 265 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 265 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 266 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 266 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 266 ^ y is impossible.
+-/
+theorem diophantine1_4_8_266 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 266 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (266 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 266 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 267 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 267 ^ y,
+this is impossible, because it implies that 267 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_267 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 267 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 267 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 267 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 268 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 268 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 268 ^ y is impossible.
+-/
+theorem diophantine1_4_8_268 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 268 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (268 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 268 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 269 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 269 ^ y,
+this is impossible, because it implies that 269 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_269 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 269 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 269 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 269 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 270 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 270 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 270 ^ y is impossible.
+-/
+theorem diophantine1_4_8_270 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 270 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (270 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 270 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 271 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 271 ^ y,
+this is impossible, because it implies that 271 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_271 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 271 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 271 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 271 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 272 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 272 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 272 ^ y is impossible.
+-/
+theorem diophantine1_4_8_272 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 272 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (272 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 272 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 273 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 273 ^ y,
+this is impossible, because it implies that 273 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_273 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 273 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 273 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 273 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 274 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 274 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 274 ^ y is impossible.
+-/
+theorem diophantine1_4_8_274 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 274 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (274 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 274 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 275 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 275 ^ y,
+this is impossible, because it implies that 275 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_275 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 275 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 275 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 275 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 276 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 276 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 276 ^ y is impossible.
+-/
+theorem diophantine1_4_8_276 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 276 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (276 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 276 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 277 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 277 ^ y,
+this is impossible, because it implies that 277 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_277 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 277 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 277 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 277 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 278 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 278 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 278 ^ y is impossible.
+-/
+theorem diophantine1_4_8_278 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 278 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (278 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 278 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 279 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 279 ^ y,
+this is impossible, because it implies that 279 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_279 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 279 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 279 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 279 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 280 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 280 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 280 ^ y is impossible.
+-/
+theorem diophantine1_4_8_280 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 280 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (280 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 280 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 281 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 281 ^ y,
+this is impossible, because it implies that 281 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_281 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 281 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 281 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 281 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 282 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 282 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 282 ^ y is impossible.
+-/
+theorem diophantine1_4_8_282 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 282 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (282 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 282 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 283 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 283 ^ y,
+this is impossible, because it implies that 283 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_283 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 283 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 283 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 283 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 284 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 284 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 284 ^ y is impossible.
+-/
+theorem diophantine1_4_8_284 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 284 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (284 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 284 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 285 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 285 ^ y,
+this is impossible, because it implies that 285 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_285 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 285 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 285 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 285 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 286 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 286 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 286 ^ y is impossible.
+-/
+theorem diophantine1_4_8_286 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 286 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (286 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 286 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 287 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 287 ^ y,
+this is impossible, because it implies that 287 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_287 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 287 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 287 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 287 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 288 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 288 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 288 ^ y is impossible.
+-/
+theorem diophantine1_4_8_288 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 288 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (288 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 288 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 289 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 289 ^ y,
+this is impossible, because it implies that 289 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_289 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 289 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 289 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 289 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 290 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 290 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 290 ^ y is impossible.
+-/
+theorem diophantine1_4_8_290 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 290 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (290 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 290 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 291 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 291 ^ y,
+this is impossible, because it implies that 291 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_291 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 291 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 291 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 291 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 292 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 292 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 292 ^ y is impossible.
+-/
+theorem diophantine1_4_8_292 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 292 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (292 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 292 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 293 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 293 ^ y,
+this is impossible, because it implies that 293 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_293 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 293 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 293 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 293 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 294 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 294 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 294 ^ y is impossible.
+-/
+theorem diophantine1_4_8_294 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 294 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (294 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 294 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 295 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 295 ^ y,
+this is impossible, because it implies that 295 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_295 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 295 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 295 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 295 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 296 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 296 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 296 ^ y is impossible.
+-/
+theorem diophantine1_4_8_296 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 296 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (296 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 296 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 297 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 297 ^ y,
+this is impossible, because it implies that 297 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_297 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 297 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 297 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 297 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 298 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 298 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 298 ^ y is impossible.
+-/
+theorem diophantine1_4_8_298 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 298 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (298 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 298 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 299 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 299 ^ y,
+this is impossible, because it implies that 299 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_299 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 299 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 299 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 299 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 300 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 300 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 300 ^ y is impossible.
+-/
+theorem diophantine1_4_8_300 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 300 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (300 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 300 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 301 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 301 ^ y,
+this is impossible, because it implies that 301 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_301 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 301 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 301 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 301 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 302 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 302 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 302 ^ y is impossible.
+-/
+theorem diophantine1_4_8_302 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 302 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (302 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 302 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 303 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 303 ^ y,
+this is impossible, because it implies that 303 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_303 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 303 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 303 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 303 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 304 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 304 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 304 ^ y is impossible.
+-/
+theorem diophantine1_4_8_304 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 304 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (304 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 304 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 305 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 305 ^ y,
+this is impossible, because it implies that 305 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_305 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 305 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 305 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 305 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 306 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 306 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 306 ^ y is impossible.
+-/
+theorem diophantine1_4_8_306 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 306 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (306 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 306 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 307 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 307 ^ y,
+this is impossible, because it implies that 307 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_307 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 307 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 307 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 307 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 308 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 308 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 308 ^ y is impossible.
+-/
+theorem diophantine1_4_8_308 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 308 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (308 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 308 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 309 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 309 ^ y,
+this is impossible, because it implies that 309 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_309 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 309 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 309 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 309 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 310 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 310 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 310 ^ y is impossible.
+-/
+theorem diophantine1_4_8_310 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 310 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (310 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 310 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 311 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 311 ^ y,
+this is impossible, because it implies that 311 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_311 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 311 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 311 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 311 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 312 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 312 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 312 ^ y is impossible.
+-/
+theorem diophantine1_4_8_312 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 312 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (312 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 312 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 313 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 313 ^ y,
+this is impossible, because it implies that 313 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_313 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 313 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 313 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 313 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 314 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 314 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 314 ^ y is impossible.
+-/
+theorem diophantine1_4_8_314 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 314 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (314 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 314 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 315 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 315 ^ y,
+this is impossible, because it implies that 315 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_315 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 315 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 315 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 315 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 316 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 316 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 316 ^ y is impossible.
+-/
+theorem diophantine1_4_8_316 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 316 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (316 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 316 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 317 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 317 ^ y,
+this is impossible, because it implies that 317 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_317 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 317 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 317 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 317 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 318 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 318 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 318 ^ y is impossible.
+-/
+theorem diophantine1_4_8_318 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 318 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (318 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 318 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 319 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 319 ^ y,
+this is impossible, because it implies that 319 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_319 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 319 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 319 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 319 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 320 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 320 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 320 ^ y is impossible.
+-/
+theorem diophantine1_4_8_320 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 320 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (320 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 320 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 321 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 321 ^ y,
+this is impossible, because it implies that 321 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_321 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 321 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 321 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 321 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 322 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 322 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 322 ^ y is impossible.
+-/
+theorem diophantine1_4_8_322 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 322 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (322 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 322 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 323 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 323 ^ y,
+this is impossible, because it implies that 323 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_323 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 323 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 323 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 323 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 324 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 324 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 324 ^ y is impossible.
+-/
+theorem diophantine1_4_8_324 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 324 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (324 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 324 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 325 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 325 ^ y,
+this is impossible, because it implies that 325 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_325 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 325 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 325 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 325 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 326 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 326 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 326 ^ y is impossible.
+-/
+theorem diophantine1_4_8_326 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 326 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (326 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 326 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 327 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 327 ^ y,
+this is impossible, because it implies that 327 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_327 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 327 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 327 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 327 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 328 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 328 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 328 ^ y is impossible.
+-/
+theorem diophantine1_4_8_328 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 328 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (328 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 328 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 329 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 329 ^ y,
+this is impossible, because it implies that 329 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_329 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 329 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 329 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 329 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 330 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 330 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 330 ^ y is impossible.
+-/
+theorem diophantine1_4_8_330 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 330 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (330 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 330 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 331 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 331 ^ y,
+this is impossible, because it implies that 331 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_331 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 331 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 331 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 331 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 332 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 332 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 332 ^ y is impossible.
+-/
+theorem diophantine1_4_8_332 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 332 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (332 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 332 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 333 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 333 ^ y,
+this is impossible, because it implies that 333 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_333 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 333 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 333 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 333 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 334 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 334 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 334 ^ y is impossible.
+-/
+theorem diophantine1_4_8_334 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 334 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (334 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 334 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 335 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 335 ^ y,
+this is impossible, because it implies that 335 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_335 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 335 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 335 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 335 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 336 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 336 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 336 ^ y is impossible.
+-/
+theorem diophantine1_4_8_336 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 336 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (336 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 336 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 337 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 337 ^ y,
+this is impossible, because it implies that 337 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_337 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 337 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 337 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 337 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 338 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 338 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 338 ^ y is impossible.
+-/
+theorem diophantine1_4_8_338 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 338 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (338 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 338 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 339 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 339 ^ y,
+this is impossible, because it implies that 339 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_339 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 339 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 339 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 339 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 340 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 340 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 340 ^ y is impossible.
+-/
+theorem diophantine1_4_8_340 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 340 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (340 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 340 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 341 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 341 ^ y,
+this is impossible, because it implies that 341 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_341 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 341 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 341 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 341 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 342 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 342 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 342 ^ y is impossible.
+-/
+theorem diophantine1_4_8_342 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 342 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (342 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 342 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 343 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 343 ^ y,
+this is impossible, because it implies that 343 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_343 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 343 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 343 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 343 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 344 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 344 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 344 ^ y is impossible.
+-/
+theorem diophantine1_4_8_344 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 344 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (344 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 344 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 345 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 345 ^ y,
+this is impossible, because it implies that 345 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_345 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 345 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 345 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 345 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 346 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 346 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 346 ^ y is impossible.
+-/
+theorem diophantine1_4_8_346 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 346 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (346 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 346 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 347 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 347 ^ y,
+this is impossible, because it implies that 347 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_347 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 347 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 347 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 347 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 348 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 348 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 348 ^ y is impossible.
+-/
+theorem diophantine1_4_8_348 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 348 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (348 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 348 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 349 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 349 ^ y,
+this is impossible, because it implies that 349 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_349 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 349 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 349 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 349 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 350 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 350 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 350 ^ y is impossible.
+-/
+theorem diophantine1_4_8_350 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 350 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (350 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 350 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 351 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 351 ^ y,
+this is impossible, because it implies that 351 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_351 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 351 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 351 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 351 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 352 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 352 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 352 ^ y is impossible.
+-/
+theorem diophantine1_4_8_352 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 352 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (352 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 352 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 353 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 353 ^ y,
+this is impossible, because it implies that 353 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_353 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 353 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 353 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 353 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 354 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 354 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 354 ^ y is impossible.
+-/
+theorem diophantine1_4_8_354 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 354 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (354 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 354 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 355 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 355 ^ y,
+this is impossible, because it implies that 355 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_355 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 355 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 355 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 355 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 356 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 356 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 356 ^ y is impossible.
+-/
+theorem diophantine1_4_8_356 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 356 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (356 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 356 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 357 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 357 ^ y,
+this is impossible, because it implies that 357 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_357 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 357 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 357 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 357 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 358 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 358 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 358 ^ y is impossible.
+-/
+theorem diophantine1_4_8_358 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 358 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (358 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 358 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 359 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 359 ^ y,
+this is impossible, because it implies that 359 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_359 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 359 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 359 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 359 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 360 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 360 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 360 ^ y is impossible.
+-/
+theorem diophantine1_4_8_360 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 360 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (360 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 360 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 361 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 361 ^ y,
+this is impossible, because it implies that 361 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_361 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 361 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 361 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 361 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 362 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 362 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 362 ^ y is impossible.
+-/
+theorem diophantine1_4_8_362 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 362 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (362 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 362 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 363 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 363 ^ y,
+this is impossible, because it implies that 363 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_363 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 363 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 363 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 363 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 364 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 364 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 364 ^ y is impossible.
+-/
+theorem diophantine1_4_8_364 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 364 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (364 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 364 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 365 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 365 ^ y,
+this is impossible, because it implies that 365 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_365 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 365 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 365 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 365 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 366 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 366 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 366 ^ y is impossible.
+-/
+theorem diophantine1_4_8_366 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 366 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (366 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 366 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 367 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 367 ^ y,
+this is impossible, because it implies that 367 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_367 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 367 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 367 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 367 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 368 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 368 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 368 ^ y is impossible.
+-/
+theorem diophantine1_4_8_368 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 368 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (368 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 368 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 369 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 369 ^ y,
+this is impossible, because it implies that 369 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_369 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 369 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 369 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 369 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 370 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 370 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 370 ^ y is impossible.
+-/
+theorem diophantine1_4_8_370 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 370 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (370 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 370 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 371 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 371 ^ y,
+this is impossible, because it implies that 371 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_371 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 371 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 371 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 371 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 372 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 372 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 372 ^ y is impossible.
+-/
+theorem diophantine1_4_8_372 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 372 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (372 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 372 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 373 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 373 ^ y,
+this is impossible, because it implies that 373 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_373 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 373 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 373 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 373 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 374 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 374 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 374 ^ y is impossible.
+-/
+theorem diophantine1_4_8_374 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 374 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (374 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 374 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 375 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 375 ^ y,
+this is impossible, because it implies that 375 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_375 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 375 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 375 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 375 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 376 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 376 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 376 ^ y is impossible.
+-/
+theorem diophantine1_4_8_376 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 376 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (376 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 376 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 377 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 377 ^ y,
+this is impossible, because it implies that 377 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_377 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 377 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 377 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 377 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 378 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 378 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 378 ^ y is impossible.
+-/
+theorem diophantine1_4_8_378 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 378 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (378 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 378 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 379 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 379 ^ y,
+this is impossible, because it implies that 379 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_379 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 379 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 379 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 379 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 380 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 380 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 380 ^ y is impossible.
+-/
+theorem diophantine1_4_8_380 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 380 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (380 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 380 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 381 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 381 ^ y,
+this is impossible, because it implies that 381 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_381 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 381 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 381 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 381 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 382 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 382 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 382 ^ y is impossible.
+-/
+theorem diophantine1_4_8_382 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 382 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (382 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 382 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 383 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 383 ^ y,
+this is impossible, because it implies that 383 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_383 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 383 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 383 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 383 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 384 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 384 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 384 ^ y is impossible.
+-/
+theorem diophantine1_4_8_384 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 384 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (384 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 384 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 385 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 385 ^ y,
+this is impossible, because it implies that 385 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_385 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 385 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 385 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 385 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 386 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 386 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 386 ^ y is impossible.
+-/
+theorem diophantine1_4_8_386 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 386 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (386 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 386 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 387 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 387 ^ y,
+this is impossible, because it implies that 387 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_387 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 387 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 387 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 387 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 388 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 388 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 388 ^ y is impossible.
+-/
+theorem diophantine1_4_8_388 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 388 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (388 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 388 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 389 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 389 ^ y,
+this is impossible, because it implies that 389 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_389 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 389 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 389 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 389 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 390 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 390 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 390 ^ y is impossible.
+-/
+theorem diophantine1_4_8_390 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 390 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (390 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 390 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 391 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 391 ^ y,
+this is impossible, because it implies that 391 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_391 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 391 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 391 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 391 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 392 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 392 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 392 ^ y is impossible.
+-/
+theorem diophantine1_4_8_392 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 392 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (392 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 392 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 393 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 393 ^ y,
+this is impossible, because it implies that 393 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_393 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 393 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 393 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 393 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 394 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 394 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 394 ^ y is impossible.
+-/
+theorem diophantine1_4_8_394 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 394 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (394 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 394 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 395 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 395 ^ y,
+this is impossible, because it implies that 395 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_395 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 395 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 395 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 395 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 396 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 396 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 396 ^ y is impossible.
+-/
+theorem diophantine1_4_8_396 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 396 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (396 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 396 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 397 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 397 ^ y,
+this is impossible, because it implies that 397 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_397 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 397 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 397 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 397 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 398 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 398 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 398 ^ y is impossible.
+-/
+theorem diophantine1_4_8_398 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 398 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (398 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 398 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 399 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 399 ^ y,
+this is impossible, because it implies that 399 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_399 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 399 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 399 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 399 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 400 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 400 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 400 ^ y is impossible.
+-/
+theorem diophantine1_4_8_400 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 400 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (400 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 400 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 401 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 401 ^ y,
+this is impossible, because it implies that 401 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_401 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 401 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 401 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 401 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 402 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 402 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 402 ^ y is impossible.
+-/
+theorem diophantine1_4_8_402 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 402 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (402 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 402 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 403 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 403 ^ y,
+this is impossible, because it implies that 403 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_403 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 403 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 403 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 403 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 404 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 404 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 404 ^ y is impossible.
+-/
+theorem diophantine1_4_8_404 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 404 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (404 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 404 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 405 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 405 ^ y,
+this is impossible, because it implies that 405 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_405 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 405 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 405 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 405 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 406 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 406 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 406 ^ y is impossible.
+-/
+theorem diophantine1_4_8_406 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 406 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (406 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 406 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 407 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 407 ^ y,
+this is impossible, because it implies that 407 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_407 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 407 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 407 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 407 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 408 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 408 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 408 ^ y is impossible.
+-/
+theorem diophantine1_4_8_408 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 408 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (408 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 408 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 409 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 409 ^ y,
+this is impossible, because it implies that 409 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_409 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 409 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 409 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 409 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 410 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 410 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 410 ^ y is impossible.
+-/
+theorem diophantine1_4_8_410 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 410 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (410 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 410 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 411 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 411 ^ y,
+this is impossible, because it implies that 411 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_411 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 411 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 411 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 411 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 412 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 412 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 412 ^ y is impossible.
+-/
+theorem diophantine1_4_8_412 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 412 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (412 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 412 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 413 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 413 ^ y,
+this is impossible, because it implies that 413 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_413 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 413 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 413 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 413 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 414 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 414 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 414 ^ y is impossible.
+-/
+theorem diophantine1_4_8_414 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 414 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (414 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 414 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 415 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 415 ^ y,
+this is impossible, because it implies that 415 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_415 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 415 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 415 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 415 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 416 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 416 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 416 ^ y is impossible.
+-/
+theorem diophantine1_4_8_416 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 416 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (416 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 416 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 417 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 417 ^ y,
+this is impossible, because it implies that 417 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_417 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 417 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 417 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 417 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 418 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 418 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 418 ^ y is impossible.
+-/
+theorem diophantine1_4_8_418 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 418 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (418 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 418 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 419 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 419 ^ y,
+this is impossible, because it implies that 419 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_419 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 419 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 419 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 419 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 420 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 420 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 420 ^ y is impossible.
+-/
+theorem diophantine1_4_8_420 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 420 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (420 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 420 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 421 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 421 ^ y,
+this is impossible, because it implies that 421 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_421 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 421 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 421 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 421 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 422 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 422 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 422 ^ y is impossible.
+-/
+theorem diophantine1_4_8_422 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 422 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (422 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 422 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 423 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 423 ^ y,
+this is impossible, because it implies that 423 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_423 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 423 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 423 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 423 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 424 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 424 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 424 ^ y is impossible.
+-/
+theorem diophantine1_4_8_424 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 424 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (424 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 424 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 425 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 425 ^ y,
+this is impossible, because it implies that 425 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_425 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 425 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 425 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 425 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 426 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 426 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 426 ^ y is impossible.
+-/
+theorem diophantine1_4_8_426 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 426 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (426 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 426 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 427 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 427 ^ y,
+this is impossible, because it implies that 427 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_427 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 427 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 427 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 427 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 428 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 428 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 428 ^ y is impossible.
+-/
+theorem diophantine1_4_8_428 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 428 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (428 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 428 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 429 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 429 ^ y,
+this is impossible, because it implies that 429 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_429 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 429 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 429 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 429 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 430 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 430 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 430 ^ y is impossible.
+-/
+theorem diophantine1_4_8_430 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 430 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (430 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 430 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 431 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 431 ^ y,
+this is impossible, because it implies that 431 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_431 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 431 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 431 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 431 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 432 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 432 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 432 ^ y is impossible.
+-/
+theorem diophantine1_4_8_432 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 432 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (432 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 432 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 433 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 433 ^ y,
+this is impossible, because it implies that 433 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_433 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 433 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 433 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 433 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 434 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 434 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 434 ^ y is impossible.
+-/
+theorem diophantine1_4_8_434 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 434 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (434 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 434 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 435 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 435 ^ y,
+this is impossible, because it implies that 435 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_435 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 435 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 435 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 435 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 436 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 436 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 436 ^ y is impossible.
+-/
+theorem diophantine1_4_8_436 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 436 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (436 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 436 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 437 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 437 ^ y,
+this is impossible, because it implies that 437 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_437 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 437 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 437 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 437 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 438 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 438 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 438 ^ y is impossible.
+-/
+theorem diophantine1_4_8_438 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 438 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (438 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 438 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 439 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 439 ^ y,
+this is impossible, because it implies that 439 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_439 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 439 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 439 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 439 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 440 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 440 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 440 ^ y is impossible.
+-/
+theorem diophantine1_4_8_440 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 440 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (440 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 440 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 441 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 441 ^ y,
+this is impossible, because it implies that 441 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_441 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 441 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 441 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 441 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 442 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 442 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 442 ^ y is impossible.
+-/
+theorem diophantine1_4_8_442 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 442 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (442 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 442 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 443 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 443 ^ y,
+this is impossible, because it implies that 443 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_443 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 443 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 443 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 443 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 444 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 444 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 444 ^ y is impossible.
+-/
+theorem diophantine1_4_8_444 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 444 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (444 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 444 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 445 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 445 ^ y,
+this is impossible, because it implies that 445 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_445 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 445 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 445 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 445 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 446 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 446 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 446 ^ y is impossible.
+-/
+theorem diophantine1_4_8_446 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 446 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (446 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 446 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 447 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 447 ^ y,
+this is impossible, because it implies that 447 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_447 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 447 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 447 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 447 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 448 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 448 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 448 ^ y is impossible.
+-/
+theorem diophantine1_4_8_448 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 448 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (448 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 448 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 449 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 449 ^ y,
+this is impossible, because it implies that 449 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_449 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 449 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 449 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 449 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 450 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 450 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 450 ^ y is impossible.
+-/
+theorem diophantine1_4_8_450 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 450 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (450 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 450 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 451 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 451 ^ y,
+this is impossible, because it implies that 451 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_451 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 451 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 451 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 451 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 452 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 452 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 452 ^ y is impossible.
+-/
+theorem diophantine1_4_8_452 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 452 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (452 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 452 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 453 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 453 ^ y,
+this is impossible, because it implies that 453 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_453 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 453 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 453 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 453 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 454 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 454 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 454 ^ y is impossible.
+-/
+theorem diophantine1_4_8_454 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 454 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (454 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 454 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 455 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 455 ^ y,
+this is impossible, because it implies that 455 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_455 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 455 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 455 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 455 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 456 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 456 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 456 ^ y is impossible.
+-/
+theorem diophantine1_4_8_456 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 456 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (456 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 456 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 457 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 457 ^ y,
+this is impossible, because it implies that 457 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_457 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 457 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 457 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 457 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 458 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 458 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 458 ^ y is impossible.
+-/
+theorem diophantine1_4_8_458 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 458 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (458 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 458 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 459 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 459 ^ y,
+this is impossible, because it implies that 459 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_459 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 459 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 459 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 459 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 460 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 460 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 460 ^ y is impossible.
+-/
+theorem diophantine1_4_8_460 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 460 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (460 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 460 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 461 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 461 ^ y,
+this is impossible, because it implies that 461 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_461 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 461 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 461 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 461 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 462 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 462 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 462 ^ y is impossible.
+-/
+theorem diophantine1_4_8_462 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 462 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (462 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 462 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 463 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 463 ^ y,
+this is impossible, because it implies that 463 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_463 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 463 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 463 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 463 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 464 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 464 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 464 ^ y is impossible.
+-/
+theorem diophantine1_4_8_464 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 464 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (464 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 464 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 465 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 465 ^ y,
+this is impossible, because it implies that 465 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_465 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 465 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 465 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 465 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 466 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 466 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 466 ^ y is impossible.
+-/
+theorem diophantine1_4_8_466 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 466 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (466 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 466 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 467 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 467 ^ y,
+this is impossible, because it implies that 467 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_467 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 467 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 467 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 467 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 468 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 468 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 468 ^ y is impossible.
+-/
+theorem diophantine1_4_8_468 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 468 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (468 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 468 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 469 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 469 ^ y,
+this is impossible, because it implies that 469 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_469 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 469 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 469 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 469 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 470 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 470 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 470 ^ y is impossible.
+-/
+theorem diophantine1_4_8_470 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 470 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (470 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 470 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 471 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 471 ^ y,
+this is impossible, because it implies that 471 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_471 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 471 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 471 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 471 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 472 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 472 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 472 ^ y is impossible.
+-/
+theorem diophantine1_4_8_472 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 472 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (472 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 472 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 473 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 473 ^ y,
+this is impossible, because it implies that 473 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_473 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 473 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 473 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 473 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 474 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 474 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 474 ^ y is impossible.
+-/
+theorem diophantine1_4_8_474 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 474 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (474 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 474 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 475 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 475 ^ y,
+this is impossible, because it implies that 475 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_475 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 475 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 475 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 475 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 476 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 476 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 476 ^ y is impossible.
+-/
+theorem diophantine1_4_8_476 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 476 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (476 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 476 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 477 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 477 ^ y,
+this is impossible, because it implies that 477 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_477 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 477 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 477 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 477 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 478 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 478 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 478 ^ y is impossible.
+-/
+theorem diophantine1_4_8_478 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 478 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (478 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 478 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 479 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 479 ^ y,
+this is impossible, because it implies that 479 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_479 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 479 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 479 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 479 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 480 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 480 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 480 ^ y is impossible.
+-/
+theorem diophantine1_4_8_480 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 480 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (480 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 480 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 481 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 481 ^ y,
+this is impossible, because it implies that 481 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_481 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 481 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 481 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 481 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 482 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 482 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 482 ^ y is impossible.
+-/
+theorem diophantine1_4_8_482 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 482 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (482 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 482 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 483 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 483 ^ y,
+this is impossible, because it implies that 483 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_483 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 483 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 483 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 483 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 484 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 484 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 484 ^ y is impossible.
+-/
+theorem diophantine1_4_8_484 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 484 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (484 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 484 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 485 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 485 ^ y,
+this is impossible, because it implies that 485 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_485 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 485 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 485 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 485 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 486 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 486 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 486 ^ y is impossible.
+-/
+theorem diophantine1_4_8_486 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 486 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (486 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 486 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 487 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 487 ^ y,
+this is impossible, because it implies that 487 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_487 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 487 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 487 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 487 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 488 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 488 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 488 ^ y is impossible.
+-/
+theorem diophantine1_4_8_488 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 488 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (488 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 488 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 489 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 489 ^ y,
+this is impossible, because it implies that 489 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_489 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 489 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 489 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 489 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 490 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 490 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 490 ^ y is impossible.
+-/
+theorem diophantine1_4_8_490 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 490 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (490 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 490 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 491 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 491 ^ y,
+this is impossible, because it implies that 491 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_491 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 491 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 491 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 491 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 492 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 492 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 492 ^ y is impossible.
+-/
+theorem diophantine1_4_8_492 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 492 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (492 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 492 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 493 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 493 ^ y,
+this is impossible, because it implies that 493 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_493 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 493 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 493 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 493 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 494 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 494 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 494 ^ y is impossible.
+-/
+theorem diophantine1_4_8_494 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 494 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (494 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 494 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 495 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 495 ^ y,
+this is impossible, because it implies that 495 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_495 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 495 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 495 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 495 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 496 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 496 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 496 ^ y is impossible.
+-/
+theorem diophantine1_4_8_496 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 496 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (496 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 496 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 497 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 497 ^ y,
+this is impossible, because it implies that 497 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_497 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 497 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 497 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 497 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 498 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 498 ^ y,
+if x >= 4 and y >= 4,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 4 or y < 4.
+Further examination shows that 4 ^ x + 8 = 498 ^ y is impossible.
+-/
+theorem diophantine1_4_8_498 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 498 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 4) (y >= 4)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 4, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (498 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 4, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 3) (y <= 3) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 498 ^ y, proof := h3},
+    {prop := Or (x <= 3) (y <= 3), proof := h7},
+  ] "diophantine1_enumeration"
+  exact h8
+
+/-
+(Class I, Type ii)   4 ^ x + 8 = 499 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 499 ^ y,
+this is impossible, because it implies that 499 ^ y = 0 (mod 4).
+-/
+theorem diophantine1_4_8_499 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 499 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  have h6 := Claim (4 ^ x % 4 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 1, proof := h1},
+  ] "pow_mod_eq_zero"
+  have h7 : 499 ^ y % 4 = 0 := by omega
+  have h8 := Claim False [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 1, proof := h2},
+    {prop := 499 ^ y % 4 = 0, proof := h7},
+  ] "observe_mod_cycle"
+  exact h8
+
+/-
+(Class I, Type iii)   4 ^ x + 8 = 500 ^ y
+For positive integers x, y satisfying 4 ^ x + 8 = 500 ^ y,
+if x >= 2 and y >= 2,
+8 = 0 (mod 16), which is impossible.
+Therefore, x < 2 or y < 2.
+Further examination shows that 4 ^ x + 8 = 500 ^ y is impossible.
+-/
+theorem diophantine1_4_8_500 (x : Nat) (y : Nat) (h1 : x >= 1) (h2 : y >= 1) (h3 : 4 ^ x + 8 = 500 ^ y) :
+  False
+  := by
+  have h4 : x % 1 = 0 := by omega
+  have h5 : y % 1 = 0 := by omega
+  by_cases h6 : And (x >= 2) (y >= 2)
+  have h7 := Claim (4 ^ x % 16 = 0) [
+    {prop := x % 1 = 0, proof := h4},
+    {prop := x >= 2, proof := h6.left},
+  ] "pow_mod_eq_zero"
+  have h8 := Claim (500 ^ y % 16 = 0) [
+    {prop := y % 1 = 0, proof := h5},
+    {prop := y >= 2, proof := h6.right},
+  ] "pow_mod_eq_zero"
+  omega
+  have h7 : Or (x <= 1) (y <= 1) := by omega
+  have h8 := Claim False [
+    {prop :=  x % 1 = 0, proof := h4},
+    {prop :=  x >= 1, proof := h1},
+    {prop :=  y % 1 = 0, proof := h5},
+    {prop :=  y >= 1, proof := h2},
+    {prop := 4 ^ x + 8 = 500 ^ y, proof := h3},
+    {prop := Or (x <= 1) (y <= 1), proof := h7},
   ] "diophantine1_enumeration"
   exact h8
 

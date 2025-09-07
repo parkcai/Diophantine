@@ -8,6 +8,7 @@ diophantine.c
 tmp.lean
 fix.py
 quick.py
+reload_warmup.md
 results/*.lean
 !results/2-1.lean
 !results/2-2.lean

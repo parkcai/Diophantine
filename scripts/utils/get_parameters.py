@@ -20,7 +20,7 @@ def get_diophantine_parameters(
     c_min = get_integer_input("c_min", 2)
     a_start = get_integer_input("a_start", a_min)
     b_start = get_integer_input("b_start", b_min)
-    exclude_trivial = get_boolean_input("exclude_trivial", True)
+    exclude_trivial = get_boolean_input("exclude_trivial", False)
     timeout = get_boolean_input("timeout", True)
     
     return a_max, a_min, b_max, b_min, c_max, c_min, a_start, b_start, exclude_trivial, timeout
