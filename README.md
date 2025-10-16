@@ -4,7 +4,7 @@
 
 **An Effective Method for Solving a Class of Transcendental Diophantine Equations**: https://arxiv.org/abs/2510.11753
 
-> Solving the Diophantine Equation `a ^ x + b = c ^ y` using the SysY language
+Solving the Diophantine Equation `a ^ x + b = c ^ y` using the SysY language
 
 ```bash
 gcc -O3 diophantine.c -o diophantine -I C:/msys64/mingw64/include -L C:/msys64/mingw64/lib -lgmp
