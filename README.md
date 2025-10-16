@@ -1,5 +1,9 @@
 # Diophantine_SysY
 
+## Related Work
+
+**An Effective Method for Solving a Class of Transcendental Diophantine Equations**: https://arxiv.org/abs/2510.11753
+
 > Solving the Diophantine Equation `a ^ x + b = c ^ y` using the SysY language
 
 ```bash
