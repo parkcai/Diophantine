@@ -38,6 +38,10 @@ least_common_multiple_code = f"""int least_common_multiple(int n, int m) {{
     {big_int_declare("RES")}
     {big_int_set_int("RES", "m / d")}
     {big_int_mul_int("RES", "RES", "n")}
+    if ({big_int_gt_int("RES", "2147483647")} || {big_int_lt_int("RES", "-2147483648")}) {{
+        {big_int_release("RES")}
+        {make_assertion("0", "[Runtime Error] function least_common_multiple encounters an int32 overflow!", 2, True)}
+    }}
     {big_int_export_to_int("res", "RES")}
     {big_int_release("RES")}
     return res;
@@ -330,6 +334,10 @@ power_code = f"""int power(int base, int exp, int mod) {{
             {big_int_mod_uint("RES", "RES", "mod")}
         }}
         i = i + 1;
+    }}
+    if ({big_int_gt_int("RES", "2147483647")} || {big_int_lt_int("RES", "-2147483648")}) {{
+        {big_int_release("RES")}
+        {make_assertion("0", "[Runtime Error] function power encounters an int32 overflow!", 2, True)}
     }}
     {big_int_export_to_int("res", "RES")}
     {big_int_release("RES")}
