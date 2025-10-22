@@ -59,7 +59,7 @@ def big_int_release(
     
     if is_toy:
         code += 4 * indent * " "
-        code += f"/* toy version big int resource release of {big_int}(do nothing) */"
+        code += f"/* toy version big int resource release of {big_int} (do nothing) */"
     
     else:
         code += 4 * indent * " "
