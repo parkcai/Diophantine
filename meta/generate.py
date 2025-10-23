@@ -29,7 +29,7 @@ main_code = f"""int main() {{
             Solve_Diophantine1_backdoor();
             continue;
         }}else{{
-{printf("Unknown usage %d, try ./diophantine 0/1/2/3!", ["usage"], 3)}
+            {printf("Unknown usage %d, try ./diophantine 0/1/2/3!", ["usage"], 3)}
         }}
         return 0;
     }}
